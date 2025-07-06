@@ -28,7 +28,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["DCS", "DCE", "DIT"]
-    }
+    },
+    refreshToken : {
+        type : String
+    },
 }, { timestamps: true })
 
 
@@ -64,5 +67,17 @@ userSchema.methods.generateAccessToken = function () {
     )
 }
 
+userSchema.methods.generateRefreshTokem = function () {
 
+           return jwt.sign({
+                _id : this._id,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn : process.env.REFRESH_TOKEN_EXPIRY
+        }
+    
+    )
+
+}
 
