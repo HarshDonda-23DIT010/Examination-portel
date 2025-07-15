@@ -120,9 +120,144 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.YearScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  startDate: 'startDate',
+  endDate: 'endDate'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  department: 'department',
+  role: 'role'
+};
+
+exports.Prisma.SubjectScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  semester: 'semester',
+  coordinatorId: 'coordinatorId',
+  dep_IT: 'dep_IT',
+  dep_CE: 'dep_CE',
+  dep_CSE: 'dep_CSE',
+  type: 'type',
+  theory_hour: 'theory_hour',
+  practical_hour: 'practical_hour',
+  theory_credite: 'theory_credite',
+  practical_credite: 'practical_credite',
+  theory_int_marks: 'theory_int_marks',
+  practical_int_marks: 'practical_int_marks',
+  theory_ext_marks: 'theory_ext_marks',
+  practical_ext_marks: 'practical_ext_marks',
+  yearId: 'yearId'
+};
+
+exports.Prisma.SubjectFacultyScalarFieldEnum = {
+  id: 'id',
+  facultyId: 'facultyId',
+  subjectId: 'subjectId',
+  role: 'role',
+  yearId: 'yearId'
+};
+
+exports.Prisma.StudentScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  name: 'name',
+  email: 'email',
+  department: 'department',
+  semester: 'semester',
+  class: 'class'
+};
+
+exports.Prisma.ExamScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  date: 'date',
+  subjectId: 'subjectId',
+  facultyId: 'facultyId',
+  totalMarks: 'totalMarks',
+  effectiveMarks: 'effectiveMarks',
+  class1: 'class1',
+  class2: 'class2',
+  status: 'status',
+  yearId: 'yearId'
+};
+
+exports.Prisma.MarksScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  earnedMarks: 'earnedMarks',
+  effectiveMarks: 'effectiveMarks',
+  examId: 'examId',
+  yearId: 'yearId'
+};
+
+exports.Prisma.DetainScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  examId: 'examId',
+  yearId: 'yearId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  Faculty: 'Faculty',
+  HOD: 'HOD',
+  Admin: 'Admin'
+};
+
+exports.SubjectType = exports.$Enums.SubjectType = {
+  major: 'major',
+  elective: 'elective',
+  universityElective: 'universityElective'
+};
+
+exports.SubjectFacultyRole = exports.$Enums.SubjectFacultyRole = {
+  SubjectCoordinator: 'SubjectCoordinator',
+  Faculty: 'Faculty'
+};
+
+exports.Department = exports.$Enums.Department = {
+  DCS: 'DCS',
+  DIT: 'DIT',
+  DCE: 'DCE'
+};
+
+exports.ExamStatus = exports.$Enums.ExamStatus = {
+  taken: 'taken',
+  notTaken: 'notTaken',
+  pending: 'pending'
+};
 
 exports.Prisma.ModelName = {
-
+  Year: 'Year',
+  User: 'User',
+  Subject: 'Subject',
+  SubjectFaculty: 'SubjectFaculty',
+  Student: 'Student',
+  Exam: 'Exam',
+  Marks: 'Marks',
+  Detain: 'Detain'
 };
 
 /**
