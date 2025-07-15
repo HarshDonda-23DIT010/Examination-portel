@@ -10,6 +10,168 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql"   
   url      = env("DATABASE_URL")
+}
+
+// models
+
+model Year {
+  id             Int             @id @unique @default(autoincrement())
+  year           String
+  startDate      DateTime
+  endDate        DateTime
+  subject        Subject?
+  subjectFaculty SubjectFaculty?
+  exam           Exam?
+  marks          Marks?
+  detain         Detain?
+}
+
+enum Department {
+  DCS
+  DIT
+  DCE
+}
+
+enum UserRole {
+  Faculty
+  HOD
+  Admin
+}
+
+model User {
+  id                 Int              @id @unique @default(autoincrement())
+  userId             String           @unique
+  name               String
+  email              String           @unique
+  password           String
+  department         String
+  role               UserRole
+  subjectCoordinator Subject?
+  subjectFaculty     SubjectFaculty[]
+  exam               Exam[]
+}
+
+enum SubjectType {
+  major
+  elective
+  universityElective
+}
+
+model Subject {
+  id                 Int    @id @unique @default(autoincrement())
+  code               String @unique
+  name               String
+  semester           Int
+  coordinatorId      Int    @unique
+  subjectCoordinator User   @relation(fields: [coordinatorId], references: [id])
+
+  dep_IT    String?
+  dep_CE    String?
+  dep_CSE   String?
+  type      SubjectType
+  students  Student[]
+  faculties SubjectFaculty[]
+  exam      Exam[]
+
+  theory_hour       Int?
+  practical_hour    Int?
+  theory_credite    Int?
+  practical_credite Int?
+
+  // internal marks
+  theory_int_marks    Int?
+  practical_int_marks Int?
+
+  // external marks
+  theory_ext_marks    Int?
+  practical_ext_marks Int?
+
+  yearId Int  @unique
+  year   Year @relation(fields: [yearId], references: [id])
+}
+
+enum SubjectFacultyRole {
+  SubjectCoordinator
+  Faculty
+}
+
+model SubjectFaculty {
+  id        String                @id @unique @default(uuid())
+  facultyId Int
+  faculty   User               @relation(fields: [facultyId], references: [id])
+  subjectId Int
+  subject   Subject            @relation(fields: [subjectId], references: [id])
+  // department
+  role      SubjectFacultyRole
+
+  yearId Int  @unique
+  year   Year @relation(fields: [yearId], references: [id])
+}
+
+model Student {
+  id         String        @id @unique @default(uuid())
+  studentId  Int        @unique
+  name       String
+  email      String     @unique
+  department Department
+  semester   Int
+  class      String
+  subjects   Subject[]
+  exams      Exam[]
+  marks      Marks[]
+  detain     Detain[]
+}
+
+enum ExamStatus {
+  taken
+  notTaken
+  pending
+}
+
+model Exam {
+  id               String         @id @unique @default(uuid())
+  name             String
+  date             DateTime?
+  subjectId        Int
+  subject          Subject     @relation(fields: [subjectId], references: [id])
+  facultyId        Int
+  faculty          User        @relation(fields: [facultyId], references: [id])
+  eligibleStudents Student[]
+  totalMarks       Int?
+  effectiveMarks   Int? // exam effective marks
+  class1           Boolean?
+  class2           Boolean?
+  marks            Marks?
+  detain           Detain[]
+  status           ExamStatus?
+
+  yearId Int  @unique
+  year   Year @relation(fields: [yearId], references: [id])
+}
+
+model Marks {
+  id        String     @id @unique @default(uuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  earnedMarks    Int
+  effectiveMarks Int // for each student
+  examId         String  @unique
+  exam           Exam @relation(fields: [examId], references: [id])
+
+  yearId Int  @unique
+  year   Year @relation(fields: [yearId], references: [id])
+}
+
+model Detain {
+  id        Int     @id @unique @default(autoincrement())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+  examId    String
+  exam      Exam    @relation(fields: [examId], references: [id])
+
+  yearId Int  @unique
+  year   Year @relation(fields: [yearId], references: [id])
 }
