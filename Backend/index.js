@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
+import authRoutes from './routes/auth.routes.js';
 
 dotenv.config()
 
@@ -14,3 +15,9 @@ app.use(cookieParser());
 app.listen(PORT, () => {
     console.log(`Server running on port : ${PORT}`)
 });
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Examination Portal API');
+})
+
+app.use('/api/auth', authRoutes);
