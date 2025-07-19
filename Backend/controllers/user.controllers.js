@@ -171,3 +171,5 @@ export const getFaculties = asyncHandler(async (req, res) => {
 })
 
 
+
+
