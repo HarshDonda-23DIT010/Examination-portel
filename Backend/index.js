@@ -1,7 +1,8 @@
 import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
-import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/auth.routes.js';
+import yearRoutes from "./routes/year.routes.js"
 import cors from 'cors';
 
 dotenv.config()
@@ -27,7 +28,8 @@ app.get('/', (req, res) => {
 })
 
 // API end points 
-app.use('/api/v1/user', authRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/year', yearRoutes);
 
 
 app.listen(PORT, () => {
