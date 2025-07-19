@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { register, login, logout, getAllUsers, userUpdateByAdminAndHOD, removeUser, changePassword } from '../controllers/user.controllers.js';
+import { register, login, logout, getAllUsers, userUpdateByAdminAndHOD, removeUser, changePassword } from '../controllers/user.controller.js';
 import { protect } from '../middlewares/auth.middlware.js';
 import { AdminProtect } from '../middlewares/admin.middlware.js';
 

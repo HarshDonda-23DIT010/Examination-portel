@@ -18,9 +18,9 @@ datasource db {
 
 model Year {
   id             Int             @id @unique @default(autoincrement())
-  year           String
-  startDate      DateTime
-  endDate        DateTime
+  year           String          @unique
+  startDate      DateTime        @db.Date
+  endDate        DateTime        @db.Date
   subject        Subject?
   subjectFaculty SubjectFaculty?
   exam           Exam?
@@ -133,7 +133,7 @@ enum ExamStatus {
 model Exam {
   id               String      @id @unique @default(uuid())
   name             String
-  date             DateTime?
+  date             DateTime?   @db.Date
   subjectId        Int
   subject          Subject     @relation(fields: [subjectId], references: [id])
   facultyId        Int

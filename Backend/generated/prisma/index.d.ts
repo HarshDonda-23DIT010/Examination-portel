@@ -11680,10 +11680,10 @@ export namespace Prisma {
 
   export type YearWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    year?: string
     AND?: YearWhereInput | YearWhereInput[]
     OR?: YearWhereInput[]
     NOT?: YearWhereInput | YearWhereInput[]
-    year?: StringFilter<"Year"> | string
     startDate?: DateTimeFilter<"Year"> | Date | string
     endDate?: DateTimeFilter<"Year"> | Date | string
     subject?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
@@ -11691,7 +11691,7 @@ export namespace Prisma {
     exam?: XOR<ExamNullableScalarRelationFilter, ExamWhereInput> | null
     marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
     detain?: XOR<DetainNullableScalarRelationFilter, DetainWhereInput> | null
-  }, "id" | "id">
+  }, "id" | "id" | "year">
 
   export type YearOrderByWithAggregationInput = {
     id?: SortOrder

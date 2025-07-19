@@ -10,7 +10,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"   
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -18,9 +18,9 @@ datasource db {
 
 model Year {
   id             Int             @id @unique @default(autoincrement())
-  year           String
-  startDate      DateTime
-  endDate        DateTime
+  year           String          @unique
+  startDate      DateTime        @db.Date
+  endDate        DateTime        @db.Date
   subject        Subject?
   subjectFaculty SubjectFaculty?
   exam           Exam?
@@ -98,7 +98,7 @@ enum SubjectFacultyRole {
 }
 
 model SubjectFaculty {
-  id        String                @id @unique @default(uuid())
+  id        String             @id @unique @default(uuid())
   facultyId Int
   faculty   User               @relation(fields: [facultyId], references: [id])
   subjectId Int
@@ -111,7 +111,7 @@ model SubjectFaculty {
 }
 
 model Student {
-  id         String        @id @unique @default(uuid())
+  id         String     @id @unique @default(uuid())
   studentId  Int        @unique
   name       String
   email      String     @unique
@@ -131,9 +131,9 @@ enum ExamStatus {
 }
 
 model Exam {
-  id               String         @id @unique @default(uuid())
+  id               String      @id @unique @default(uuid())
   name             String
-  date             DateTime?
+  date             DateTime?   @db.Date
   subjectId        Int
   subject          Subject     @relation(fields: [subjectId], references: [id])
   facultyId        Int
@@ -152,14 +152,14 @@ model Exam {
 }
 
 model Marks {
-  id        String     @id @unique @default(uuid())
+  id        String  @id @unique @default(uuid())
   studentId String
   student   Student @relation(fields: [studentId], references: [id])
 
   earnedMarks    Int
   effectiveMarks Int // for each student
-  examId         String  @unique
-  exam           Exam @relation(fields: [examId], references: [id])
+  examId         String @unique
+  exam           Exam   @relation(fields: [examId], references: [id])
 
   yearId Int  @unique
   year   Year @relation(fields: [yearId], references: [id])
