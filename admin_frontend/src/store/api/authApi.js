@@ -75,7 +75,7 @@ export const authApi = createApi({
     }),
     getFaculties: builder.query({
         query: () => ({
-          url: '/get-all-faculties',
+          url: '/get-all-users',
           method: 'GET',
         }),
         providesTags: ['Auth'],
