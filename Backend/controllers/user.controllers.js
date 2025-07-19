@@ -303,5 +303,3 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 })
 
-
-

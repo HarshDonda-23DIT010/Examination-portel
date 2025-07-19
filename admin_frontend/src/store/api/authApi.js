@@ -40,8 +40,10 @@ export const authApi = createApi({
       }) {
         try {
           const result = await queryFulfilled;
-          const { data } = result;
-          
+          const {
+            data
+          } = result;
+
           dispatch(setCredentials({
             user: data.data,
           }));
@@ -99,7 +101,32 @@ export const authApi = createApi({
       },
       providesTags: ['Auth'],
     }),
-
+    updateFaculty: builder.mutation({
+      query: (facultyData) => ({
+        url: '/update-user',
+        method: 'PUT',
+        body: facultyData,
+      }),
+      providesTags: ['Auth'],
+    }),
+    deleteFaculty: builder.mutation({
+      query: (userId) => ({
+        url: `/delete-user/${userId}`,
+        method: 'GET',
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+    updatePassword: builder.mutation({
+      query: ({ userId, oldPassword, newPassword }) => ({
+        url: `/change-pass/${userId}`,
+        method: 'PUT',
+        body: {
+          oldPassword,
+          newPassword
+        },
+      }),
+      invalidatesTags: ['Auth'],
+    }),
   }),
 });
 
@@ -107,5 +134,8 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useCreateFacultyMutation,
-  useGetFacultiesQuery
+  useGetFacultiesQuery,
+  useUpdateFacultyMutation,
+  useDeleteFacultyMutation,
+  useUpdatePasswordMutation
 } = authApi;

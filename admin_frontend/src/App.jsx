@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/store';
+import { Toaster } from './components/ui/sonner';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -8,6 +10,7 @@ import MainLayout from './layout/MainLayout';
 import './App.css'
 import AddFaculties from './pages/faculties/AddFaculties';
 import AdminSetting from './pages/setting/AdminSetting';
+import Profile from './pages/Profile/Profile';
 
 const appRouter = createBrowserRouter([
   {
@@ -24,10 +27,13 @@ const appRouter = createBrowserRouter([
         path: '/',
         element: <ProtectedRoute><Welcome /></ProtectedRoute>
       },
-
       {
         path: 'add-faculties',
         element: <ProtectedRoute><AddFaculties /></ProtectedRoute>
+      },
+      {
+        path: 'profile',
+        element: <ProtectedRoute><Profile /></ProtectedRoute>
       },
       {
         path: 'admin/settings',
@@ -42,7 +48,10 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={appRouter} />
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={appRouter} />
+        <Toaster />
+      </PersistGate>
     </Provider>
   )
 }
