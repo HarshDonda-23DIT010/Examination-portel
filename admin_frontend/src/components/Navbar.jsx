@@ -45,7 +45,7 @@ const Navbar = () => {
                   <div className="">
                      <h1
                         className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold text-blue-800 cursor-pointer hover:text-blue-600 transition-colors"
-                        onClick={() => handleNavigation('/welcome')}
+                        onClick={() => handleNavigation('/')}
                      >
                         DEPSTAR Admin
                      </h1>

@@ -54,6 +54,7 @@ const AddFaculties = () => {
     if (!formData.password.trim()) errors.password = 'Password is required';
     if (formData.password.length < 6) errors.password = 'Password must be at least 6 characters';
     if (!formData.department.trim()) errors.department = 'Department is required';
+    if (!formData.role.trim()) errors.role = 'Role is required';
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -73,7 +74,7 @@ const AddFaculties = () => {
         email: '',
         password: '',
         department: '',
-        role: 'faculty'
+        role: ''
       });
       setIsDialogOpen(false);
       // Refetch faculties to update the table
@@ -92,7 +93,7 @@ const AddFaculties = () => {
       email: '',
       password: '',
       department: '',
-      role: 'faculty'
+      role: ''
     });
     setFormErrors({});
     setShowPassword(false);
@@ -160,17 +161,20 @@ const AddFaculties = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                       User ID
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                       Email
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                       Department
+                    </th>
+                    <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Role
                     </th>
                   </tr>
                 </thead>
@@ -189,6 +193,9 @@ const AddFaculties = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {faculty.department}
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {faculty.role}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -201,7 +208,7 @@ const AddFaculties = () => {
       {/* Add Faculty Dialog */}
       {isDialogOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             {/* Dialog Header */}
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Add New Faculty</h3>
@@ -214,152 +221,160 @@ const AddFaculties = () => {
             </div>
 
             {/* Dialog Content */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {/* User ID */}
-              <div>
-                <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-2">
-                  User ID
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+            <form onSubmit={handleSubmit} className="p-6">
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 space-y-0">
+                {/* Left Column */}
+                <div className="space-y-4">
+                  {/* User ID */}
+                  <div>
+                    <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-2">
+                      User ID
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <User className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input
+                        id="userId"
+                        name="userId"
+                        type="text"
+                        value={formData.userId}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.userId ? 'border-red-300' : 'border-gray-300'}`}
+                        placeholder="Enter user ID"
+                      />
+                    </div>
+                    {formErrors.userId && <p className="text-red-500 text-xs mt-1">{formErrors.userId}</p>}
                   </div>
-                  <input
-                    id="userId"
-                    name="userId"
-                    type="text"
-                    value={formData.userId}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.userId ? 'border-red-300' : 'border-gray-300'}`}
-                    placeholder="Enter user ID"
-                  />
-                </div>
-                {formErrors.userId && <p className="text-red-500 text-xs mt-1">{formErrors.userId}</p>}
-              </div>
 
-              {/* Name */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                  {/* Name */}
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <User className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.name ? 'border-red-300' : 'border-gray-300'}`}
+                        placeholder="Enter full name"
+                      />
+                    </div>
+                    {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
                   </div>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.name ? 'border-red-300' : 'border-gray-300'}`}
-                    placeholder="Enter full name"
-                  />
-                </div>
-                {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
-              </div>
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                  {/* Email */}
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Email
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Mail className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.email ? 'border-red-300' : 'border-gray-300'}`}
+                        placeholder="Enter email address"
+                      />
+                    </div>
+                    {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                   </div>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.email ? 'border-red-300' : 'border-gray-300'}`}
-                    placeholder="Enter email address"
-                  />
                 </div>
-                {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
-              </div>
 
-              {/* Password */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
+                {/* Right Column */}
+                <div className="space-y-4">
+                  {/* Password */}
+                  <div>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Lock className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input
+                        id="password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-12 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.password ? 'border-red-300' : 'border-gray-300'}`}
+                        placeholder="Enter password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                      >
+                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                    {formErrors.password && <p className="text-red-500 text-xs mt-1">{formErrors.password}</p>}
                   </div>
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-12 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.password ? 'border-red-300' : 'border-gray-300'}`}
-                    placeholder="Enter password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-                {formErrors.password && <p className="text-red-500 text-xs mt-1">{formErrors.password}</p>}
-              </div>
 
-              {/* Department */}
-              <div>
-                <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
-                  Department
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Building className="h-5 w-5 text-gray-400" />
+                  {/* Department */}
+                  <div>
+                    <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
+                      Department
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Building className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <select
+                        id="department"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.department ? 'border-red-300' : 'border-gray-300'}`}
+                      >
+                        <option value="">Select Department</option>
+                        <option value="DCS">DCS</option>
+                        <option value="DIT">DIT</option>
+                        <option value="DCE">DCE</option>
+                      </select>
+                    </div>
+                    {formErrors.department && <p className="text-red-500 text-xs mt-1">{formErrors.department}</p>}
                   </div>
-                  <select
-                    id="department"
-                    name="department"
-                    value={formData.department}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.department ? 'border-red-300' : 'border-gray-300'}`}
-                  >
-                    <option value="">Select Department</option>
-                    <option value="DCS">DCS</option>
-                    <option value="DIT">DIT</option>
-                    <option value="DCE">DCE</option>
-                  </select>
-                </div>
-                {formErrors.department && <p className="text-red-500 text-xs mt-1">{formErrors.department}</p>}
-              </div>
-              <div>
-                <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
-                  Role
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Users className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <select
-                    id="role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.department ? 'border-red-300' : 'border-gray-300'}`}
-                  >
-                    <option value="">Select role</option>
-                    <option value="HOD">HOD</option>
-                    <option value="Faculty">Faculty</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-                </div>
-                {formErrors.department && <p className="text-red-500 text-xs mt-1">{formErrors.department}</p>}
-              </div>
 
-              {/* Role (hidden/fixed as faculty) */}
-              <input type="hidden" name="role" value="faculty" />
+                  {/* Role */}
+                  <div>
+                    <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
+                      Role
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Users className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <select
+                        id="role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleInputChange}
+                        className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.role ? 'border-red-300' : 'border-gray-300'}`}
+                      >
+                        <option value="">Select role</option>
+                        <option value="HOD">HOD</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </div>
+                    {formErrors.role && <p className="text-red-500 text-xs mt-1">{formErrors.role}</p>}
+                  </div>
+                </div>
+              </div>
 
               {/* Dialog Actions */}
               <div className="flex justify-end space-x-3 pt-4">

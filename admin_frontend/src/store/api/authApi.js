@@ -4,17 +4,21 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import {
   setCredentials,
-  logout
+  logout,
+  setUsers,
 } from '../slices/authSlice';
+import {
+  USER_ENDPOINTS
+} from '../../utils/EndPoints.js';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/v1/user',
+    baseUrl: USER_ENDPOINTS,
     prepareHeaders: (headers, {
       getState
     }) => {
-      const token = getState().auth.token;
+      const token = localStorage.getItem('AccessToken');
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
@@ -35,23 +39,22 @@ export const authApi = createApi({
         queryFulfilled
       }) {
         try {
-          const {
-            data
-          } = await queryFulfilled;
+          const result = await queryFulfilled;
+          const { data } = result;
+          
           dispatch(setCredentials({
-            user: data.user,
-            token: data.token
+            user: data.data,
           }));
         } catch (error) {
           console.error('Login failed:', error);
         }
       },
-      // invalidatesTags: ['Auth'],
+      invalidatesTags: ['Auth'],
     }),
     logout: builder.mutation({
       query: () => ({
         url: '/logout',
-        method: 'POST',
+        method: 'GET',
       }),
       async onQueryStarted(arg, {
         dispatch,
@@ -64,7 +67,7 @@ export const authApi = createApi({
           dispatch(logout());
         }
       },
-      // invalidatesTags: ['Auth'],
+      invalidatesTags: ['Auth'],
     }),
     CreateFaculty: builder.mutation({
       query: (facultyData) => ({
@@ -72,13 +75,29 @@ export const authApi = createApi({
         method: 'POST',
         body: facultyData,
       }),
+      invalidatesTags: ['Auth'],
     }),
     getFaculties: builder.query({
-        query: () => ({
-          url: '/get-all-users',
-          method: 'GET',
-        }),
-        providesTags: ['Auth'],
+      query: () => ({
+        url: '/get-all-users',
+        method: 'GET',
+      }),
+      async onQueryStarted(arg, {
+        dispatch,
+        queryFulfilled
+      }) {
+        try {
+          const {
+            data
+          } = await queryFulfilled;
+          if (data.success && data.data) {
+            dispatch(setUsers(data.data));
+          }
+        } catch (error) {
+          console.error('Failed to fetch faculties:', error);
+        }
+      },
+      providesTags: ['Auth'],
     }),
 
   }),
