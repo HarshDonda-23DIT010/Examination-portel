@@ -59,4 +59,14 @@ export const addNewYear = asyncHandler(async (req, res) => {
 });
 
 
-// export const removeYear = asyncHandler()
+export const getAllYear = asyncHandler(async (req, res) => {
+    const years = await prisma.year.findMany({});
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            years,
+            "All year fetched successfully."
+        )
+    )
+})
