@@ -19,7 +19,7 @@ const AddFaculties = () => {
   const [createFaculty, { isLoading: isCreating }] = useCreateFacultyMutation();
   const { data: facultiesData, isLoading: isLoadingFaculties, error, refetch } = useGetFacultiesQuery();
 
-  const faculties = facultiesData?.faculties || [];
+  const faculties = facultiesData?.data || [];
 
   // Filter faculties based on search term
   const filteredFaculties = faculties.filter(faculty =>
@@ -133,22 +133,15 @@ const AddFaculties = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-            <button
-              onClick={refetch}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition duration-200"
-            >
-              Refresh
-            </button>
+            <div className="px-6 py-4 ml-16">
+              <h2 className="text-lg font-semibold text-gray-900">Faculty List</h2>
+              <p className="text-sm text-gray-600">Total: {filteredFaculties.length} faculties</p>
+            </div>
           </div>
         </div>
 
         {/* Faculty Table */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Faculty List</h2>
-            <p className="text-sm text-gray-600">Total: {filteredFaculties.length} faculties</p>
-          </div>
-
           <div className="overflow-x-auto">
             {isLoadingFaculties ? (
               <div className="flex justify-center items-center py-12">

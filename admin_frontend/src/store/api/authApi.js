@@ -10,7 +10,7 @@ import {
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/auth',
+    baseUrl: 'http://localhost:5000/api/v1/user',
     prepareHeaders: (headers, {
       getState
     }) => {
@@ -75,7 +75,7 @@ export const authApi = createApi({
     }),
     getFaculties: builder.query({
         query: () => ({
-          url: '/get-faculties',
+          url: '/get-all-users',
           method: 'GET',
         }),
         providesTags: ['Auth'],

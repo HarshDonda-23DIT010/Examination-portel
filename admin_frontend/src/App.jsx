@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layout/MainLayout';
 import './App.css'
 import AddFaculties from './pages/faculties/AddFaculties';
+import AdminSetting from './pages/setting/AdminSetting';
 
 const appRouter = createBrowserRouter([
   {
@@ -28,7 +29,10 @@ const appRouter = createBrowserRouter([
         path: 'add-faculties',
         element: <ProtectedRoute><AddFaculties /></ProtectedRoute>
       },
-      
+      {
+        path: 'admin/settings',
+        element: <ProtectedRoute><AdminSetting/></ProtectedRoute>
+      }
       // Admin routes can be added here later
 
     ]
