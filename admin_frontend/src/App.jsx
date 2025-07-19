@@ -11,6 +11,7 @@ import './App.css'
 import AddFaculties from './pages/faculties/AddFaculties';
 import AdminSetting from './pages/setting/AdminSetting';
 import Profile from './pages/Profile/Profile';
+import AddAcademicYear from './pages/academic_year/AddAcademicYear';
 
 const appRouter = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const appRouter = createBrowserRouter([
       {
         path: 'admin/settings',
         element: <ProtectedRoute><AdminSetting/></ProtectedRoute>
+      },
+      {
+        path: 'academic-year',
+        element: <ProtectedRoute><AddAcademicYear/></ProtectedRoute>
       }
       // Admin routes can be added here later
 
