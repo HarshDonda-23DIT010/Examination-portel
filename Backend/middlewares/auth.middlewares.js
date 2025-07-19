@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 
 export const protect = (req, res, next) => {
-  const token = req.cookies.access_token;
+  // console.log(req.cookies);
+
+  const token = req.cookies.AccessToken;
 
   if (!token) {
     return res.status(401).json({ error: 'No token. Not authorized' });
