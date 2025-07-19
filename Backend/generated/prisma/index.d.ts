@@ -1571,15 +1571,84 @@ export namespace Prisma {
 
 
   /**
+   * Count Type YearCountOutputType
+   */
+
+  export type YearCountOutputType = {
+    subject: number
+    subjectFaculty: number
+    exam: number
+    marks: number
+    detain: number
+  }
+
+  export type YearCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subject?: boolean | YearCountOutputTypeCountSubjectArgs
+    subjectFaculty?: boolean | YearCountOutputTypeCountSubjectFacultyArgs
+    exam?: boolean | YearCountOutputTypeCountExamArgs
+    marks?: boolean | YearCountOutputTypeCountMarksArgs
+    detain?: boolean | YearCountOutputTypeCountDetainArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YearCountOutputType
+     */
+    select?: YearCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeCountSubjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubjectWhereInput
+  }
+
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeCountSubjectFacultyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubjectFacultyWhereInput
+  }
+
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeCountExamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExamWhereInput
+  }
+
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeCountMarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarksWhereInput
+  }
+
+  /**
+   * YearCountOutputType without action
+   */
+  export type YearCountOutputTypeCountDetainArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DetainWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
   export type UserCountOutputType = {
+    subjectCoordinator: number
     subjectFaculty: number
     exam: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subjectCoordinator?: boolean | UserCountOutputTypeCountSubjectCoordinatorArgs
     subjectFaculty?: boolean | UserCountOutputTypeCountSubjectFacultyArgs
     exam?: boolean | UserCountOutputTypeCountExamArgs
   }
@@ -1593,6 +1662,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSubjectCoordinatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubjectWhereInput
   }
 
   /**
@@ -1956,6 +2032,7 @@ export namespace Prisma {
     exam?: boolean | Year$examArgs<ExtArgs>
     marks?: boolean | Year$marksArgs<ExtArgs>
     detain?: boolean | Year$detainArgs<ExtArgs>
+    _count?: boolean | YearCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["year"]>
 
   export type YearSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1986,6 +2063,7 @@ export namespace Prisma {
     exam?: boolean | Year$examArgs<ExtArgs>
     marks?: boolean | Year$marksArgs<ExtArgs>
     detain?: boolean | Year$detainArgs<ExtArgs>
+    _count?: boolean | YearCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type YearIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type YearIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1993,11 +2071,11 @@ export namespace Prisma {
   export type $YearPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Year"
     objects: {
-      subject: Prisma.$SubjectPayload<ExtArgs> | null
-      subjectFaculty: Prisma.$SubjectFacultyPayload<ExtArgs> | null
-      exam: Prisma.$ExamPayload<ExtArgs> | null
-      marks: Prisma.$MarksPayload<ExtArgs> | null
-      detain: Prisma.$DetainPayload<ExtArgs> | null
+      subject: Prisma.$SubjectPayload<ExtArgs>[]
+      subjectFaculty: Prisma.$SubjectFacultyPayload<ExtArgs>[]
+      exam: Prisma.$ExamPayload<ExtArgs>[]
+      marks: Prisma.$MarksPayload<ExtArgs>[]
+      detain: Prisma.$DetainPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2398,11 +2476,11 @@ export namespace Prisma {
    */
   export interface Prisma__YearClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    subject<T extends Year$subjectArgs<ExtArgs> = {}>(args?: Subset<T, Year$subjectArgs<ExtArgs>>): Prisma__SubjectClient<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subjectFaculty<T extends Year$subjectFacultyArgs<ExtArgs> = {}>(args?: Subset<T, Year$subjectFacultyArgs<ExtArgs>>): Prisma__SubjectFacultyClient<$Result.GetResult<Prisma.$SubjectFacultyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    exam<T extends Year$examArgs<ExtArgs> = {}>(args?: Subset<T, Year$examArgs<ExtArgs>>): Prisma__ExamClient<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    marks<T extends Year$marksArgs<ExtArgs> = {}>(args?: Subset<T, Year$marksArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    detain<T extends Year$detainArgs<ExtArgs> = {}>(args?: Subset<T, Year$detainArgs<ExtArgs>>): Prisma__DetainClient<$Result.GetResult<Prisma.$DetainPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    subject<T extends Year$subjectArgs<ExtArgs> = {}>(args?: Subset<T, Year$subjectArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    subjectFaculty<T extends Year$subjectFacultyArgs<ExtArgs> = {}>(args?: Subset<T, Year$subjectFacultyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubjectFacultyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    exam<T extends Year$examArgs<ExtArgs> = {}>(args?: Subset<T, Year$examArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    marks<T extends Year$marksArgs<ExtArgs> = {}>(args?: Subset<T, Year$marksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    detain<T extends Year$detainArgs<ExtArgs> = {}>(args?: Subset<T, Year$detainArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2840,6 +2918,11 @@ export namespace Prisma {
      */
     include?: SubjectInclude<ExtArgs> | null
     where?: SubjectWhereInput
+    orderBy?: SubjectOrderByWithRelationInput | SubjectOrderByWithRelationInput[]
+    cursor?: SubjectWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubjectScalarFieldEnum | SubjectScalarFieldEnum[]
   }
 
   /**
@@ -2859,6 +2942,11 @@ export namespace Prisma {
      */
     include?: SubjectFacultyInclude<ExtArgs> | null
     where?: SubjectFacultyWhereInput
+    orderBy?: SubjectFacultyOrderByWithRelationInput | SubjectFacultyOrderByWithRelationInput[]
+    cursor?: SubjectFacultyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubjectFacultyScalarFieldEnum | SubjectFacultyScalarFieldEnum[]
   }
 
   /**
@@ -2878,6 +2966,11 @@ export namespace Prisma {
      */
     include?: ExamInclude<ExtArgs> | null
     where?: ExamWhereInput
+    orderBy?: ExamOrderByWithRelationInput | ExamOrderByWithRelationInput[]
+    cursor?: ExamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExamScalarFieldEnum | ExamScalarFieldEnum[]
   }
 
   /**
@@ -2897,6 +2990,11 @@ export namespace Prisma {
      */
     include?: MarksInclude<ExtArgs> | null
     where?: MarksWhereInput
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    cursor?: MarksWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
   }
 
   /**
@@ -2916,6 +3014,11 @@ export namespace Prisma {
      */
     include?: DetainInclude<ExtArgs> | null
     where?: DetainWhereInput
+    orderBy?: DetainOrderByWithRelationInput | DetainOrderByWithRelationInput[]
+    cursor?: DetainWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DetainScalarFieldEnum | DetainScalarFieldEnum[]
   }
 
   /**
@@ -3200,7 +3303,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      subjectCoordinator: Prisma.$SubjectPayload<ExtArgs> | null
+      subjectCoordinator: Prisma.$SubjectPayload<ExtArgs>[]
       subjectFaculty: Prisma.$SubjectFacultyPayload<ExtArgs>[]
       exam: Prisma.$ExamPayload<ExtArgs>[]
     }
@@ -3606,7 +3709,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    subjectCoordinator<T extends User$subjectCoordinatorArgs<ExtArgs> = {}>(args?: Subset<T, User$subjectCoordinatorArgs<ExtArgs>>): Prisma__SubjectClient<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    subjectCoordinator<T extends User$subjectCoordinatorArgs<ExtArgs> = {}>(args?: Subset<T, User$subjectCoordinatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subjectFaculty<T extends User$subjectFacultyArgs<ExtArgs> = {}>(args?: Subset<T, User$subjectFacultyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubjectFacultyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     exam<T extends User$examArgs<ExtArgs> = {}>(args?: Subset<T, User$examArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -4049,6 +4152,11 @@ export namespace Prisma {
      */
     include?: SubjectInclude<ExtArgs> | null
     where?: SubjectWhereInput
+    orderBy?: SubjectOrderByWithRelationInput | SubjectOrderByWithRelationInput[]
+    cursor?: SubjectWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubjectScalarFieldEnum | SubjectScalarFieldEnum[]
   }
 
   /**
@@ -4166,10 +4274,10 @@ export namespace Prisma {
     name: string | null
     semester: number | null
     coordinatorId: number | null
-    dep_IT: string | null
-    dep_CE: string | null
-    dep_CSE: string | null
     type: $Enums.SubjectType | null
+    dep_IT: boolean | null
+    dep_CE: boolean | null
+    dep_CSE: boolean | null
     theory_hour: number | null
     practical_hour: number | null
     theory_credite: number | null
@@ -4187,10 +4295,10 @@ export namespace Prisma {
     name: string | null
     semester: number | null
     coordinatorId: number | null
-    dep_IT: string | null
-    dep_CE: string | null
-    dep_CSE: string | null
     type: $Enums.SubjectType | null
+    dep_IT: boolean | null
+    dep_CE: boolean | null
+    dep_CSE: boolean | null
     theory_hour: number | null
     practical_hour: number | null
     theory_credite: number | null
@@ -4208,10 +4316,10 @@ export namespace Prisma {
     name: number
     semester: number
     coordinatorId: number
+    type: number
     dep_IT: number
     dep_CE: number
     dep_CSE: number
-    type: number
     theory_hour: number
     practical_hour: number
     theory_credite: number
@@ -4261,10 +4369,10 @@ export namespace Prisma {
     name?: true
     semester?: true
     coordinatorId?: true
+    type?: true
     dep_IT?: true
     dep_CE?: true
     dep_CSE?: true
-    type?: true
     theory_hour?: true
     practical_hour?: true
     theory_credite?: true
@@ -4282,10 +4390,10 @@ export namespace Prisma {
     name?: true
     semester?: true
     coordinatorId?: true
+    type?: true
     dep_IT?: true
     dep_CE?: true
     dep_CSE?: true
-    type?: true
     theory_hour?: true
     practical_hour?: true
     theory_credite?: true
@@ -4303,10 +4411,10 @@ export namespace Prisma {
     name?: true
     semester?: true
     coordinatorId?: true
+    type?: true
     dep_IT?: true
     dep_CE?: true
     dep_CSE?: true
-    type?: true
     theory_hour?: true
     practical_hour?: true
     theory_credite?: true
@@ -4411,10 +4519,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT: string | null
-    dep_CE: string | null
-    dep_CSE: string | null
     type: $Enums.SubjectType
+    dep_IT: boolean | null
+    dep_CE: boolean | null
+    dep_CSE: boolean | null
     theory_hour: number | null
     practical_hour: number | null
     theory_credite: number | null
@@ -4451,10 +4559,10 @@ export namespace Prisma {
     name?: boolean
     semester?: boolean
     coordinatorId?: boolean
+    type?: boolean
     dep_IT?: boolean
     dep_CE?: boolean
     dep_CSE?: boolean
-    type?: boolean
     theory_hour?: boolean
     practical_hour?: boolean
     theory_credite?: boolean
@@ -4478,10 +4586,10 @@ export namespace Prisma {
     name?: boolean
     semester?: boolean
     coordinatorId?: boolean
+    type?: boolean
     dep_IT?: boolean
     dep_CE?: boolean
     dep_CSE?: boolean
-    type?: boolean
     theory_hour?: boolean
     practical_hour?: boolean
     theory_credite?: boolean
@@ -4501,10 +4609,10 @@ export namespace Prisma {
     name?: boolean
     semester?: boolean
     coordinatorId?: boolean
+    type?: boolean
     dep_IT?: boolean
     dep_CE?: boolean
     dep_CSE?: boolean
-    type?: boolean
     theory_hour?: boolean
     practical_hour?: boolean
     theory_credite?: boolean
@@ -4524,10 +4632,10 @@ export namespace Prisma {
     name?: boolean
     semester?: boolean
     coordinatorId?: boolean
+    type?: boolean
     dep_IT?: boolean
     dep_CE?: boolean
     dep_CSE?: boolean
-    type?: boolean
     theory_hour?: boolean
     practical_hour?: boolean
     theory_credite?: boolean
@@ -4539,7 +4647,7 @@ export namespace Prisma {
     yearId?: boolean
   }
 
-  export type SubjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "name" | "semester" | "coordinatorId" | "dep_IT" | "dep_CE" | "dep_CSE" | "type" | "theory_hour" | "practical_hour" | "theory_credite" | "practical_credite" | "theory_int_marks" | "practical_int_marks" | "theory_ext_marks" | "practical_ext_marks" | "yearId", ExtArgs["result"]["subject"]>
+  export type SubjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "name" | "semester" | "coordinatorId" | "type" | "dep_IT" | "dep_CE" | "dep_CSE" | "theory_hour" | "practical_hour" | "theory_credite" | "practical_credite" | "theory_int_marks" | "practical_int_marks" | "theory_ext_marks" | "practical_ext_marks" | "yearId", ExtArgs["result"]["subject"]>
   export type SubjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subjectCoordinator?: boolean | UserDefaultArgs<ExtArgs>
     students?: boolean | Subject$studentsArgs<ExtArgs>
@@ -4572,10 +4680,10 @@ export namespace Prisma {
       name: string
       semester: number
       coordinatorId: number
-      dep_IT: string | null
-      dep_CE: string | null
-      dep_CSE: string | null
       type: $Enums.SubjectType
+      dep_IT: boolean | null
+      dep_CE: boolean | null
+      dep_CSE: boolean | null
       theory_hour: number | null
       practical_hour: number | null
       theory_credite: number | null
@@ -5018,10 +5126,10 @@ export namespace Prisma {
     readonly name: FieldRef<"Subject", 'String'>
     readonly semester: FieldRef<"Subject", 'Int'>
     readonly coordinatorId: FieldRef<"Subject", 'Int'>
-    readonly dep_IT: FieldRef<"Subject", 'String'>
-    readonly dep_CE: FieldRef<"Subject", 'String'>
-    readonly dep_CSE: FieldRef<"Subject", 'String'>
     readonly type: FieldRef<"Subject", 'SubjectType'>
+    readonly dep_IT: FieldRef<"Subject", 'Boolean'>
+    readonly dep_CE: FieldRef<"Subject", 'Boolean'>
+    readonly dep_CSE: FieldRef<"Subject", 'Boolean'>
     readonly theory_hour: FieldRef<"Subject", 'Int'>
     readonly practical_hour: FieldRef<"Subject", 'Int'>
     readonly theory_credite: FieldRef<"Subject", 'Int'>
@@ -11405,10 +11513,10 @@ export namespace Prisma {
     name: 'name',
     semester: 'semester',
     coordinatorId: 'coordinatorId',
+    type: 'type',
     dep_IT: 'dep_IT',
     dep_CE: 'dep_CE',
     dep_CSE: 'dep_CSE',
-    type: 'type',
     theory_hour: 'theory_hour',
     practical_hour: 'practical_hour',
     theory_credite: 'theory_credite',
@@ -11600,6 +11708,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'SubjectFacultyRole'
    */
   export type EnumSubjectFacultyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubjectFacultyRole'>
@@ -11610,13 +11725,6 @@ export namespace Prisma {
    * Reference to a field of type 'SubjectFacultyRole[]'
    */
   export type ListEnumSubjectFacultyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubjectFacultyRole[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -11659,11 +11767,11 @@ export namespace Prisma {
     year?: StringFilter<"Year"> | string
     startDate?: DateTimeFilter<"Year"> | Date | string
     endDate?: DateTimeFilter<"Year"> | Date | string
-    subject?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
-    subjectFaculty?: XOR<SubjectFacultyNullableScalarRelationFilter, SubjectFacultyWhereInput> | null
-    exam?: XOR<ExamNullableScalarRelationFilter, ExamWhereInput> | null
-    marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
-    detain?: XOR<DetainNullableScalarRelationFilter, DetainWhereInput> | null
+    subject?: SubjectListRelationFilter
+    subjectFaculty?: SubjectFacultyListRelationFilter
+    exam?: ExamListRelationFilter
+    marks?: MarksListRelationFilter
+    detain?: DetainListRelationFilter
   }
 
   export type YearOrderByWithRelationInput = {
@@ -11671,11 +11779,11 @@ export namespace Prisma {
     year?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    subject?: SubjectOrderByWithRelationInput
-    subjectFaculty?: SubjectFacultyOrderByWithRelationInput
-    exam?: ExamOrderByWithRelationInput
-    marks?: MarksOrderByWithRelationInput
-    detain?: DetainOrderByWithRelationInput
+    subject?: SubjectOrderByRelationAggregateInput
+    subjectFaculty?: SubjectFacultyOrderByRelationAggregateInput
+    exam?: ExamOrderByRelationAggregateInput
+    marks?: MarksOrderByRelationAggregateInput
+    detain?: DetainOrderByRelationAggregateInput
   }
 
   export type YearWhereUniqueInput = Prisma.AtLeast<{
@@ -11686,11 +11794,11 @@ export namespace Prisma {
     NOT?: YearWhereInput | YearWhereInput[]
     startDate?: DateTimeFilter<"Year"> | Date | string
     endDate?: DateTimeFilter<"Year"> | Date | string
-    subject?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
-    subjectFaculty?: XOR<SubjectFacultyNullableScalarRelationFilter, SubjectFacultyWhereInput> | null
-    exam?: XOR<ExamNullableScalarRelationFilter, ExamWhereInput> | null
-    marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
-    detain?: XOR<DetainNullableScalarRelationFilter, DetainWhereInput> | null
+    subject?: SubjectListRelationFilter
+    subjectFaculty?: SubjectFacultyListRelationFilter
+    exam?: ExamListRelationFilter
+    marks?: MarksListRelationFilter
+    detain?: DetainListRelationFilter
   }, "id" | "id" | "year">
 
   export type YearOrderByWithAggregationInput = {
@@ -11726,7 +11834,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     department?: EnumDepartmentFilter<"User"> | $Enums.Department
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
-    subjectCoordinator?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
+    subjectCoordinator?: SubjectListRelationFilter
     subjectFaculty?: SubjectFacultyListRelationFilter
     exam?: ExamListRelationFilter
   }
@@ -11739,7 +11847,7 @@ export namespace Prisma {
     password?: SortOrder
     department?: SortOrder
     role?: SortOrder
-    subjectCoordinator?: SubjectOrderByWithRelationInput
+    subjectCoordinator?: SubjectOrderByRelationAggregateInput
     subjectFaculty?: SubjectFacultyOrderByRelationAggregateInput
     exam?: ExamOrderByRelationAggregateInput
   }
@@ -11755,7 +11863,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     department?: EnumDepartmentFilter<"User"> | $Enums.Department
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
-    subjectCoordinator?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
+    subjectCoordinator?: SubjectListRelationFilter
     subjectFaculty?: SubjectFacultyListRelationFilter
     exam?: ExamListRelationFilter
   }, "id" | "id" | "userId" | "email">
@@ -11797,10 +11905,10 @@ export namespace Prisma {
     name?: StringFilter<"Subject"> | string
     semester?: IntFilter<"Subject"> | number
     coordinatorId?: IntFilter<"Subject"> | number
-    dep_IT?: StringNullableFilter<"Subject"> | string | null
-    dep_CE?: StringNullableFilter<"Subject"> | string | null
-    dep_CSE?: StringNullableFilter<"Subject"> | string | null
     type?: EnumSubjectTypeFilter<"Subject"> | $Enums.SubjectType
+    dep_IT?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CE?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CSE?: BoolNullableFilter<"Subject"> | boolean | null
     theory_hour?: IntNullableFilter<"Subject"> | number | null
     practical_hour?: IntNullableFilter<"Subject"> | number | null
     theory_credite?: IntNullableFilter<"Subject"> | number | null
@@ -11823,10 +11931,10 @@ export namespace Prisma {
     name?: SortOrder
     semester?: SortOrder
     coordinatorId?: SortOrder
+    type?: SortOrder
     dep_IT?: SortOrderInput | SortOrder
     dep_CE?: SortOrderInput | SortOrder
     dep_CSE?: SortOrderInput | SortOrder
-    type?: SortOrder
     theory_hour?: SortOrderInput | SortOrder
     practical_hour?: SortOrderInput | SortOrder
     theory_credite?: SortOrderInput | SortOrder
@@ -11846,17 +11954,16 @@ export namespace Prisma {
   export type SubjectWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     code?: string
-    coordinatorId?: number
-    yearId?: number
     AND?: SubjectWhereInput | SubjectWhereInput[]
     OR?: SubjectWhereInput[]
     NOT?: SubjectWhereInput | SubjectWhereInput[]
     name?: StringFilter<"Subject"> | string
     semester?: IntFilter<"Subject"> | number
-    dep_IT?: StringNullableFilter<"Subject"> | string | null
-    dep_CE?: StringNullableFilter<"Subject"> | string | null
-    dep_CSE?: StringNullableFilter<"Subject"> | string | null
+    coordinatorId?: IntFilter<"Subject"> | number
     type?: EnumSubjectTypeFilter<"Subject"> | $Enums.SubjectType
+    dep_IT?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CE?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CSE?: BoolNullableFilter<"Subject"> | boolean | null
     theory_hour?: IntNullableFilter<"Subject"> | number | null
     practical_hour?: IntNullableFilter<"Subject"> | number | null
     theory_credite?: IntNullableFilter<"Subject"> | number | null
@@ -11865,12 +11972,13 @@ export namespace Prisma {
     practical_int_marks?: IntNullableFilter<"Subject"> | number | null
     theory_ext_marks?: IntNullableFilter<"Subject"> | number | null
     practical_ext_marks?: IntNullableFilter<"Subject"> | number | null
+    yearId?: IntFilter<"Subject"> | number
     subjectCoordinator?: XOR<UserScalarRelationFilter, UserWhereInput>
     students?: StudentListRelationFilter
     faculties?: SubjectFacultyListRelationFilter
     exam?: ExamListRelationFilter
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "code" | "coordinatorId" | "yearId">
+  }, "id" | "code">
 
   export type SubjectOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11878,10 +11986,10 @@ export namespace Prisma {
     name?: SortOrder
     semester?: SortOrder
     coordinatorId?: SortOrder
+    type?: SortOrder
     dep_IT?: SortOrderInput | SortOrder
     dep_CE?: SortOrderInput | SortOrder
     dep_CSE?: SortOrderInput | SortOrder
-    type?: SortOrder
     theory_hour?: SortOrderInput | SortOrder
     practical_hour?: SortOrderInput | SortOrder
     theory_credite?: SortOrderInput | SortOrder
@@ -11907,10 +12015,10 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Subject"> | string
     semester?: IntWithAggregatesFilter<"Subject"> | number
     coordinatorId?: IntWithAggregatesFilter<"Subject"> | number
-    dep_IT?: StringNullableWithAggregatesFilter<"Subject"> | string | null
-    dep_CE?: StringNullableWithAggregatesFilter<"Subject"> | string | null
-    dep_CSE?: StringNullableWithAggregatesFilter<"Subject"> | string | null
     type?: EnumSubjectTypeWithAggregatesFilter<"Subject"> | $Enums.SubjectType
+    dep_IT?: BoolNullableWithAggregatesFilter<"Subject"> | boolean | null
+    dep_CE?: BoolNullableWithAggregatesFilter<"Subject"> | boolean | null
+    dep_CSE?: BoolNullableWithAggregatesFilter<"Subject"> | boolean | null
     theory_hour?: IntNullableWithAggregatesFilter<"Subject"> | number | null
     practical_hour?: IntNullableWithAggregatesFilter<"Subject"> | number | null
     theory_credite?: IntNullableWithAggregatesFilter<"Subject"> | number | null
@@ -11949,17 +12057,17 @@ export namespace Prisma {
 
   export type SubjectFacultyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    yearId?: number
     AND?: SubjectFacultyWhereInput | SubjectFacultyWhereInput[]
     OR?: SubjectFacultyWhereInput[]
     NOT?: SubjectFacultyWhereInput | SubjectFacultyWhereInput[]
     facultyId?: IntFilter<"SubjectFaculty"> | number
     subjectId?: IntFilter<"SubjectFaculty"> | number
     role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    yearId?: IntFilter<"SubjectFaculty"> | number
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "yearId">
+  }, "id" | "id">
 
   export type SubjectFacultyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12106,7 +12214,6 @@ export namespace Prisma {
 
   export type ExamWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    yearId?: number
     AND?: ExamWhereInput | ExamWhereInput[]
     OR?: ExamWhereInput[]
     NOT?: ExamWhereInput | ExamWhereInput[]
@@ -12119,13 +12226,14 @@ export namespace Prisma {
     class1?: BoolNullableFilter<"Exam"> | boolean | null
     class2?: BoolNullableFilter<"Exam"> | boolean | null
     status?: EnumExamStatusNullableFilter<"Exam"> | $Enums.ExamStatus | null
+    yearId?: IntFilter<"Exam"> | number
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     eligibleStudents?: StudentListRelationFilter
     marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
     detain?: DetainListRelationFilter
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "yearId">
+  }, "id" | "id">
 
   export type ExamOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12193,17 +12301,17 @@ export namespace Prisma {
   export type MarksWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     examId?: string
-    yearId?: number
     AND?: MarksWhereInput | MarksWhereInput[]
     OR?: MarksWhereInput[]
     NOT?: MarksWhereInput | MarksWhereInput[]
     studentId?: StringFilter<"Marks"> | string
     earnedMarks?: IntFilter<"Marks"> | number
     effectiveMarks?: IntFilter<"Marks"> | number
+    yearId?: IntFilter<"Marks"> | number
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "examId" | "yearId">
+  }, "id" | "id" | "examId">
 
   export type MarksOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12256,16 +12364,16 @@ export namespace Prisma {
 
   export type DetainWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    yearId?: number
     AND?: DetainWhereInput | DetainWhereInput[]
     OR?: DetainWhereInput[]
     NOT?: DetainWhereInput | DetainWhereInput[]
     studentId?: StringFilter<"Detain"> | string
     examId?: StringFilter<"Detain"> | string
+    yearId?: IntFilter<"Detain"> | number
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "yearId">
+  }, "id" | "id">
 
   export type DetainOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12293,11 +12401,11 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyCreateNestedOneWithoutYearInput
-    exam?: ExamCreateNestedOneWithoutYearInput
-    marks?: MarksCreateNestedOneWithoutYearInput
-    detain?: DetainCreateNestedOneWithoutYearInput
+    subject?: SubjectCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyCreateNestedManyWithoutYearInput
+    exam?: ExamCreateNestedManyWithoutYearInput
+    marks?: MarksCreateNestedManyWithoutYearInput
+    detain?: DetainCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateInput = {
@@ -12305,22 +12413,22 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectUncheckedCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyUncheckedCreateNestedOneWithoutYearInput
-    exam?: ExamUncheckedCreateNestedOneWithoutYearInput
-    marks?: MarksUncheckedCreateNestedOneWithoutYearInput
-    detain?: DetainUncheckedCreateNestedOneWithoutYearInput
+    subject?: SubjectUncheckedCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutYearInput
+    exam?: ExamUncheckedCreateNestedManyWithoutYearInput
+    marks?: MarksUncheckedCreateNestedManyWithoutYearInput
+    detain?: DetainUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearUpdateInput = {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUpdateOneWithoutYearNestedInput
-    exam?: ExamUpdateOneWithoutYearNestedInput
-    marks?: MarksUpdateOneWithoutYearNestedInput
-    detain?: DetainUpdateOneWithoutYearNestedInput
+    subject?: SubjectUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUpdateManyWithoutYearNestedInput
+    exam?: ExamUpdateManyWithoutYearNestedInput
+    marks?: MarksUpdateManyWithoutYearNestedInput
+    detain?: DetainUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateInput = {
@@ -12328,11 +12436,11 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUncheckedUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput
-    exam?: ExamUncheckedUpdateOneWithoutYearNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutYearNestedInput
-    detain?: DetainUncheckedUpdateOneWithoutYearNestedInput
+    subject?: SubjectUncheckedUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutYearNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutYearNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutYearNestedInput
   }
 
   export type YearCreateManyInput = {
@@ -12362,7 +12470,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectCreateNestedManyWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyCreateNestedManyWithoutFacultyInput
     exam?: ExamCreateNestedManyWithoutFacultyInput
   }
@@ -12375,7 +12483,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectUncheckedCreateNestedManyWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput
     exam?: ExamUncheckedCreateNestedManyWithoutFacultyInput
   }
@@ -12387,7 +12495,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUpdateManyWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUpdateManyWithoutFacultyNestedInput
     exam?: ExamUpdateManyWithoutFacultyNestedInput
   }
@@ -12400,7 +12508,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUncheckedUpdateManyWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput
     exam?: ExamUncheckedUpdateManyWithoutFacultyNestedInput
   }
@@ -12438,10 +12546,10 @@ export namespace Prisma {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -12463,10 +12571,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -12485,10 +12593,10 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12510,10 +12618,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12534,10 +12642,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -12553,10 +12661,10 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12573,10 +12681,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12975,29 +13083,54 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type SubjectNullableScalarRelationFilter = {
-    is?: SubjectWhereInput | null
-    isNot?: SubjectWhereInput | null
+  export type SubjectListRelationFilter = {
+    every?: SubjectWhereInput
+    some?: SubjectWhereInput
+    none?: SubjectWhereInput
   }
 
-  export type SubjectFacultyNullableScalarRelationFilter = {
-    is?: SubjectFacultyWhereInput | null
-    isNot?: SubjectFacultyWhereInput | null
+  export type SubjectFacultyListRelationFilter = {
+    every?: SubjectFacultyWhereInput
+    some?: SubjectFacultyWhereInput
+    none?: SubjectFacultyWhereInput
   }
 
-  export type ExamNullableScalarRelationFilter = {
-    is?: ExamWhereInput | null
-    isNot?: ExamWhereInput | null
+  export type ExamListRelationFilter = {
+    every?: ExamWhereInput
+    some?: ExamWhereInput
+    none?: ExamWhereInput
   }
 
-  export type MarksNullableScalarRelationFilter = {
-    is?: MarksWhereInput | null
-    isNot?: MarksWhereInput | null
+  export type MarksListRelationFilter = {
+    every?: MarksWhereInput
+    some?: MarksWhereInput
+    none?: MarksWhereInput
   }
 
-  export type DetainNullableScalarRelationFilter = {
-    is?: DetainWhereInput | null
-    isNot?: DetainWhereInput | null
+  export type DetainListRelationFilter = {
+    every?: DetainWhereInput
+    some?: DetainWhereInput
+    none?: DetainWhereInput
+  }
+
+  export type SubjectOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubjectFacultyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ExamOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MarksOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DetainOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type YearCountOrderByAggregateInput = {
@@ -13091,26 +13224,6 @@ export namespace Prisma {
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
-  export type SubjectFacultyListRelationFilter = {
-    every?: SubjectFacultyWhereInput
-    some?: SubjectFacultyWhereInput
-    none?: SubjectFacultyWhereInput
-  }
-
-  export type ExamListRelationFilter = {
-    every?: ExamWhereInput
-    some?: ExamWhereInput
-    none?: ExamWhereInput
-  }
-
-  export type SubjectFacultyOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ExamOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -13169,26 +13282,16 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type EnumSubjectTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.SubjectType | EnumSubjectTypeFieldRefInput<$PrismaModel>
     in?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumSubjectTypeFilter<$PrismaModel> | $Enums.SubjectType
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -13233,10 +13336,10 @@ export namespace Prisma {
     name?: SortOrder
     semester?: SortOrder
     coordinatorId?: SortOrder
+    type?: SortOrder
     dep_IT?: SortOrder
     dep_CE?: SortOrder
     dep_CSE?: SortOrder
-    type?: SortOrder
     theory_hour?: SortOrder
     practical_hour?: SortOrder
     theory_credite?: SortOrder
@@ -13269,10 +13372,10 @@ export namespace Prisma {
     name?: SortOrder
     semester?: SortOrder
     coordinatorId?: SortOrder
+    type?: SortOrder
     dep_IT?: SortOrder
     dep_CE?: SortOrder
     dep_CSE?: SortOrder
-    type?: SortOrder
     theory_hour?: SortOrder
     practical_hour?: SortOrder
     theory_credite?: SortOrder
@@ -13290,10 +13393,10 @@ export namespace Prisma {
     name?: SortOrder
     semester?: SortOrder
     coordinatorId?: SortOrder
+    type?: SortOrder
     dep_IT?: SortOrder
     dep_CE?: SortOrder
     dep_CSE?: SortOrder
-    type?: SortOrder
     theory_hour?: SortOrder
     practical_hour?: SortOrder
     theory_credite?: SortOrder
@@ -13320,24 +13423,6 @@ export namespace Prisma {
     yearId?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type EnumSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.SubjectType | EnumSubjectTypeFieldRefInput<$PrismaModel>
     in?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
@@ -13346,6 +13431,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSubjectTypeFilter<$PrismaModel>
     _max?: NestedEnumSubjectTypeFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -13422,36 +13515,6 @@ export namespace Prisma {
     _max?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
   }
 
-  export type SubjectListRelationFilter = {
-    every?: SubjectWhereInput
-    some?: SubjectWhereInput
-    none?: SubjectWhereInput
-  }
-
-  export type MarksListRelationFilter = {
-    every?: MarksWhereInput
-    some?: MarksWhereInput
-    none?: MarksWhereInput
-  }
-
-  export type DetainListRelationFilter = {
-    every?: DetainWhereInput
-    some?: DetainWhereInput
-    none?: DetainWhereInput
-  }
-
-  export type SubjectOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type MarksOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type DetainOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type StudentCountOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
@@ -13503,16 +13566,16 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
   export type EnumExamStatusNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.ExamStatus | EnumExamStatusFieldRefInput<$PrismaModel> | null
     in?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel> | null
     not?: NestedEnumExamStatusNullableFilter<$PrismaModel> | $Enums.ExamStatus | null
+  }
+
+  export type MarksNullableScalarRelationFilter = {
+    is?: MarksWhereInput | null
+    isNot?: MarksWhereInput | null
   }
 
   export type ExamCountOrderByAggregateInput = {
@@ -13585,14 +13648,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type EnumExamStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -13685,64 +13740,74 @@ export namespace Prisma {
     yearId?: SortOrder
   }
 
-  export type SubjectCreateNestedOneWithoutYearInput = {
-    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput
-    connect?: SubjectWhereUniqueInput
+  export type SubjectCreateNestedManyWithoutYearInput = {
+    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput> | SubjectCreateWithoutYearInput[] | SubjectUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput | SubjectCreateOrConnectWithoutYearInput[]
+    createMany?: SubjectCreateManyYearInputEnvelope
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
   }
 
-  export type SubjectFacultyCreateNestedOneWithoutYearInput = {
-    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput
-    connect?: SubjectFacultyWhereUniqueInput
+  export type SubjectFacultyCreateNestedManyWithoutYearInput = {
+    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput> | SubjectFacultyCreateWithoutYearInput[] | SubjectFacultyUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput | SubjectFacultyCreateOrConnectWithoutYearInput[]
+    createMany?: SubjectFacultyCreateManyYearInputEnvelope
+    connect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
   }
 
-  export type ExamCreateNestedOneWithoutYearInput = {
-    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
-    connectOrCreate?: ExamCreateOrConnectWithoutYearInput
-    connect?: ExamWhereUniqueInput
+  export type ExamCreateNestedManyWithoutYearInput = {
+    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput> | ExamCreateWithoutYearInput[] | ExamUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: ExamCreateOrConnectWithoutYearInput | ExamCreateOrConnectWithoutYearInput[]
+    createMany?: ExamCreateManyYearInputEnvelope
+    connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
-  export type MarksCreateNestedOneWithoutYearInput = {
-    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutYearInput
-    connect?: MarksWhereUniqueInput
+  export type MarksCreateNestedManyWithoutYearInput = {
+    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput> | MarksCreateWithoutYearInput[] | MarksUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutYearInput | MarksCreateOrConnectWithoutYearInput[]
+    createMany?: MarksCreateManyYearInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
   }
 
-  export type DetainCreateNestedOneWithoutYearInput = {
-    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
-    connectOrCreate?: DetainCreateOrConnectWithoutYearInput
-    connect?: DetainWhereUniqueInput
+  export type DetainCreateNestedManyWithoutYearInput = {
+    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput> | DetainCreateWithoutYearInput[] | DetainUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: DetainCreateOrConnectWithoutYearInput | DetainCreateOrConnectWithoutYearInput[]
+    createMany?: DetainCreateManyYearInputEnvelope
+    connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
   }
 
-  export type SubjectUncheckedCreateNestedOneWithoutYearInput = {
-    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput
-    connect?: SubjectWhereUniqueInput
+  export type SubjectUncheckedCreateNestedManyWithoutYearInput = {
+    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput> | SubjectCreateWithoutYearInput[] | SubjectUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput | SubjectCreateOrConnectWithoutYearInput[]
+    createMany?: SubjectCreateManyYearInputEnvelope
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
   }
 
-  export type SubjectFacultyUncheckedCreateNestedOneWithoutYearInput = {
-    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput
-    connect?: SubjectFacultyWhereUniqueInput
+  export type SubjectFacultyUncheckedCreateNestedManyWithoutYearInput = {
+    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput> | SubjectFacultyCreateWithoutYearInput[] | SubjectFacultyUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput | SubjectFacultyCreateOrConnectWithoutYearInput[]
+    createMany?: SubjectFacultyCreateManyYearInputEnvelope
+    connect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
   }
 
-  export type ExamUncheckedCreateNestedOneWithoutYearInput = {
-    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
-    connectOrCreate?: ExamCreateOrConnectWithoutYearInput
-    connect?: ExamWhereUniqueInput
+  export type ExamUncheckedCreateNestedManyWithoutYearInput = {
+    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput> | ExamCreateWithoutYearInput[] | ExamUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: ExamCreateOrConnectWithoutYearInput | ExamCreateOrConnectWithoutYearInput[]
+    createMany?: ExamCreateManyYearInputEnvelope
+    connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
-  export type MarksUncheckedCreateNestedOneWithoutYearInput = {
-    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutYearInput
-    connect?: MarksWhereUniqueInput
+  export type MarksUncheckedCreateNestedManyWithoutYearInput = {
+    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput> | MarksCreateWithoutYearInput[] | MarksUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutYearInput | MarksCreateOrConnectWithoutYearInput[]
+    createMany?: MarksCreateManyYearInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
   }
 
-  export type DetainUncheckedCreateNestedOneWithoutYearInput = {
-    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
-    connectOrCreate?: DetainCreateOrConnectWithoutYearInput
-    connect?: DetainWhereUniqueInput
+  export type DetainUncheckedCreateNestedManyWithoutYearInput = {
+    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput> | DetainCreateWithoutYearInput[] | DetainUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: DetainCreateOrConnectWithoutYearInput | DetainCreateOrConnectWithoutYearInput[]
+    createMany?: DetainCreateManyYearInputEnvelope
+    connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13753,54 +13818,74 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type SubjectUpdateOneWithoutYearNestedInput = {
-    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput
-    upsert?: SubjectUpsertWithoutYearInput
-    disconnect?: SubjectWhereInput | boolean
-    delete?: SubjectWhereInput | boolean
-    connect?: SubjectWhereUniqueInput
-    update?: XOR<XOR<SubjectUpdateToOneWithWhereWithoutYearInput, SubjectUpdateWithoutYearInput>, SubjectUncheckedUpdateWithoutYearInput>
+  export type SubjectUpdateManyWithoutYearNestedInput = {
+    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput> | SubjectCreateWithoutYearInput[] | SubjectUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput | SubjectCreateOrConnectWithoutYearInput[]
+    upsert?: SubjectUpsertWithWhereUniqueWithoutYearInput | SubjectUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: SubjectCreateManyYearInputEnvelope
+    set?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    disconnect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    delete?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    update?: SubjectUpdateWithWhereUniqueWithoutYearInput | SubjectUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: SubjectUpdateManyWithWhereWithoutYearInput | SubjectUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
   }
 
-  export type SubjectFacultyUpdateOneWithoutYearNestedInput = {
-    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput
-    upsert?: SubjectFacultyUpsertWithoutYearInput
-    disconnect?: SubjectFacultyWhereInput | boolean
-    delete?: SubjectFacultyWhereInput | boolean
-    connect?: SubjectFacultyWhereUniqueInput
-    update?: XOR<XOR<SubjectFacultyUpdateToOneWithWhereWithoutYearInput, SubjectFacultyUpdateWithoutYearInput>, SubjectFacultyUncheckedUpdateWithoutYearInput>
+  export type SubjectFacultyUpdateManyWithoutYearNestedInput = {
+    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput> | SubjectFacultyCreateWithoutYearInput[] | SubjectFacultyUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput | SubjectFacultyCreateOrConnectWithoutYearInput[]
+    upsert?: SubjectFacultyUpsertWithWhereUniqueWithoutYearInput | SubjectFacultyUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: SubjectFacultyCreateManyYearInputEnvelope
+    set?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    disconnect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    delete?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    connect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    update?: SubjectFacultyUpdateWithWhereUniqueWithoutYearInput | SubjectFacultyUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: SubjectFacultyUpdateManyWithWhereWithoutYearInput | SubjectFacultyUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
   }
 
-  export type ExamUpdateOneWithoutYearNestedInput = {
-    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
-    connectOrCreate?: ExamCreateOrConnectWithoutYearInput
-    upsert?: ExamUpsertWithoutYearInput
-    disconnect?: ExamWhereInput | boolean
-    delete?: ExamWhereInput | boolean
-    connect?: ExamWhereUniqueInput
-    update?: XOR<XOR<ExamUpdateToOneWithWhereWithoutYearInput, ExamUpdateWithoutYearInput>, ExamUncheckedUpdateWithoutYearInput>
+  export type ExamUpdateManyWithoutYearNestedInput = {
+    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput> | ExamCreateWithoutYearInput[] | ExamUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: ExamCreateOrConnectWithoutYearInput | ExamCreateOrConnectWithoutYearInput[]
+    upsert?: ExamUpsertWithWhereUniqueWithoutYearInput | ExamUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: ExamCreateManyYearInputEnvelope
+    set?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    disconnect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    delete?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    update?: ExamUpdateWithWhereUniqueWithoutYearInput | ExamUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: ExamUpdateManyWithWhereWithoutYearInput | ExamUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: ExamScalarWhereInput | ExamScalarWhereInput[]
   }
 
-  export type MarksUpdateOneWithoutYearNestedInput = {
-    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutYearInput
-    upsert?: MarksUpsertWithoutYearInput
-    disconnect?: MarksWhereInput | boolean
-    delete?: MarksWhereInput | boolean
-    connect?: MarksWhereUniqueInput
-    update?: XOR<XOR<MarksUpdateToOneWithWhereWithoutYearInput, MarksUpdateWithoutYearInput>, MarksUncheckedUpdateWithoutYearInput>
+  export type MarksUpdateManyWithoutYearNestedInput = {
+    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput> | MarksCreateWithoutYearInput[] | MarksUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutYearInput | MarksCreateOrConnectWithoutYearInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutYearInput | MarksUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: MarksCreateManyYearInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutYearInput | MarksUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutYearInput | MarksUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
   }
 
-  export type DetainUpdateOneWithoutYearNestedInput = {
-    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
-    connectOrCreate?: DetainCreateOrConnectWithoutYearInput
-    upsert?: DetainUpsertWithoutYearInput
-    disconnect?: DetainWhereInput | boolean
-    delete?: DetainWhereInput | boolean
-    connect?: DetainWhereUniqueInput
-    update?: XOR<XOR<DetainUpdateToOneWithWhereWithoutYearInput, DetainUpdateWithoutYearInput>, DetainUncheckedUpdateWithoutYearInput>
+  export type DetainUpdateManyWithoutYearNestedInput = {
+    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput> | DetainCreateWithoutYearInput[] | DetainUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: DetainCreateOrConnectWithoutYearInput | DetainCreateOrConnectWithoutYearInput[]
+    upsert?: DetainUpsertWithWhereUniqueWithoutYearInput | DetainUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: DetainCreateManyYearInputEnvelope
+    set?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    disconnect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    delete?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    update?: DetainUpdateWithWhereUniqueWithoutYearInput | DetainUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: DetainUpdateManyWithWhereWithoutYearInput | DetainUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: DetainScalarWhereInput | DetainScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -13811,60 +13896,81 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type SubjectUncheckedUpdateOneWithoutYearNestedInput = {
-    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput
-    upsert?: SubjectUpsertWithoutYearInput
-    disconnect?: SubjectWhereInput | boolean
-    delete?: SubjectWhereInput | boolean
-    connect?: SubjectWhereUniqueInput
-    update?: XOR<XOR<SubjectUpdateToOneWithWhereWithoutYearInput, SubjectUpdateWithoutYearInput>, SubjectUncheckedUpdateWithoutYearInput>
+  export type SubjectUncheckedUpdateManyWithoutYearNestedInput = {
+    create?: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput> | SubjectCreateWithoutYearInput[] | SubjectUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutYearInput | SubjectCreateOrConnectWithoutYearInput[]
+    upsert?: SubjectUpsertWithWhereUniqueWithoutYearInput | SubjectUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: SubjectCreateManyYearInputEnvelope
+    set?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    disconnect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    delete?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    update?: SubjectUpdateWithWhereUniqueWithoutYearInput | SubjectUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: SubjectUpdateManyWithWhereWithoutYearInput | SubjectUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
   }
 
-  export type SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput = {
-    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
-    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput
-    upsert?: SubjectFacultyUpsertWithoutYearInput
-    disconnect?: SubjectFacultyWhereInput | boolean
-    delete?: SubjectFacultyWhereInput | boolean
-    connect?: SubjectFacultyWhereUniqueInput
-    update?: XOR<XOR<SubjectFacultyUpdateToOneWithWhereWithoutYearInput, SubjectFacultyUpdateWithoutYearInput>, SubjectFacultyUncheckedUpdateWithoutYearInput>
+  export type SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput = {
+    create?: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput> | SubjectFacultyCreateWithoutYearInput[] | SubjectFacultyUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: SubjectFacultyCreateOrConnectWithoutYearInput | SubjectFacultyCreateOrConnectWithoutYearInput[]
+    upsert?: SubjectFacultyUpsertWithWhereUniqueWithoutYearInput | SubjectFacultyUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: SubjectFacultyCreateManyYearInputEnvelope
+    set?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    disconnect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    delete?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    connect?: SubjectFacultyWhereUniqueInput | SubjectFacultyWhereUniqueInput[]
+    update?: SubjectFacultyUpdateWithWhereUniqueWithoutYearInput | SubjectFacultyUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: SubjectFacultyUpdateManyWithWhereWithoutYearInput | SubjectFacultyUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
   }
 
-  export type ExamUncheckedUpdateOneWithoutYearNestedInput = {
-    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
-    connectOrCreate?: ExamCreateOrConnectWithoutYearInput
-    upsert?: ExamUpsertWithoutYearInput
-    disconnect?: ExamWhereInput | boolean
-    delete?: ExamWhereInput | boolean
-    connect?: ExamWhereUniqueInput
-    update?: XOR<XOR<ExamUpdateToOneWithWhereWithoutYearInput, ExamUpdateWithoutYearInput>, ExamUncheckedUpdateWithoutYearInput>
+  export type ExamUncheckedUpdateManyWithoutYearNestedInput = {
+    create?: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput> | ExamCreateWithoutYearInput[] | ExamUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: ExamCreateOrConnectWithoutYearInput | ExamCreateOrConnectWithoutYearInput[]
+    upsert?: ExamUpsertWithWhereUniqueWithoutYearInput | ExamUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: ExamCreateManyYearInputEnvelope
+    set?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    disconnect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    delete?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+    update?: ExamUpdateWithWhereUniqueWithoutYearInput | ExamUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: ExamUpdateManyWithWhereWithoutYearInput | ExamUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: ExamScalarWhereInput | ExamScalarWhereInput[]
   }
 
-  export type MarksUncheckedUpdateOneWithoutYearNestedInput = {
-    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutYearInput
-    upsert?: MarksUpsertWithoutYearInput
-    disconnect?: MarksWhereInput | boolean
-    delete?: MarksWhereInput | boolean
-    connect?: MarksWhereUniqueInput
-    update?: XOR<XOR<MarksUpdateToOneWithWhereWithoutYearInput, MarksUpdateWithoutYearInput>, MarksUncheckedUpdateWithoutYearInput>
+  export type MarksUncheckedUpdateManyWithoutYearNestedInput = {
+    create?: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput> | MarksCreateWithoutYearInput[] | MarksUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutYearInput | MarksCreateOrConnectWithoutYearInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutYearInput | MarksUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: MarksCreateManyYearInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutYearInput | MarksUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutYearInput | MarksUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
   }
 
-  export type DetainUncheckedUpdateOneWithoutYearNestedInput = {
-    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
-    connectOrCreate?: DetainCreateOrConnectWithoutYearInput
-    upsert?: DetainUpsertWithoutYearInput
-    disconnect?: DetainWhereInput | boolean
-    delete?: DetainWhereInput | boolean
-    connect?: DetainWhereUniqueInput
-    update?: XOR<XOR<DetainUpdateToOneWithWhereWithoutYearInput, DetainUpdateWithoutYearInput>, DetainUncheckedUpdateWithoutYearInput>
+  export type DetainUncheckedUpdateManyWithoutYearNestedInput = {
+    create?: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput> | DetainCreateWithoutYearInput[] | DetainUncheckedCreateWithoutYearInput[]
+    connectOrCreate?: DetainCreateOrConnectWithoutYearInput | DetainCreateOrConnectWithoutYearInput[]
+    upsert?: DetainUpsertWithWhereUniqueWithoutYearInput | DetainUpsertWithWhereUniqueWithoutYearInput[]
+    createMany?: DetainCreateManyYearInputEnvelope
+    set?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    disconnect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    delete?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
+    update?: DetainUpdateWithWhereUniqueWithoutYearInput | DetainUpdateWithWhereUniqueWithoutYearInput[]
+    updateMany?: DetainUpdateManyWithWhereWithoutYearInput | DetainUpdateManyWithWhereWithoutYearInput[]
+    deleteMany?: DetainScalarWhereInput | DetainScalarWhereInput[]
   }
 
-  export type SubjectCreateNestedOneWithoutSubjectCoordinatorInput = {
-    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput
-    connect?: SubjectWhereUniqueInput
+  export type SubjectCreateNestedManyWithoutSubjectCoordinatorInput = {
+    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput> | SubjectCreateWithoutSubjectCoordinatorInput[] | SubjectUncheckedCreateWithoutSubjectCoordinatorInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput | SubjectCreateOrConnectWithoutSubjectCoordinatorInput[]
+    createMany?: SubjectCreateManySubjectCoordinatorInputEnvelope
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
   }
 
   export type SubjectFacultyCreateNestedManyWithoutFacultyInput = {
@@ -13881,10 +13987,11 @@ export namespace Prisma {
     connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
-  export type SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput = {
-    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput
-    connect?: SubjectWhereUniqueInput
+  export type SubjectUncheckedCreateNestedManyWithoutSubjectCoordinatorInput = {
+    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput> | SubjectCreateWithoutSubjectCoordinatorInput[] | SubjectUncheckedCreateWithoutSubjectCoordinatorInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput | SubjectCreateOrConnectWithoutSubjectCoordinatorInput[]
+    createMany?: SubjectCreateManySubjectCoordinatorInputEnvelope
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
   }
 
   export type SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput = {
@@ -13909,14 +14016,18 @@ export namespace Prisma {
     set?: $Enums.UserRole
   }
 
-  export type SubjectUpdateOneWithoutSubjectCoordinatorNestedInput = {
-    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput
-    upsert?: SubjectUpsertWithoutSubjectCoordinatorInput
-    disconnect?: SubjectWhereInput | boolean
-    delete?: SubjectWhereInput | boolean
-    connect?: SubjectWhereUniqueInput
-    update?: XOR<XOR<SubjectUpdateToOneWithWhereWithoutSubjectCoordinatorInput, SubjectUpdateWithoutSubjectCoordinatorInput>, SubjectUncheckedUpdateWithoutSubjectCoordinatorInput>
+  export type SubjectUpdateManyWithoutSubjectCoordinatorNestedInput = {
+    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput> | SubjectCreateWithoutSubjectCoordinatorInput[] | SubjectUncheckedCreateWithoutSubjectCoordinatorInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput | SubjectCreateOrConnectWithoutSubjectCoordinatorInput[]
+    upsert?: SubjectUpsertWithWhereUniqueWithoutSubjectCoordinatorInput | SubjectUpsertWithWhereUniqueWithoutSubjectCoordinatorInput[]
+    createMany?: SubjectCreateManySubjectCoordinatorInputEnvelope
+    set?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    disconnect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    delete?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    update?: SubjectUpdateWithWhereUniqueWithoutSubjectCoordinatorInput | SubjectUpdateWithWhereUniqueWithoutSubjectCoordinatorInput[]
+    updateMany?: SubjectUpdateManyWithWhereWithoutSubjectCoordinatorInput | SubjectUpdateManyWithWhereWithoutSubjectCoordinatorInput[]
+    deleteMany?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
   }
 
   export type SubjectFacultyUpdateManyWithoutFacultyNestedInput = {
@@ -13947,14 +14058,18 @@ export namespace Prisma {
     deleteMany?: ExamScalarWhereInput | ExamScalarWhereInput[]
   }
 
-  export type SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput = {
-    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
-    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput
-    upsert?: SubjectUpsertWithoutSubjectCoordinatorInput
-    disconnect?: SubjectWhereInput | boolean
-    delete?: SubjectWhereInput | boolean
-    connect?: SubjectWhereUniqueInput
-    update?: XOR<XOR<SubjectUpdateToOneWithWhereWithoutSubjectCoordinatorInput, SubjectUpdateWithoutSubjectCoordinatorInput>, SubjectUncheckedUpdateWithoutSubjectCoordinatorInput>
+  export type SubjectUncheckedUpdateManyWithoutSubjectCoordinatorNestedInput = {
+    create?: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput> | SubjectCreateWithoutSubjectCoordinatorInput[] | SubjectUncheckedCreateWithoutSubjectCoordinatorInput[]
+    connectOrCreate?: SubjectCreateOrConnectWithoutSubjectCoordinatorInput | SubjectCreateOrConnectWithoutSubjectCoordinatorInput[]
+    upsert?: SubjectUpsertWithWhereUniqueWithoutSubjectCoordinatorInput | SubjectUpsertWithWhereUniqueWithoutSubjectCoordinatorInput[]
+    createMany?: SubjectCreateManySubjectCoordinatorInputEnvelope
+    set?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    disconnect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    delete?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    connect?: SubjectWhereUniqueInput | SubjectWhereUniqueInput[]
+    update?: SubjectUpdateWithWhereUniqueWithoutSubjectCoordinatorInput | SubjectUpdateWithWhereUniqueWithoutSubjectCoordinatorInput[]
+    updateMany?: SubjectUpdateManyWithWhereWithoutSubjectCoordinatorInput | SubjectUpdateManyWithWhereWithoutSubjectCoordinatorInput[]
+    deleteMany?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
   }
 
   export type SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput = {
@@ -14037,12 +14152,12 @@ export namespace Prisma {
     connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type EnumSubjectTypeFieldUpdateOperationsInput = {
     set?: $Enums.SubjectType
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -14417,10 +14532,6 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
-  }
-
   export type NullableEnumExamStatusFieldUpdateOperationsInput = {
     set?: $Enums.ExamStatus | null
   }
@@ -14735,25 +14846,16 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedEnumSubjectTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.SubjectType | EnumSubjectTypeFieldRefInput<$PrismaModel>
     in?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumSubjectTypeFilter<$PrismaModel> | $Enums.SubjectType
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
@@ -14767,23 +14869,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.SubjectType | EnumSubjectTypeFieldRefInput<$PrismaModel>
     in?: $Enums.SubjectType[] | ListEnumSubjectTypeFieldRefInput<$PrismaModel>
@@ -14792,6 +14877,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSubjectTypeFilter<$PrismaModel>
     _max?: NestedEnumSubjectTypeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14849,11 +14942,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
   export type NestedEnumExamStatusNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.ExamStatus | EnumExamStatusFieldRefInput<$PrismaModel> | null
     in?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel> | null
@@ -14875,14 +14963,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumExamStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ExamStatus | EnumExamStatusFieldRefInput<$PrismaModel> | null
     in?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel> | null
@@ -14897,10 +14977,10 @@ export namespace Prisma {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -14921,10 +15001,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -14941,6 +15021,11 @@ export namespace Prisma {
   export type SubjectCreateOrConnectWithoutYearInput = {
     where: SubjectWhereUniqueInput
     create: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
+  }
+
+  export type SubjectCreateManyYearInputEnvelope = {
+    data: SubjectCreateManyYearInput | SubjectCreateManyYearInput[]
+    skipDuplicates?: boolean
   }
 
   export type SubjectFacultyCreateWithoutYearInput = {
@@ -14960,6 +15045,11 @@ export namespace Prisma {
   export type SubjectFacultyCreateOrConnectWithoutYearInput = {
     where: SubjectFacultyWhereUniqueInput
     create: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
+  }
+
+  export type SubjectFacultyCreateManyYearInputEnvelope = {
+    data: SubjectFacultyCreateManyYearInput | SubjectFacultyCreateManyYearInput[]
+    skipDuplicates?: boolean
   }
 
   export type ExamCreateWithoutYearInput = {
@@ -14999,6 +15089,11 @@ export namespace Prisma {
     create: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
   }
 
+  export type ExamCreateManyYearInputEnvelope = {
+    data: ExamCreateManyYearInput | ExamCreateManyYearInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MarksCreateWithoutYearInput = {
     id?: string
     earnedMarks: number
@@ -15020,6 +15115,11 @@ export namespace Prisma {
     create: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
   }
 
+  export type MarksCreateManyYearInputEnvelope = {
+    data: MarksCreateManyYearInput | MarksCreateManyYearInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DetainCreateWithoutYearInput = {
     student: StudentCreateNestedOneWithoutDetainInput
     exam: ExamCreateNestedOneWithoutDetainInput
@@ -15036,187 +15136,173 @@ export namespace Prisma {
     create: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
   }
 
-  export type SubjectUpsertWithoutYearInput = {
-    update: XOR<SubjectUpdateWithoutYearInput, SubjectUncheckedUpdateWithoutYearInput>
-    create: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
-    where?: SubjectWhereInput
+  export type DetainCreateManyYearInputEnvelope = {
+    data: DetainCreateManyYearInput | DetainCreateManyYearInput[]
+    skipDuplicates?: boolean
   }
 
-  export type SubjectUpdateToOneWithWhereWithoutYearInput = {
-    where?: SubjectWhereInput
+  export type SubjectUpsertWithWhereUniqueWithoutYearInput = {
+    where: SubjectWhereUniqueInput
+    update: XOR<SubjectUpdateWithoutYearInput, SubjectUncheckedUpdateWithoutYearInput>
+    create: XOR<SubjectCreateWithoutYearInput, SubjectUncheckedCreateWithoutYearInput>
+  }
+
+  export type SubjectUpdateWithWhereUniqueWithoutYearInput = {
+    where: SubjectWhereUniqueInput
     data: XOR<SubjectUpdateWithoutYearInput, SubjectUncheckedUpdateWithoutYearInput>
   }
 
-  export type SubjectUpdateWithoutYearInput = {
-    code?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
-    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    subjectCoordinator?: UserUpdateOneRequiredWithoutSubjectCoordinatorNestedInput
-    students?: StudentUpdateManyWithoutSubjectsNestedInput
-    faculties?: SubjectFacultyUpdateManyWithoutSubjectNestedInput
-    exam?: ExamUpdateManyWithoutSubjectNestedInput
+  export type SubjectUpdateManyWithWhereWithoutYearInput = {
+    where: SubjectScalarWhereInput
+    data: XOR<SubjectUpdateManyMutationInput, SubjectUncheckedUpdateManyWithoutYearInput>
   }
 
-  export type SubjectUncheckedUpdateWithoutYearInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    code?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    semester?: IntFieldUpdateOperationsInput | number
-    coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
-    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    students?: StudentUncheckedUpdateManyWithoutSubjectsNestedInput
-    faculties?: SubjectFacultyUncheckedUpdateManyWithoutSubjectNestedInput
-    exam?: ExamUncheckedUpdateManyWithoutSubjectNestedInput
+  export type SubjectScalarWhereInput = {
+    AND?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
+    OR?: SubjectScalarWhereInput[]
+    NOT?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
+    id?: IntFilter<"Subject"> | number
+    code?: StringFilter<"Subject"> | string
+    name?: StringFilter<"Subject"> | string
+    semester?: IntFilter<"Subject"> | number
+    coordinatorId?: IntFilter<"Subject"> | number
+    type?: EnumSubjectTypeFilter<"Subject"> | $Enums.SubjectType
+    dep_IT?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CE?: BoolNullableFilter<"Subject"> | boolean | null
+    dep_CSE?: BoolNullableFilter<"Subject"> | boolean | null
+    theory_hour?: IntNullableFilter<"Subject"> | number | null
+    practical_hour?: IntNullableFilter<"Subject"> | number | null
+    theory_credite?: IntNullableFilter<"Subject"> | number | null
+    practical_credite?: IntNullableFilter<"Subject"> | number | null
+    theory_int_marks?: IntNullableFilter<"Subject"> | number | null
+    practical_int_marks?: IntNullableFilter<"Subject"> | number | null
+    theory_ext_marks?: IntNullableFilter<"Subject"> | number | null
+    practical_ext_marks?: IntNullableFilter<"Subject"> | number | null
+    yearId?: IntFilter<"Subject"> | number
   }
 
-  export type SubjectFacultyUpsertWithoutYearInput = {
+  export type SubjectFacultyUpsertWithWhereUniqueWithoutYearInput = {
+    where: SubjectFacultyWhereUniqueInput
     update: XOR<SubjectFacultyUpdateWithoutYearInput, SubjectFacultyUncheckedUpdateWithoutYearInput>
     create: XOR<SubjectFacultyCreateWithoutYearInput, SubjectFacultyUncheckedCreateWithoutYearInput>
-    where?: SubjectFacultyWhereInput
   }
 
-  export type SubjectFacultyUpdateToOneWithWhereWithoutYearInput = {
-    where?: SubjectFacultyWhereInput
+  export type SubjectFacultyUpdateWithWhereUniqueWithoutYearInput = {
+    where: SubjectFacultyWhereUniqueInput
     data: XOR<SubjectFacultyUpdateWithoutYearInput, SubjectFacultyUncheckedUpdateWithoutYearInput>
   }
 
-  export type SubjectFacultyUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
-    faculty?: UserUpdateOneRequiredWithoutSubjectFacultyNestedInput
-    subject?: SubjectUpdateOneRequiredWithoutFacultiesNestedInput
+  export type SubjectFacultyUpdateManyWithWhereWithoutYearInput = {
+    where: SubjectFacultyScalarWhereInput
+    data: XOR<SubjectFacultyUpdateManyMutationInput, SubjectFacultyUncheckedUpdateManyWithoutYearInput>
   }
 
-  export type SubjectFacultyUncheckedUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    facultyId?: IntFieldUpdateOperationsInput | number
-    subjectId?: IntFieldUpdateOperationsInput | number
-    role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+  export type SubjectFacultyScalarWhereInput = {
+    AND?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
+    OR?: SubjectFacultyScalarWhereInput[]
+    NOT?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
+    id?: StringFilter<"SubjectFaculty"> | string
+    facultyId?: IntFilter<"SubjectFaculty"> | number
+    subjectId?: IntFilter<"SubjectFaculty"> | number
+    role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    yearId?: IntFilter<"SubjectFaculty"> | number
   }
 
-  export type ExamUpsertWithoutYearInput = {
+  export type ExamUpsertWithWhereUniqueWithoutYearInput = {
+    where: ExamWhereUniqueInput
     update: XOR<ExamUpdateWithoutYearInput, ExamUncheckedUpdateWithoutYearInput>
     create: XOR<ExamCreateWithoutYearInput, ExamUncheckedCreateWithoutYearInput>
-    where?: ExamWhereInput
   }
 
-  export type ExamUpdateToOneWithWhereWithoutYearInput = {
-    where?: ExamWhereInput
+  export type ExamUpdateWithWhereUniqueWithoutYearInput = {
+    where: ExamWhereUniqueInput
     data: XOR<ExamUpdateWithoutYearInput, ExamUncheckedUpdateWithoutYearInput>
   }
 
-  export type ExamUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
-    effectiveMarks?: NullableIntFieldUpdateOperationsInput | number | null
-    class1?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    class2?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableEnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus | null
-    subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
-    faculty?: UserUpdateOneRequiredWithoutExamNestedInput
-    eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
-    detain?: DetainUpdateManyWithoutExamNestedInput
+  export type ExamUpdateManyWithWhereWithoutYearInput = {
+    where: ExamScalarWhereInput
+    data: XOR<ExamUpdateManyMutationInput, ExamUncheckedUpdateManyWithoutYearInput>
   }
 
-  export type ExamUncheckedUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    subjectId?: IntFieldUpdateOperationsInput | number
-    facultyId?: IntFieldUpdateOperationsInput | number
-    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
-    effectiveMarks?: NullableIntFieldUpdateOperationsInput | number | null
-    class1?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    class2?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableEnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus | null
-    eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
-    detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
+  export type ExamScalarWhereInput = {
+    AND?: ExamScalarWhereInput | ExamScalarWhereInput[]
+    OR?: ExamScalarWhereInput[]
+    NOT?: ExamScalarWhereInput | ExamScalarWhereInput[]
+    id?: StringFilter<"Exam"> | string
+    name?: StringFilter<"Exam"> | string
+    date?: DateTimeNullableFilter<"Exam"> | Date | string | null
+    subjectId?: IntFilter<"Exam"> | number
+    facultyId?: IntFilter<"Exam"> | number
+    totalMarks?: IntNullableFilter<"Exam"> | number | null
+    effectiveMarks?: IntNullableFilter<"Exam"> | number | null
+    class1?: BoolNullableFilter<"Exam"> | boolean | null
+    class2?: BoolNullableFilter<"Exam"> | boolean | null
+    status?: EnumExamStatusNullableFilter<"Exam"> | $Enums.ExamStatus | null
+    yearId?: IntFilter<"Exam"> | number
   }
 
-  export type MarksUpsertWithoutYearInput = {
+  export type MarksUpsertWithWhereUniqueWithoutYearInput = {
+    where: MarksWhereUniqueInput
     update: XOR<MarksUpdateWithoutYearInput, MarksUncheckedUpdateWithoutYearInput>
     create: XOR<MarksCreateWithoutYearInput, MarksUncheckedCreateWithoutYearInput>
-    where?: MarksWhereInput
   }
 
-  export type MarksUpdateToOneWithWhereWithoutYearInput = {
-    where?: MarksWhereInput
+  export type MarksUpdateWithWhereUniqueWithoutYearInput = {
+    where: MarksWhereUniqueInput
     data: XOR<MarksUpdateWithoutYearInput, MarksUncheckedUpdateWithoutYearInput>
   }
 
-  export type MarksUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    earnedMarks?: IntFieldUpdateOperationsInput | number
-    effectiveMarks?: IntFieldUpdateOperationsInput | number
-    student?: StudentUpdateOneRequiredWithoutMarksNestedInput
-    exam?: ExamUpdateOneRequiredWithoutMarksNestedInput
+  export type MarksUpdateManyWithWhereWithoutYearInput = {
+    where: MarksScalarWhereInput
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyWithoutYearInput>
   }
 
-  export type MarksUncheckedUpdateWithoutYearInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    studentId?: StringFieldUpdateOperationsInput | string
-    earnedMarks?: IntFieldUpdateOperationsInput | number
-    effectiveMarks?: IntFieldUpdateOperationsInput | number
-    examId?: StringFieldUpdateOperationsInput | string
+  export type MarksScalarWhereInput = {
+    AND?: MarksScalarWhereInput | MarksScalarWhereInput[]
+    OR?: MarksScalarWhereInput[]
+    NOT?: MarksScalarWhereInput | MarksScalarWhereInput[]
+    id?: StringFilter<"Marks"> | string
+    studentId?: StringFilter<"Marks"> | string
+    earnedMarks?: IntFilter<"Marks"> | number
+    effectiveMarks?: IntFilter<"Marks"> | number
+    examId?: StringFilter<"Marks"> | string
+    yearId?: IntFilter<"Marks"> | number
   }
 
-  export type DetainUpsertWithoutYearInput = {
+  export type DetainUpsertWithWhereUniqueWithoutYearInput = {
+    where: DetainWhereUniqueInput
     update: XOR<DetainUpdateWithoutYearInput, DetainUncheckedUpdateWithoutYearInput>
     create: XOR<DetainCreateWithoutYearInput, DetainUncheckedCreateWithoutYearInput>
-    where?: DetainWhereInput
   }
 
-  export type DetainUpdateToOneWithWhereWithoutYearInput = {
-    where?: DetainWhereInput
+  export type DetainUpdateWithWhereUniqueWithoutYearInput = {
+    where: DetainWhereUniqueInput
     data: XOR<DetainUpdateWithoutYearInput, DetainUncheckedUpdateWithoutYearInput>
   }
 
-  export type DetainUpdateWithoutYearInput = {
-    student?: StudentUpdateOneRequiredWithoutDetainNestedInput
-    exam?: ExamUpdateOneRequiredWithoutDetainNestedInput
+  export type DetainUpdateManyWithWhereWithoutYearInput = {
+    where: DetainScalarWhereInput
+    data: XOR<DetainUpdateManyMutationInput, DetainUncheckedUpdateManyWithoutYearInput>
   }
 
-  export type DetainUncheckedUpdateWithoutYearInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    studentId?: StringFieldUpdateOperationsInput | string
-    examId?: StringFieldUpdateOperationsInput | string
+  export type DetainScalarWhereInput = {
+    AND?: DetainScalarWhereInput | DetainScalarWhereInput[]
+    OR?: DetainScalarWhereInput[]
+    NOT?: DetainScalarWhereInput | DetainScalarWhereInput[]
+    id?: IntFilter<"Detain"> | number
+    studentId?: StringFilter<"Detain"> | string
+    examId?: StringFilter<"Detain"> | string
+    yearId?: IntFilter<"Detain"> | number
   }
 
   export type SubjectCreateWithoutSubjectCoordinatorInput = {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -15236,10 +15322,10 @@ export namespace Prisma {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -15257,6 +15343,11 @@ export namespace Prisma {
   export type SubjectCreateOrConnectWithoutSubjectCoordinatorInput = {
     where: SubjectWhereUniqueInput
     create: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
+  }
+
+  export type SubjectCreateManySubjectCoordinatorInputEnvelope = {
+    data: SubjectCreateManySubjectCoordinatorInput | SubjectCreateManySubjectCoordinatorInput[]
+    skipDuplicates?: boolean
   }
 
   export type SubjectFacultyCreateWithoutFacultyInput = {
@@ -15325,60 +15416,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SubjectUpsertWithoutSubjectCoordinatorInput = {
+  export type SubjectUpsertWithWhereUniqueWithoutSubjectCoordinatorInput = {
+    where: SubjectWhereUniqueInput
     update: XOR<SubjectUpdateWithoutSubjectCoordinatorInput, SubjectUncheckedUpdateWithoutSubjectCoordinatorInput>
     create: XOR<SubjectCreateWithoutSubjectCoordinatorInput, SubjectUncheckedCreateWithoutSubjectCoordinatorInput>
-    where?: SubjectWhereInput
   }
 
-  export type SubjectUpdateToOneWithWhereWithoutSubjectCoordinatorInput = {
-    where?: SubjectWhereInput
+  export type SubjectUpdateWithWhereUniqueWithoutSubjectCoordinatorInput = {
+    where: SubjectWhereUniqueInput
     data: XOR<SubjectUpdateWithoutSubjectCoordinatorInput, SubjectUncheckedUpdateWithoutSubjectCoordinatorInput>
   }
 
-  export type SubjectUpdateWithoutSubjectCoordinatorInput = {
-    code?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
-    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    students?: StudentUpdateManyWithoutSubjectsNestedInput
-    faculties?: SubjectFacultyUpdateManyWithoutSubjectNestedInput
-    exam?: ExamUpdateManyWithoutSubjectNestedInput
-    year?: YearUpdateOneRequiredWithoutSubjectNestedInput
-  }
-
-  export type SubjectUncheckedUpdateWithoutSubjectCoordinatorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    code?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
-    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
-    yearId?: IntFieldUpdateOperationsInput | number
-    students?: StudentUncheckedUpdateManyWithoutSubjectsNestedInput
-    faculties?: SubjectFacultyUncheckedUpdateManyWithoutSubjectNestedInput
-    exam?: ExamUncheckedUpdateManyWithoutSubjectNestedInput
+  export type SubjectUpdateManyWithWhereWithoutSubjectCoordinatorInput = {
+    where: SubjectScalarWhereInput
+    data: XOR<SubjectUpdateManyMutationInput, SubjectUncheckedUpdateManyWithoutSubjectCoordinatorInput>
   }
 
   export type SubjectFacultyUpsertWithWhereUniqueWithoutFacultyInput = {
@@ -15397,17 +15448,6 @@ export namespace Prisma {
     data: XOR<SubjectFacultyUpdateManyMutationInput, SubjectFacultyUncheckedUpdateManyWithoutFacultyInput>
   }
 
-  export type SubjectFacultyScalarWhereInput = {
-    AND?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
-    OR?: SubjectFacultyScalarWhereInput[]
-    NOT?: SubjectFacultyScalarWhereInput | SubjectFacultyScalarWhereInput[]
-    id?: StringFilter<"SubjectFaculty"> | string
-    facultyId?: IntFilter<"SubjectFaculty"> | number
-    subjectId?: IntFilter<"SubjectFaculty"> | number
-    role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
-    yearId?: IntFilter<"SubjectFaculty"> | number
-  }
-
   export type ExamUpsertWithWhereUniqueWithoutFacultyInput = {
     where: ExamWhereUniqueInput
     update: XOR<ExamUpdateWithoutFacultyInput, ExamUncheckedUpdateWithoutFacultyInput>
@@ -15422,23 +15462,6 @@ export namespace Prisma {
   export type ExamUpdateManyWithWhereWithoutFacultyInput = {
     where: ExamScalarWhereInput
     data: XOR<ExamUpdateManyMutationInput, ExamUncheckedUpdateManyWithoutFacultyInput>
-  }
-
-  export type ExamScalarWhereInput = {
-    AND?: ExamScalarWhereInput | ExamScalarWhereInput[]
-    OR?: ExamScalarWhereInput[]
-    NOT?: ExamScalarWhereInput | ExamScalarWhereInput[]
-    id?: StringFilter<"Exam"> | string
-    name?: StringFilter<"Exam"> | string
-    date?: DateTimeNullableFilter<"Exam"> | Date | string | null
-    subjectId?: IntFilter<"Exam"> | number
-    facultyId?: IntFilter<"Exam"> | number
-    totalMarks?: IntNullableFilter<"Exam"> | number | null
-    effectiveMarks?: IntNullableFilter<"Exam"> | number | null
-    class1?: BoolNullableFilter<"Exam"> | boolean | null
-    class2?: BoolNullableFilter<"Exam"> | boolean | null
-    status?: EnumExamStatusNullableFilter<"Exam"> | $Enums.ExamStatus | null
-    yearId?: IntFilter<"Exam"> | number
   }
 
   export type UserCreateWithoutSubjectCoordinatorInput = {
@@ -15570,10 +15593,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subjectFaculty?: SubjectFacultyCreateNestedOneWithoutYearInput
-    exam?: ExamCreateNestedOneWithoutYearInput
-    marks?: MarksCreateNestedOneWithoutYearInput
-    detain?: DetainCreateNestedOneWithoutYearInput
+    subjectFaculty?: SubjectFacultyCreateNestedManyWithoutYearInput
+    exam?: ExamCreateNestedManyWithoutYearInput
+    marks?: MarksCreateNestedManyWithoutYearInput
+    detain?: DetainCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateWithoutSubjectInput = {
@@ -15581,10 +15604,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subjectFaculty?: SubjectFacultyUncheckedCreateNestedOneWithoutYearInput
-    exam?: ExamUncheckedCreateNestedOneWithoutYearInput
-    marks?: MarksUncheckedCreateNestedOneWithoutYearInput
-    detain?: DetainUncheckedCreateNestedOneWithoutYearInput
+    subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutYearInput
+    exam?: ExamUncheckedCreateNestedManyWithoutYearInput
+    marks?: MarksUncheckedCreateNestedManyWithoutYearInput
+    detain?: DetainUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearCreateOrConnectWithoutSubjectInput = {
@@ -15702,10 +15725,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subjectFaculty?: SubjectFacultyUpdateOneWithoutYearNestedInput
-    exam?: ExamUpdateOneWithoutYearNestedInput
-    marks?: MarksUpdateOneWithoutYearNestedInput
-    detain?: DetainUpdateOneWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUpdateManyWithoutYearNestedInput
+    exam?: ExamUpdateManyWithoutYearNestedInput
+    marks?: MarksUpdateManyWithoutYearNestedInput
+    detain?: DetainUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateWithoutSubjectInput = {
@@ -15713,10 +15736,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subjectFaculty?: SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput
-    exam?: ExamUncheckedUpdateOneWithoutYearNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutYearNestedInput
-    detain?: DetainUncheckedUpdateOneWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutYearNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutYearNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutYearNestedInput
   }
 
   export type UserCreateWithoutSubjectFacultyInput = {
@@ -15726,7 +15749,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectCreateNestedManyWithoutSubjectCoordinatorInput
     exam?: ExamCreateNestedManyWithoutFacultyInput
   }
 
@@ -15738,7 +15761,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectUncheckedCreateNestedManyWithoutSubjectCoordinatorInput
     exam?: ExamUncheckedCreateNestedManyWithoutFacultyInput
   }
 
@@ -15751,10 +15774,10 @@ export namespace Prisma {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -15775,10 +15798,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -15801,10 +15824,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectCreateNestedOneWithoutYearInput
-    exam?: ExamCreateNestedOneWithoutYearInput
-    marks?: MarksCreateNestedOneWithoutYearInput
-    detain?: DetainCreateNestedOneWithoutYearInput
+    subject?: SubjectCreateNestedManyWithoutYearInput
+    exam?: ExamCreateNestedManyWithoutYearInput
+    marks?: MarksCreateNestedManyWithoutYearInput
+    detain?: DetainCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateWithoutSubjectFacultyInput = {
@@ -15812,10 +15835,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectUncheckedCreateNestedOneWithoutYearInput
-    exam?: ExamUncheckedCreateNestedOneWithoutYearInput
-    marks?: MarksUncheckedCreateNestedOneWithoutYearInput
-    detain?: DetainUncheckedCreateNestedOneWithoutYearInput
+    subject?: SubjectUncheckedCreateNestedManyWithoutYearInput
+    exam?: ExamUncheckedCreateNestedManyWithoutYearInput
+    marks?: MarksUncheckedCreateNestedManyWithoutYearInput
+    detain?: DetainUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearCreateOrConnectWithoutSubjectFacultyInput = {
@@ -15841,7 +15864,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUpdateManyWithoutSubjectCoordinatorNestedInput
     exam?: ExamUpdateManyWithoutFacultyNestedInput
   }
 
@@ -15853,7 +15876,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUncheckedUpdateManyWithoutSubjectCoordinatorNestedInput
     exam?: ExamUncheckedUpdateManyWithoutFacultyNestedInput
   }
 
@@ -15872,10 +15895,10 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15896,10 +15919,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15928,10 +15951,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUpdateOneWithoutYearNestedInput
-    exam?: ExamUpdateOneWithoutYearNestedInput
-    marks?: MarksUpdateOneWithoutYearNestedInput
-    detain?: DetainUpdateOneWithoutYearNestedInput
+    subject?: SubjectUpdateManyWithoutYearNestedInput
+    exam?: ExamUpdateManyWithoutYearNestedInput
+    marks?: MarksUpdateManyWithoutYearNestedInput
+    detain?: DetainUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateWithoutSubjectFacultyInput = {
@@ -15939,20 +15962,20 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUncheckedUpdateOneWithoutYearNestedInput
-    exam?: ExamUncheckedUpdateOneWithoutYearNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutYearNestedInput
-    detain?: DetainUncheckedUpdateOneWithoutYearNestedInput
+    subject?: SubjectUncheckedUpdateManyWithoutYearNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutYearNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutYearNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutYearNestedInput
   }
 
   export type SubjectCreateWithoutStudentsInput = {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -15973,10 +15996,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -16095,30 +16118,6 @@ export namespace Prisma {
     data: XOR<SubjectUpdateManyMutationInput, SubjectUncheckedUpdateManyWithoutStudentsInput>
   }
 
-  export type SubjectScalarWhereInput = {
-    AND?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
-    OR?: SubjectScalarWhereInput[]
-    NOT?: SubjectScalarWhereInput | SubjectScalarWhereInput[]
-    id?: IntFilter<"Subject"> | number
-    code?: StringFilter<"Subject"> | string
-    name?: StringFilter<"Subject"> | string
-    semester?: IntFilter<"Subject"> | number
-    coordinatorId?: IntFilter<"Subject"> | number
-    dep_IT?: StringNullableFilter<"Subject"> | string | null
-    dep_CE?: StringNullableFilter<"Subject"> | string | null
-    dep_CSE?: StringNullableFilter<"Subject"> | string | null
-    type?: EnumSubjectTypeFilter<"Subject"> | $Enums.SubjectType
-    theory_hour?: IntNullableFilter<"Subject"> | number | null
-    practical_hour?: IntNullableFilter<"Subject"> | number | null
-    theory_credite?: IntNullableFilter<"Subject"> | number | null
-    practical_credite?: IntNullableFilter<"Subject"> | number | null
-    theory_int_marks?: IntNullableFilter<"Subject"> | number | null
-    practical_int_marks?: IntNullableFilter<"Subject"> | number | null
-    theory_ext_marks?: IntNullableFilter<"Subject"> | number | null
-    practical_ext_marks?: IntNullableFilter<"Subject"> | number | null
-    yearId?: IntFilter<"Subject"> | number
-  }
-
   export type ExamUpsertWithWhereUniqueWithoutEligibleStudentsInput = {
     where: ExamWhereUniqueInput
     update: XOR<ExamUpdateWithoutEligibleStudentsInput, ExamUncheckedUpdateWithoutEligibleStudentsInput>
@@ -16151,18 +16150,6 @@ export namespace Prisma {
     data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type MarksScalarWhereInput = {
-    AND?: MarksScalarWhereInput | MarksScalarWhereInput[]
-    OR?: MarksScalarWhereInput[]
-    NOT?: MarksScalarWhereInput | MarksScalarWhereInput[]
-    id?: StringFilter<"Marks"> | string
-    studentId?: StringFilter<"Marks"> | string
-    earnedMarks?: IntFilter<"Marks"> | number
-    effectiveMarks?: IntFilter<"Marks"> | number
-    examId?: StringFilter<"Marks"> | string
-    yearId?: IntFilter<"Marks"> | number
-  }
-
   export type DetainUpsertWithWhereUniqueWithoutStudentInput = {
     where: DetainWhereUniqueInput
     update: XOR<DetainUpdateWithoutStudentInput, DetainUncheckedUpdateWithoutStudentInput>
@@ -16179,24 +16166,14 @@ export namespace Prisma {
     data: XOR<DetainUpdateManyMutationInput, DetainUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type DetainScalarWhereInput = {
-    AND?: DetainScalarWhereInput | DetainScalarWhereInput[]
-    OR?: DetainScalarWhereInput[]
-    NOT?: DetainScalarWhereInput | DetainScalarWhereInput[]
-    id?: IntFilter<"Detain"> | number
-    studentId?: StringFilter<"Detain"> | string
-    examId?: StringFilter<"Detain"> | string
-    yearId?: IntFilter<"Detain"> | number
-  }
-
   export type SubjectCreateWithoutExamInput = {
     code: string
     name: string
     semester: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -16217,10 +16194,10 @@ export namespace Prisma {
     name: string
     semester: number
     coordinatorId: number
-    dep_IT?: string | null
-    dep_CE?: string | null
-    dep_CSE?: string | null
     type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
     theory_hour?: number | null
     practical_hour?: number | null
     theory_credite?: number | null
@@ -16246,7 +16223,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectCreateNestedManyWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyCreateNestedManyWithoutFacultyInput
   }
 
@@ -16258,7 +16235,7 @@ export namespace Prisma {
     password: string
     department: $Enums.Department
     role: $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
+    subjectCoordinator?: SubjectUncheckedCreateNestedManyWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput
   }
 
@@ -16344,10 +16321,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyCreateNestedOneWithoutYearInput
-    marks?: MarksCreateNestedOneWithoutYearInput
-    detain?: DetainCreateNestedOneWithoutYearInput
+    subject?: SubjectCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyCreateNestedManyWithoutYearInput
+    marks?: MarksCreateNestedManyWithoutYearInput
+    detain?: DetainCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateWithoutExamInput = {
@@ -16355,10 +16332,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectUncheckedCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyUncheckedCreateNestedOneWithoutYearInput
-    marks?: MarksUncheckedCreateNestedOneWithoutYearInput
-    detain?: DetainUncheckedCreateNestedOneWithoutYearInput
+    subject?: SubjectUncheckedCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutYearInput
+    marks?: MarksUncheckedCreateNestedManyWithoutYearInput
+    detain?: DetainUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearCreateOrConnectWithoutExamInput = {
@@ -16381,10 +16358,10 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -16405,10 +16382,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -16440,7 +16417,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUpdateManyWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUpdateManyWithoutFacultyNestedInput
   }
 
@@ -16452,7 +16429,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
+    subjectCoordinator?: SubjectUncheckedUpdateManyWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput
   }
 
@@ -16530,10 +16507,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUpdateOneWithoutYearNestedInput
-    marks?: MarksUpdateOneWithoutYearNestedInput
-    detain?: DetainUpdateOneWithoutYearNestedInput
+    subject?: SubjectUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUpdateManyWithoutYearNestedInput
+    marks?: MarksUpdateManyWithoutYearNestedInput
+    detain?: DetainUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateWithoutExamInput = {
@@ -16541,10 +16518,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUncheckedUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutYearNestedInput
-    detain?: DetainUncheckedUpdateOneWithoutYearNestedInput
+    subject?: SubjectUncheckedUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutYearNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutYearNestedInput
   }
 
   export type StudentCreateWithoutMarksInput = {
@@ -16619,10 +16596,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyCreateNestedOneWithoutYearInput
-    exam?: ExamCreateNestedOneWithoutYearInput
-    detain?: DetainCreateNestedOneWithoutYearInput
+    subject?: SubjectCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyCreateNestedManyWithoutYearInput
+    exam?: ExamCreateNestedManyWithoutYearInput
+    detain?: DetainCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateWithoutMarksInput = {
@@ -16630,10 +16607,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectUncheckedCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyUncheckedCreateNestedOneWithoutYearInput
-    exam?: ExamUncheckedCreateNestedOneWithoutYearInput
-    detain?: DetainUncheckedCreateNestedOneWithoutYearInput
+    subject?: SubjectUncheckedCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutYearInput
+    exam?: ExamUncheckedCreateNestedManyWithoutYearInput
+    detain?: DetainUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearCreateOrConnectWithoutMarksInput = {
@@ -16736,10 +16713,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUpdateOneWithoutYearNestedInput
-    exam?: ExamUpdateOneWithoutYearNestedInput
-    detain?: DetainUpdateOneWithoutYearNestedInput
+    subject?: SubjectUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUpdateManyWithoutYearNestedInput
+    exam?: ExamUpdateManyWithoutYearNestedInput
+    detain?: DetainUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateWithoutMarksInput = {
@@ -16747,10 +16724,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUncheckedUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput
-    exam?: ExamUncheckedUpdateOneWithoutYearNestedInput
-    detain?: DetainUncheckedUpdateOneWithoutYearNestedInput
+    subject?: SubjectUncheckedUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutYearNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutYearNestedInput
   }
 
   export type StudentCreateWithoutDetainInput = {
@@ -16825,10 +16802,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyCreateNestedOneWithoutYearInput
-    exam?: ExamCreateNestedOneWithoutYearInput
-    marks?: MarksCreateNestedOneWithoutYearInput
+    subject?: SubjectCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyCreateNestedManyWithoutYearInput
+    exam?: ExamCreateNestedManyWithoutYearInput
+    marks?: MarksCreateNestedManyWithoutYearInput
   }
 
   export type YearUncheckedCreateWithoutDetainInput = {
@@ -16836,10 +16813,10 @@ export namespace Prisma {
     year: string
     startDate: Date | string
     endDate: Date | string
-    subject?: SubjectUncheckedCreateNestedOneWithoutYearInput
-    subjectFaculty?: SubjectFacultyUncheckedCreateNestedOneWithoutYearInput
-    exam?: ExamUncheckedCreateNestedOneWithoutYearInput
-    marks?: MarksUncheckedCreateNestedOneWithoutYearInput
+    subject?: SubjectUncheckedCreateNestedManyWithoutYearInput
+    subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutYearInput
+    exam?: ExamUncheckedCreateNestedManyWithoutYearInput
+    marks?: MarksUncheckedCreateNestedManyWithoutYearInput
   }
 
   export type YearCreateOrConnectWithoutDetainInput = {
@@ -16942,10 +16919,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUpdateOneWithoutYearNestedInput
-    exam?: ExamUpdateOneWithoutYearNestedInput
-    marks?: MarksUpdateOneWithoutYearNestedInput
+    subject?: SubjectUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUpdateManyWithoutYearNestedInput
+    exam?: ExamUpdateManyWithoutYearNestedInput
+    marks?: MarksUpdateManyWithoutYearNestedInput
   }
 
   export type YearUncheckedUpdateWithoutDetainInput = {
@@ -16953,10 +16930,256 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    subject?: SubjectUncheckedUpdateOneWithoutYearNestedInput
-    subjectFaculty?: SubjectFacultyUncheckedUpdateOneWithoutYearNestedInput
-    exam?: ExamUncheckedUpdateOneWithoutYearNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutYearNestedInput
+    subject?: SubjectUncheckedUpdateManyWithoutYearNestedInput
+    subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutYearNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutYearNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutYearNestedInput
+  }
+
+  export type SubjectCreateManyYearInput = {
+    id?: number
+    code: string
+    name: string
+    semester: number
+    coordinatorId: number
+    type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
+    theory_hour?: number | null
+    practical_hour?: number | null
+    theory_credite?: number | null
+    practical_credite?: number | null
+    theory_int_marks?: number | null
+    practical_int_marks?: number | null
+    theory_ext_marks?: number | null
+    practical_ext_marks?: number | null
+  }
+
+  export type SubjectFacultyCreateManyYearInput = {
+    id?: string
+    facultyId: number
+    subjectId: number
+    role: $Enums.SubjectFacultyRole
+  }
+
+  export type ExamCreateManyYearInput = {
+    id?: string
+    name: string
+    date?: Date | string | null
+    subjectId: number
+    facultyId: number
+    totalMarks?: number | null
+    effectiveMarks?: number | null
+    class1?: boolean | null
+    class2?: boolean | null
+    status?: $Enums.ExamStatus | null
+  }
+
+  export type MarksCreateManyYearInput = {
+    id?: string
+    studentId: string
+    earnedMarks: number
+    effectiveMarks: number
+    examId: string
+  }
+
+  export type DetainCreateManyYearInput = {
+    id?: number
+    studentId: string
+    examId: string
+  }
+
+  export type SubjectUpdateWithoutYearInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    subjectCoordinator?: UserUpdateOneRequiredWithoutSubjectCoordinatorNestedInput
+    students?: StudentUpdateManyWithoutSubjectsNestedInput
+    faculties?: SubjectFacultyUpdateManyWithoutSubjectNestedInput
+    exam?: ExamUpdateManyWithoutSubjectNestedInput
+  }
+
+  export type SubjectUncheckedUpdateWithoutYearInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    coordinatorId?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    students?: StudentUncheckedUpdateManyWithoutSubjectsNestedInput
+    faculties?: SubjectFacultyUncheckedUpdateManyWithoutSubjectNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutSubjectNestedInput
+  }
+
+  export type SubjectUncheckedUpdateManyWithoutYearInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    coordinatorId?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SubjectFacultyUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    faculty?: UserUpdateOneRequiredWithoutSubjectFacultyNestedInput
+    subject?: SubjectUpdateOneRequiredWithoutFacultiesNestedInput
+  }
+
+  export type SubjectFacultyUncheckedUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    facultyId?: IntFieldUpdateOperationsInput | number
+    subjectId?: IntFieldUpdateOperationsInput | number
+    role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+  }
+
+  export type SubjectFacultyUncheckedUpdateManyWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    facultyId?: IntFieldUpdateOperationsInput | number
+    subjectId?: IntFieldUpdateOperationsInput | number
+    role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+  }
+
+  export type ExamUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    effectiveMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    class1?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    class2?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableEnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus | null
+    subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
+    faculty?: UserUpdateOneRequiredWithoutExamNestedInput
+    eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
+    marks?: MarksUpdateOneWithoutExamNestedInput
+    detain?: DetainUpdateManyWithoutExamNestedInput
+  }
+
+  export type ExamUncheckedUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    subjectId?: IntFieldUpdateOperationsInput | number
+    facultyId?: IntFieldUpdateOperationsInput | number
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    effectiveMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    class1?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    class2?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableEnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus | null
+    eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
+    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
+  }
+
+  export type ExamUncheckedUpdateManyWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    subjectId?: IntFieldUpdateOperationsInput | number
+    facultyId?: IntFieldUpdateOperationsInput | number
+    totalMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    effectiveMarks?: NullableIntFieldUpdateOperationsInput | number | null
+    class1?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    class2?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableEnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus | null
+  }
+
+  export type MarksUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    student?: StudentUpdateOneRequiredWithoutMarksNestedInput
+    exam?: ExamUpdateOneRequiredWithoutMarksNestedInput
+  }
+
+  export type MarksUncheckedUpdateWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    examId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MarksUncheckedUpdateManyWithoutYearInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    examId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DetainUpdateWithoutYearInput = {
+    student?: StudentUpdateOneRequiredWithoutDetainNestedInput
+    exam?: ExamUpdateOneRequiredWithoutDetainNestedInput
+  }
+
+  export type DetainUncheckedUpdateWithoutYearInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
+    examId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DetainUncheckedUpdateManyWithoutYearInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
+    examId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubjectCreateManySubjectCoordinatorInput = {
+    id?: number
+    code: string
+    name: string
+    semester: number
+    type: $Enums.SubjectType
+    dep_IT?: boolean | null
+    dep_CE?: boolean | null
+    dep_CSE?: boolean | null
+    theory_hour?: number | null
+    practical_hour?: number | null
+    theory_credite?: number | null
+    practical_credite?: number | null
+    theory_int_marks?: number | null
+    practical_int_marks?: number | null
+    theory_ext_marks?: number | null
+    practical_ext_marks?: number | null
+    yearId: number
   }
 
   export type SubjectFacultyCreateManyFacultyInput = {
@@ -16977,6 +17200,71 @@ export namespace Prisma {
     class2?: boolean | null
     status?: $Enums.ExamStatus | null
     yearId: number
+  }
+
+  export type SubjectUpdateWithoutSubjectCoordinatorInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    students?: StudentUpdateManyWithoutSubjectsNestedInput
+    faculties?: SubjectFacultyUpdateManyWithoutSubjectNestedInput
+    exam?: ExamUpdateManyWithoutSubjectNestedInput
+    year?: YearUpdateOneRequiredWithoutSubjectNestedInput
+  }
+
+  export type SubjectUncheckedUpdateWithoutSubjectCoordinatorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    yearId?: IntFieldUpdateOperationsInput | number
+    students?: StudentUncheckedUpdateManyWithoutSubjectsNestedInput
+    faculties?: SubjectFacultyUncheckedUpdateManyWithoutSubjectNestedInput
+    exam?: ExamUncheckedUpdateManyWithoutSubjectNestedInput
+  }
+
+  export type SubjectUncheckedUpdateManyWithoutSubjectCoordinatorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    semester?: IntFieldUpdateOperationsInput | number
+    type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_credite?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_int_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    theory_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    practical_ext_marks?: NullableIntFieldUpdateOperationsInput | number | null
+    yearId?: IntFieldUpdateOperationsInput | number
   }
 
   export type SubjectFacultyUpdateWithoutFacultyInput = {
@@ -17185,10 +17473,10 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17209,10 +17497,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17232,10 +17520,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     semester?: IntFieldUpdateOperationsInput | number
     coordinatorId?: IntFieldUpdateOperationsInput | number
-    dep_IT?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CE?: NullableStringFieldUpdateOperationsInput | string | null
-    dep_CSE?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumSubjectTypeFieldUpdateOperationsInput | $Enums.SubjectType
+    dep_IT?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CE?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dep_CSE?: NullableBoolFieldUpdateOperationsInput | boolean | null
     theory_hour?: NullableIntFieldUpdateOperationsInput | number | null
     practical_hour?: NullableIntFieldUpdateOperationsInput | number | null
     theory_credite?: NullableIntFieldUpdateOperationsInput | number | null

@@ -21,11 +21,11 @@ model Year {
   year           String          @unique
   startDate      DateTime        @db.Date
   endDate        DateTime        @db.Date
-  subject        Subject?
-  subjectFaculty SubjectFaculty?
-  exam           Exam?
-  marks          Marks?
-  detain         Detain?
+  subject        Subject[]
+  subjectFaculty SubjectFaculty[]
+  exam           Exam[]
+  marks          Marks[]
+  detain         Detain[]
 }
 
 enum Department {
@@ -48,7 +48,7 @@ model User {
   password           String
   department         Department
   role               UserRole
-  subjectCoordinator Subject?
+  subjectCoordinator Subject[]
   subjectFaculty     SubjectFaculty[]
   exam               Exam[]
 }
@@ -60,17 +60,17 @@ enum SubjectType {
 }
 
 model Subject {
-  id                 Int    @id @unique @default(autoincrement())
+  id                 Int    @id @default(autoincrement())
   code               String @unique
   name               String
   semester           Int
-  coordinatorId      Int    @unique
+  coordinatorId      Int
   subjectCoordinator User   @relation(fields: [coordinatorId], references: [id])
+  type               SubjectType
 
-  dep_IT    String?
-  dep_CE    String?
-  dep_CSE   String?
-  type      SubjectType
+  dep_IT    Boolean?
+  dep_CE    Boolean?
+  dep_CSE   Boolean?
   students  Student[]
   faculties SubjectFaculty[]
   exam      Exam[]
@@ -88,9 +88,10 @@ model Subject {
   theory_ext_marks    Int?
   practical_ext_marks Int?
 
-  yearId Int  @unique
+  yearId Int
   year   Year @relation(fields: [yearId], references: [id])
 }
+
 
 enum SubjectFacultyRole {
   SubjectCoordinator
@@ -106,7 +107,7 @@ model SubjectFaculty {
   // department
   role      SubjectFacultyRole
 
-  yearId Int  @unique
+  yearId Int  
   year   Year @relation(fields: [yearId], references: [id])
 }
 
@@ -147,7 +148,7 @@ model Exam {
   detain           Detain[]
   status           ExamStatus?
 
-  yearId Int  @unique
+  yearId Int  
   year   Year @relation(fields: [yearId], references: [id])
 }
 
@@ -161,7 +162,7 @@ model Marks {
   examId         String @unique
   exam           Exam   @relation(fields: [examId], references: [id])
 
-  yearId Int  @unique
+  yearId Int  
   year   Year @relation(fields: [yearId], references: [id])
 }
 
@@ -172,6 +173,6 @@ model Detain {
   examId    String
   exam      Exam    @relation(fields: [examId], references: [id])
 
-  yearId Int  @unique
+  yearId Int  
   year   Year @relation(fields: [yearId], references: [id])
 }
