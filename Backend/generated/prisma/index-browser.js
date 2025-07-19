@@ -220,6 +220,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Department = exports.$Enums.Department = {
+  DCS: 'DCS',
+  DIT: 'DIT',
+  DCE: 'DCE'
+};
+
 exports.UserRole = exports.$Enums.UserRole = {
   Faculty: 'Faculty',
   HOD: 'HOD',
@@ -235,12 +241,6 @@ exports.SubjectType = exports.$Enums.SubjectType = {
 exports.SubjectFacultyRole = exports.$Enums.SubjectFacultyRole = {
   SubjectCoordinator: 'SubjectCoordinator',
   Faculty: 'Faculty'
-};
-
-exports.Department = exports.$Enums.Department = {
-  DCS: 'DCS',
-  DIT: 'DIT',
-  DCE: 'DCE'
 };
 
 exports.ExamStatus = exports.$Enums.ExamStatus = {
