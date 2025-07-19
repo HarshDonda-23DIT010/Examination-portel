@@ -173,7 +173,7 @@ exports.Prisma.StudentScalarFieldEnum = {
   email: 'email',
   department: 'department',
   semester: 'semester',
-  class: 'class'
+  div: 'div'
 };
 
 exports.Prisma.ExamScalarFieldEnum = {

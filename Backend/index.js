@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import userRoutes from './routes/user.routes.js';
 import yearRoutes from "./routes/year.routes.js"
 import subjectRoutes from "./routes/subject.routes.js"
+import studentRoutes from "./routes/student.routes.js"
 import cors from 'cors';
 
 dotenv.config()
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/year', yearRoutes);
 app.use('/api/v1/subject', subjectRoutes);
+app.use('/api/v1/student', studentRoutes);
 
 
 app.listen(PORT, () => {

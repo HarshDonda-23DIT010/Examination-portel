@@ -113,12 +113,12 @@ model SubjectFaculty {
 
 model Student {
   id         String     @id @unique @default(uuid())
-  studentId  Int        @unique
+  studentId  String        @unique
   name       String
   email      String     @unique
   department Department
   semester   Int
-  class      String
+  div      String
   subjects   Subject[]
   exams      Exam[]
   marks      Marks[]

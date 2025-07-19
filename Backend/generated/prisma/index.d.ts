@@ -6754,33 +6754,31 @@ export namespace Prisma {
   }
 
   export type StudentAvgAggregateOutputType = {
-    studentId: number | null
     semester: number | null
   }
 
   export type StudentSumAggregateOutputType = {
-    studentId: number | null
     semester: number | null
   }
 
   export type StudentMinAggregateOutputType = {
     id: string | null
-    studentId: number | null
+    studentId: string | null
     name: string | null
     email: string | null
     department: $Enums.Department | null
     semester: number | null
-    class: string | null
+    div: string | null
   }
 
   export type StudentMaxAggregateOutputType = {
     id: string | null
-    studentId: number | null
+    studentId: string | null
     name: string | null
     email: string | null
     department: $Enums.Department | null
     semester: number | null
-    class: string | null
+    div: string | null
   }
 
   export type StudentCountAggregateOutputType = {
@@ -6790,18 +6788,16 @@ export namespace Prisma {
     email: number
     department: number
     semester: number
-    class: number
+    div: number
     _all: number
   }
 
 
   export type StudentAvgAggregateInputType = {
-    studentId?: true
     semester?: true
   }
 
   export type StudentSumAggregateInputType = {
-    studentId?: true
     semester?: true
   }
 
@@ -6812,7 +6808,7 @@ export namespace Prisma {
     email?: true
     department?: true
     semester?: true
-    class?: true
+    div?: true
   }
 
   export type StudentMaxAggregateInputType = {
@@ -6822,7 +6818,7 @@ export namespace Prisma {
     email?: true
     department?: true
     semester?: true
-    class?: true
+    div?: true
   }
 
   export type StudentCountAggregateInputType = {
@@ -6832,7 +6828,7 @@ export namespace Prisma {
     email?: true
     department?: true
     semester?: true
-    class?: true
+    div?: true
     _all?: true
   }
 
@@ -6924,12 +6920,12 @@ export namespace Prisma {
 
   export type StudentGroupByOutputType = {
     id: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     _count: StudentCountAggregateOutputType | null
     _avg: StudentAvgAggregateOutputType | null
     _sum: StudentSumAggregateOutputType | null
@@ -6958,7 +6954,7 @@ export namespace Prisma {
     email?: boolean
     department?: boolean
     semester?: boolean
-    class?: boolean
+    div?: boolean
     subjects?: boolean | Student$subjectsArgs<ExtArgs>
     exams?: boolean | Student$examsArgs<ExtArgs>
     marks?: boolean | Student$marksArgs<ExtArgs>
@@ -6973,7 +6969,7 @@ export namespace Prisma {
     email?: boolean
     department?: boolean
     semester?: boolean
-    class?: boolean
+    div?: boolean
   }, ExtArgs["result"]["student"]>
 
   export type StudentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6983,7 +6979,7 @@ export namespace Prisma {
     email?: boolean
     department?: boolean
     semester?: boolean
-    class?: boolean
+    div?: boolean
   }, ExtArgs["result"]["student"]>
 
   export type StudentSelectScalar = {
@@ -6993,10 +6989,10 @@ export namespace Prisma {
     email?: boolean
     department?: boolean
     semester?: boolean
-    class?: boolean
+    div?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "name" | "email" | "department" | "semester" | "class", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "name" | "email" | "department" | "semester" | "div", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subjects?: boolean | Student$subjectsArgs<ExtArgs>
     exams?: boolean | Student$examsArgs<ExtArgs>
@@ -7017,12 +7013,12 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      studentId: number
+      studentId: string
       name: string
       email: string
       department: $Enums.Department
       semester: number
-      class: string
+      div: string
     }, ExtArgs["result"]["student"]>
     composites: {}
   }
@@ -7451,12 +7447,12 @@ export namespace Prisma {
    */
   interface StudentFieldRefs {
     readonly id: FieldRef<"Student", 'String'>
-    readonly studentId: FieldRef<"Student", 'Int'>
+    readonly studentId: FieldRef<"Student", 'String'>
     readonly name: FieldRef<"Student", 'String'>
     readonly email: FieldRef<"Student", 'String'>
     readonly department: FieldRef<"Student", 'Department'>
     readonly semester: FieldRef<"Student", 'Int'>
-    readonly class: FieldRef<"Student", 'String'>
+    readonly div: FieldRef<"Student", 'String'>
   }
     
 
@@ -11549,7 +11545,7 @@ export namespace Prisma {
     email: 'email',
     department: 'department',
     semester: 'semester',
-    class: 'class'
+    div: 'div'
   };
 
   export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
@@ -12098,12 +12094,12 @@ export namespace Prisma {
     OR?: StudentWhereInput[]
     NOT?: StudentWhereInput | StudentWhereInput[]
     id?: StringFilter<"Student"> | string
-    studentId?: IntFilter<"Student"> | number
+    studentId?: StringFilter<"Student"> | string
     name?: StringFilter<"Student"> | string
     email?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    class?: StringFilter<"Student"> | string
+    div?: StringFilter<"Student"> | string
     subjects?: SubjectListRelationFilter
     exams?: ExamListRelationFilter
     marks?: MarksListRelationFilter
@@ -12117,7 +12113,7 @@ export namespace Prisma {
     email?: SortOrder
     department?: SortOrder
     semester?: SortOrder
-    class?: SortOrder
+    div?: SortOrder
     subjects?: SubjectOrderByRelationAggregateInput
     exams?: ExamOrderByRelationAggregateInput
     marks?: MarksOrderByRelationAggregateInput
@@ -12126,7 +12122,7 @@ export namespace Prisma {
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    studentId?: number
+    studentId?: string
     email?: string
     AND?: StudentWhereInput | StudentWhereInput[]
     OR?: StudentWhereInput[]
@@ -12134,7 +12130,7 @@ export namespace Prisma {
     name?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    class?: StringFilter<"Student"> | string
+    div?: StringFilter<"Student"> | string
     subjects?: SubjectListRelationFilter
     exams?: ExamListRelationFilter
     marks?: MarksListRelationFilter
@@ -12148,7 +12144,7 @@ export namespace Prisma {
     email?: SortOrder
     department?: SortOrder
     semester?: SortOrder
-    class?: SortOrder
+    div?: SortOrder
     _count?: StudentCountOrderByAggregateInput
     _avg?: StudentAvgOrderByAggregateInput
     _max?: StudentMaxOrderByAggregateInput
@@ -12161,12 +12157,12 @@ export namespace Prisma {
     OR?: StudentScalarWhereWithAggregatesInput[]
     NOT?: StudentScalarWhereWithAggregatesInput | StudentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Student"> | string
-    studentId?: IntWithAggregatesFilter<"Student"> | number
+    studentId?: StringWithAggregatesFilter<"Student"> | string
     name?: StringWithAggregatesFilter<"Student"> | string
     email?: StringWithAggregatesFilter<"Student"> | string
     department?: EnumDepartmentWithAggregatesFilter<"Student"> | $Enums.Department
     semester?: IntWithAggregatesFilter<"Student"> | number
-    class?: StringWithAggregatesFilter<"Student"> | string
+    div?: StringWithAggregatesFilter<"Student"> | string
   }
 
   export type ExamWhereInput = {
@@ -12751,12 +12747,12 @@ export namespace Prisma {
 
   export type StudentCreateInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
@@ -12765,12 +12761,12 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
@@ -12779,12 +12775,12 @@ export namespace Prisma {
 
   export type StudentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
@@ -12793,12 +12789,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
@@ -12807,32 +12803,32 @@ export namespace Prisma {
 
   export type StudentCreateManyInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
   }
 
   export type StudentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
   }
 
   export type StudentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
   }
 
   export type ExamCreateInput = {
@@ -13522,11 +13518,10 @@ export namespace Prisma {
     email?: SortOrder
     department?: SortOrder
     semester?: SortOrder
-    class?: SortOrder
+    div?: SortOrder
   }
 
   export type StudentAvgOrderByAggregateInput = {
-    studentId?: SortOrder
     semester?: SortOrder
   }
 
@@ -13537,7 +13532,7 @@ export namespace Prisma {
     email?: SortOrder
     department?: SortOrder
     semester?: SortOrder
-    class?: SortOrder
+    div?: SortOrder
   }
 
   export type StudentMinOrderByAggregateInput = {
@@ -13547,11 +13542,10 @@ export namespace Prisma {
     email?: SortOrder
     department?: SortOrder
     semester?: SortOrder
-    class?: SortOrder
+    div?: SortOrder
   }
 
   export type StudentSumOrderByAggregateInput = {
-    studentId?: SortOrder
     semester?: SortOrder
   }
 
@@ -15494,12 +15488,12 @@ export namespace Prisma {
 
   export type StudentCreateWithoutSubjectsInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -15507,12 +15501,12 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateWithoutSubjectsInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -15670,12 +15664,12 @@ export namespace Prisma {
     OR?: StudentScalarWhereInput[]
     NOT?: StudentScalarWhereInput | StudentScalarWhereInput[]
     id?: StringFilter<"Student"> | string
-    studentId?: IntFilter<"Student"> | number
+    studentId?: StringFilter<"Student"> | string
     name?: StringFilter<"Student"> | string
     email?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    class?: StringFilter<"Student"> | string
+    div?: StringFilter<"Student"> | string
   }
 
   export type SubjectFacultyUpsertWithWhereUniqueWithoutSubjectInput = {
@@ -16246,12 +16240,12 @@ export namespace Prisma {
 
   export type StudentCreateWithoutExamsInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -16259,12 +16253,12 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateWithoutExamsInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -16526,12 +16520,12 @@ export namespace Prisma {
 
   export type StudentCreateWithoutMarksInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -16539,12 +16533,12 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateWithoutMarksInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -16631,12 +16625,12 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutMarksInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -16644,12 +16638,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateWithoutMarksInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -16732,12 +16726,12 @@ export namespace Prisma {
 
   export type StudentCreateWithoutDetainInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
@@ -16745,12 +16739,12 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateWithoutDetainInput = {
     id?: string
-    studentId: number
+    studentId: string
     name: string
     email: string
     department: $Enums.Department
     semester: number
-    class: string
+    div: string
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
@@ -16837,12 +16831,12 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutDetainInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
@@ -16850,12 +16844,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateWithoutDetainInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
@@ -17355,12 +17349,12 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutSubjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -17368,12 +17362,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateWithoutSubjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -17381,12 +17375,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateManyWithoutSubjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
   }
 
   export type SubjectFacultyUpdateWithoutSubjectInput = {
@@ -17630,12 +17624,12 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutExamsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -17643,12 +17637,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateWithoutExamsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -17656,12 +17650,12 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateManyWithoutExamsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    studentId?: IntFieldUpdateOperationsInput | number
+    studentId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    class?: StringFieldUpdateOperationsInput | string
+    div?: StringFieldUpdateOperationsInput | string
   }
 
   export type DetainUpdateWithoutExamInput = {
