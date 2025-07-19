@@ -46,7 +46,7 @@ model User {
   name               String
   email              String           @unique
   password           String
-  department         String
+  department         Department
   role               UserRole
   subjectCoordinator Subject?
   subjectFaculty     SubjectFaculty[]

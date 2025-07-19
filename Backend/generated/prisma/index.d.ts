@@ -2963,7 +2963,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
-    department: string | null
+    department: $Enums.Department | null
     role: $Enums.UserRole | null
   }
 
@@ -2973,7 +2973,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
-    department: string | null
+    department: $Enums.Department | null
     role: $Enums.UserRole | null
   }
 
@@ -3120,7 +3120,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -3210,7 +3210,7 @@ export namespace Prisma {
       name: string
       email: string
       password: string
-      department: string
+      department: $Enums.Department
       role: $Enums.UserRole
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -3643,7 +3643,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
-    readonly department: FieldRef<"User", 'String'>
+    readonly department: FieldRef<"User", 'Department'>
     readonly role: FieldRef<"User", 'UserRole'>
   }
     
@@ -11558,6 +11558,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Department'
+   */
+  export type EnumDepartmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Department'>
+    
+
+
+  /**
+   * Reference to a field of type 'Department[]'
+   */
+  export type ListEnumDepartmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Department[]'>
+    
+
+
+  /**
    * Reference to a field of type 'UserRole'
    */
   export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -11596,20 +11610,6 @@ export namespace Prisma {
    * Reference to a field of type 'SubjectFacultyRole[]'
    */
   export type ListEnumSubjectFacultyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubjectFacultyRole[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Department'
-   */
-  export type EnumDepartmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Department'>
-    
-
-
-  /**
-   * Reference to a field of type 'Department[]'
-   */
-  export type ListEnumDepartmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Department[]'>
     
 
 
@@ -11724,7 +11724,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    department?: StringFilter<"User"> | string
+    department?: EnumDepartmentFilter<"User"> | $Enums.Department
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     subjectCoordinator?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
     subjectFaculty?: SubjectFacultyListRelationFilter
@@ -11753,7 +11753,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    department?: StringFilter<"User"> | string
+    department?: EnumDepartmentFilter<"User"> | $Enums.Department
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     subjectCoordinator?: XOR<SubjectNullableScalarRelationFilter, SubjectWhereInput> | null
     subjectFaculty?: SubjectFacultyListRelationFilter
@@ -11784,7 +11784,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
-    department?: StringWithAggregatesFilter<"User"> | string
+    department?: EnumDepartmentWithAggregatesFilter<"User"> | $Enums.Department
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   }
 
@@ -12360,7 +12360,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyCreateNestedManyWithoutFacultyInput
@@ -12373,7 +12373,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput
@@ -12385,7 +12385,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUpdateManyWithoutFacultyNestedInput
@@ -12398,7 +12398,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput
@@ -12411,7 +12411,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
   }
 
@@ -12420,7 +12420,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -12430,7 +12430,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -13077,6 +13077,13 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumDepartmentFilter<$PrismaModel = never> = {
+    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
+    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    not?: NestedEnumDepartmentFilter<$PrismaModel> | $Enums.Department
+  }
+
   export type EnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -13140,6 +13147,16 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumDepartmentWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
+    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    not?: NestedEnumDepartmentWithAggregatesFilter<$PrismaModel> | $Enums.Department
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDepartmentFilter<$PrismaModel>
+    _max?: NestedEnumDepartmentFilter<$PrismaModel>
   }
 
   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -13405,13 +13422,6 @@ export namespace Prisma {
     _max?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
   }
 
-  export type EnumDepartmentFilter<$PrismaModel = never> = {
-    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
-    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    not?: NestedEnumDepartmentFilter<$PrismaModel> | $Enums.Department
-  }
-
   export type SubjectListRelationFilter = {
     every?: SubjectWhereInput
     some?: SubjectWhereInput
@@ -13480,16 +13490,6 @@ export namespace Prisma {
   export type StudentSumOrderByAggregateInput = {
     studentId?: SortOrder
     semester?: SortOrder
-  }
-
-  export type EnumDepartmentWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
-    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    not?: NestedEnumDepartmentWithAggregatesFilter<$PrismaModel> | $Enums.Department
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumDepartmentFilter<$PrismaModel>
-    _max?: NestedEnumDepartmentFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -13901,6 +13901,10 @@ export namespace Prisma {
     connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
+  export type EnumDepartmentFieldUpdateOperationsInput = {
+    set?: $Enums.Department
+  }
+
   export type EnumUserRoleFieldUpdateOperationsInput = {
     set?: $Enums.UserRole
   }
@@ -14243,10 +14247,6 @@ export namespace Prisma {
     connectOrCreate?: DetainCreateOrConnectWithoutStudentInput | DetainCreateOrConnectWithoutStudentInput[]
     createMany?: DetainCreateManyStudentInputEnvelope
     connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
-  }
-
-  export type EnumDepartmentFieldUpdateOperationsInput = {
-    set?: $Enums.Department
   }
 
   export type SubjectUpdateManyWithoutStudentsNestedInput = {
@@ -14701,11 +14701,28 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumDepartmentFilter<$PrismaModel = never> = {
+    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
+    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    not?: NestedEnumDepartmentFilter<$PrismaModel> | $Enums.Department
+  }
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
+  export type NestedEnumDepartmentWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
+    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
+    not?: NestedEnumDepartmentWithAggregatesFilter<$PrismaModel> | $Enums.Department
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDepartmentFilter<$PrismaModel>
+    _max?: NestedEnumDepartmentFilter<$PrismaModel>
   }
 
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -14819,23 +14836,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
     _max?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
-  }
-
-  export type NestedEnumDepartmentFilter<$PrismaModel = never> = {
-    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
-    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    not?: NestedEnumDepartmentFilter<$PrismaModel> | $Enums.Department
-  }
-
-  export type NestedEnumDepartmentWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Department | EnumDepartmentFieldRefInput<$PrismaModel>
-    in?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Department[] | ListEnumDepartmentFieldRefInput<$PrismaModel>
-    not?: NestedEnumDepartmentWithAggregatesFilter<$PrismaModel> | $Enums.Department
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumDepartmentFilter<$PrismaModel>
-    _max?: NestedEnumDepartmentFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -15446,7 +15446,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectFaculty?: SubjectFacultyCreateNestedManyWithoutFacultyInput
     exam?: ExamCreateNestedManyWithoutFacultyInput
@@ -15458,7 +15458,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput
     exam?: ExamUncheckedCreateNestedManyWithoutFacultyInput
@@ -15608,7 +15608,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectFaculty?: SubjectFacultyUpdateManyWithoutFacultyNestedInput
     exam?: ExamUpdateManyWithoutFacultyNestedInput
@@ -15620,7 +15620,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput
     exam?: ExamUncheckedUpdateManyWithoutFacultyNestedInput
@@ -15724,7 +15724,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
     exam?: ExamCreateNestedManyWithoutFacultyInput
@@ -15736,7 +15736,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
     exam?: ExamUncheckedCreateNestedManyWithoutFacultyInput
@@ -15839,7 +15839,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
     exam?: ExamUpdateManyWithoutFacultyNestedInput
@@ -15851,7 +15851,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
     exam?: ExamUncheckedUpdateManyWithoutFacultyNestedInput
@@ -16244,7 +16244,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectCreateNestedOneWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyCreateNestedManyWithoutFacultyInput
@@ -16256,7 +16256,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    department: string
+    department: $Enums.Department
     role: $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedCreateNestedOneWithoutSubjectCoordinatorInput
     subjectFaculty?: SubjectFacultyUncheckedCreateNestedManyWithoutFacultyInput
@@ -16438,7 +16438,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUpdateOneWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUpdateManyWithoutFacultyNestedInput
@@ -16450,7 +16450,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    department?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     subjectCoordinator?: SubjectUncheckedUpdateOneWithoutSubjectCoordinatorNestedInput
     subjectFaculty?: SubjectFacultyUncheckedUpdateManyWithoutFacultyNestedInput
