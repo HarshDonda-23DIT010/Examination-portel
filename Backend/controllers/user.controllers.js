@@ -33,6 +33,10 @@ export const register = asyncHandler(async (req, res) => {
     )
   }
 
+  if (role !== "Admin" || role != "HOD" || role != "Faculty") {
+    throw new ApiError(401, "Your role is not match with enums.")
+  }
+
   const existingUser = await prisma.user.findFirst({
     where: {
       OR: [
@@ -145,18 +149,13 @@ export const logout = asyncHandler((req, res) => {
     .json(new ApiResponse(200, {}, "User logged out"))
 })
 
-export const getFaculties = asyncHandler(async (req, res) => {
+export const getAllUsers = asyncHandler(async (req, res) => {
 
   const faculties = await prisma.user.findMany({
     where: {
-      role: 'Faculty'
-    },
-    select: {
-      userId: true,
-      name: true,
-      email: true,
-      department: true,
-      role: true
+      NOT: {
+        role: "Admin"
+      }
     }
   });
 
@@ -164,7 +163,7 @@ export const getFaculties = asyncHandler(async (req, res) => {
     new ApiResponse(
       200,
       faculties,
-      "All Faculty fetched successfully."
+      "All users fetched successfully."
     )
   );
 
