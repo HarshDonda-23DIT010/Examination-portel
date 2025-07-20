@@ -143,10 +143,10 @@ exports.Prisma.SubjectScalarFieldEnum = {
   name: 'name',
   semester: 'semester',
   coordinatorId: 'coordinatorId',
+  type: 'type',
   dep_IT: 'dep_IT',
   dep_CE: 'dep_CE',
   dep_CSE: 'dep_CSE',
-  type: 'type',
   theory_hour: 'theory_hour',
   practical_hour: 'practical_hour',
   theory_credite: 'theory_credite',
@@ -173,7 +173,7 @@ exports.Prisma.StudentScalarFieldEnum = {
   email: 'email',
   department: 'department',
   semester: 'semester',
-  class: 'class'
+  div: 'div'
 };
 
 exports.Prisma.ExamScalarFieldEnum = {
