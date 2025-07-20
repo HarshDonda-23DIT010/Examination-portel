@@ -113,24 +113,24 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
 });
 
 
-export const updateStudent = asyncHandler(async (req,res)=>{
-    const {studentId,name,div} = req.body;
-    
-    if(!studentId || !name || !div){
-        throw new ApiError(400,"All fields are required.")
+export const updateStudent = asyncHandler(async (req, res) => {
+    const { studentId, name, div } = req.body;
+
+    if (!studentId || !name || !div) {
+        throw new ApiError(400, "All fields are required.")
     }
 
     const existStudent = await prisma.student.findFirst({
-        where:{studentId}
+        where: { studentId }
     })
 
-    if(!existStudent){
-        throw new ApiError(404,"Student is not found.")
+    if (!existStudent) {
+        throw new ApiError(404, "Student is not found.")
     }
 
     const student = await prisma.student.update({
-        where:{studentId},
-        data:{
+        where: { studentId },
+        data: {
             name,
             div
         }
@@ -145,8 +145,8 @@ export const updateStudent = asyncHandler(async (req,res)=>{
     )
 })
 
-export const getAllStudent = asyncHandler(async (req,res)=>{
-    
+export const getAllStudent = asyncHandler(async (req, res) => {
+
     const students = await prisma.student.findMany({})
 
     return res.status(200).json(
@@ -159,3 +159,114 @@ export const getAllStudent = asyncHandler(async (req,res)=>{
 
 })
 
+export const bulkPromoteStudent = asyncHandler(async (req, res) => {
+    const fileBuffer = req.file?.buffer;
+    if (!fileBuffer) {
+        throw new ApiError(400, 'No file uploaded');
+    }
+
+    // Read and parse Excel
+    const workbook = xlsx.read(fileBuffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const rawData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+    // Clean data
+    const cleanedData = rawData.map((row) => {
+        const cleanedRow = {};
+        for (const key in row) {
+            const cleanKey = key.trim().replace(/\uFEFF/g, '');
+            cleanedRow[cleanKey] = row[key]?.toString().trim();
+        }
+        return cleanedRow;
+    });
+
+    // Extract unique studentIds
+    const seen = new Set();
+    const uniqueStudentIds = [];
+
+    for (const row of cleanedData) {
+        const id = row.studentId?.toString().trim();
+        if (id && !seen.has(id)) {
+            seen.add(id);
+            uniqueStudentIds.push(id);
+        }
+    }
+
+    if (uniqueStudentIds.length === 0) {
+        throw new ApiError(400, 'No valid studentId found in the file');
+    }
+
+    // Fetch students from DB
+    const studentsToPromote = await prisma.student.findMany({
+        where: {
+            studentId: { in: uniqueStudentIds }
+        }
+    });
+
+    if (studentsToPromote.length === 0) {
+        throw new ApiError(404, 'No matching students found in the database');
+    }
+
+    // Update each student’s semester by +1
+    const updatePromises = studentsToPromote.map((student) =>
+        prisma.student.update({
+            where: { id: student.id },
+            data: {
+                semester: student.semester + 1
+            }
+        })
+    );
+
+    await Promise.all(updatePromises);
+
+    res.status(200).json(new ApiResponse(
+        200,
+        { updatedCount: studentsToPromote.length },
+        'Students promoted successfully.'
+    ));
+});
+
+// from the frontend share studentIds
+export const selectedStudentPromote = asyncHandler(async (req, res) => {
+    const { studentIds } = req.body;
+
+    // Validate input
+    if (!Array.isArray(studentIds) || studentIds.length === 0) {
+        throw new ApiError(400, 'studentIds must be a non-empty array');
+    }
+
+    // Clean and deduplicate
+    const uniqueIds = [...new Set(studentIds.map(id => id.toString().trim()))];
+
+    // Fetch existing students
+    const studentsToPromote = await prisma.student.findMany({
+        where: {
+            studentId: { in: uniqueIds }
+        }
+    });
+
+    if (studentsToPromote.length === 0) {
+        throw new ApiError(404, 'No matching students found');
+    }
+
+    // Promote (semester += 1)
+    const updatePromises = studentsToPromote.map(student =>
+        prisma.student.update({
+            where: { id: student.id },
+            data: { semester: student.semester + 1 }
+        })
+    );
+
+    await Promise.all(updatePromises);
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            {
+                updatedCount: studentsToPromote.length,
+                promotedIds: studentsToPromote.map(s => s.studentId),
+            },
+            'Selected students promoted successfully'
+        )
+    );
+});
