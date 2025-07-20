@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-      <div className="flex w-full max-w-7xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className="flex w-full max-w-7xl mx-24 bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* Left Side - Logo and Branding */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 p-12 flex-col justify-center items-center text-white">
           <div className="text-center">

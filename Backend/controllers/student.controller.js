@@ -145,9 +145,14 @@ export const updateStudent = asyncHandler(async (req, res) => {
     )
 })
 
-export const getAllStudent = asyncHandler(async (req, res) => {
+export const getDepartmentStudent = asyncHandler(async (req, res) => {
+    const { department } = req.params;    
 
-    const students = await prisma.student.findMany({})
+    const students = await prisma.student.findMany({
+        where: {
+            department: department
+        }
+    })
 
     return res.status(200).json(
         new ApiResponse(

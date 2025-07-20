@@ -88,7 +88,7 @@ const AddAcademicYear = () => {
 
     try {
       // Format the year data according to your API requirements
-      // Ensure dates are in yyyy-mm-dd format for backend
+      // Ensure dates are in yyyy-mm-dd format for backend  
       const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);

@@ -64,24 +64,24 @@ const Navbar = () => {
 
                {/* Navigation Links */}
                <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-                  <button
-                     onClick={() => handleNavigation('/')}
-                     className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
-                  >
-                     Dashboard
-                  </button>
-                  <button
-                     onClick={() => handleNavigation('/examinations')}
-                     className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base"
-                  >
-                     Examinations
-                  </button>
-                  <button
-                     onClick={() => handleNavigation('/students')}
-                     className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base"
-                  >
-                     Students
-                  </button>
+                  {user?.role === 'HOD' &&
+                     <>
+                        <button
+                           onClick={() => handleNavigation('/add-faculty')}
+                           className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
+                        >
+                           Add Facultys
+                        </button>
+                        <button
+                           onClick={() => handleNavigation('/add-students')}
+                           className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
+                        >
+                           Add Students
+                        </button>
+                     </>
+
+                  }
+
                </nav>
 
                {/* Right Side - User Info and Actions */}

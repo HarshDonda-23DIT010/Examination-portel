@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layout/MainLayout';
 import Welcome from './pages/Welcome';
 import Profile from './pages/profile/Profile';
+import AddFaculties from './pages/hod/AddFaculties';
+import AddStudents from './pages/hod/AddStudents';
 
 const appRouter = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const appRouter = createBrowserRouter([
       {
         path: '/profile',
         element: <ProtectedRoute><Profile /></ProtectedRoute>
+      },
+      {
+        path: '/add-faculty',
+        element: <ProtectedRoute><AddFaculties /></ProtectedRoute>
+      },
+      {
+        path: '/add-students',
+        element: <ProtectedRoute><AddStudents /></ProtectedRoute>
       },
       
     ]

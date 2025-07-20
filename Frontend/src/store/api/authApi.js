@@ -76,13 +76,62 @@ export const authApi = createApi({
       invalidatesTags: ['Auth'],
     }),
     updatePassword: builder.mutation({
-      query: ({ userId, oldPassword, newPassword }) => ({
+      query: ({
+        userId,
+        oldPassword,
+        newPassword
+      }) => ({
         url: `/change-pass/${userId}`,
         method: 'PUT',
         body: {
           oldPassword,
           newPassword
         },
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+    getFaculties: builder.query({
+      query: () => ({
+        url: '/get-all-users',
+        method: 'GET',
+      }),
+      async onQueryStarted(arg, {
+        dispatch,
+        queryFulfilled
+      }) {
+        try {
+          const {
+            data
+          } = await queryFulfilled;
+          if (data.success && data.data) {
+            dispatch(setUsers(data.data));
+          }
+        } catch (error) {
+          console.error('Failed to fetch faculties:', error);
+        }
+      },
+      providesTags: ['Auth'],
+    }),
+    updateFaculty: builder.mutation({
+      query: (facultyData) => ({
+        url: '/update-user',
+        method: 'PUT',
+        body: facultyData,
+      }),
+      providesTags: ['Auth'],
+    }),
+    deleteFaculty: builder.mutation({
+      query: (userId) => ({
+        url: `/delete-user/${userId}`,
+        method: 'GET',
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+    CreateFaculty: builder.mutation({
+      query: (facultyData) => ({
+        url: '/register',
+        method: 'POST',
+        body: facultyData,
       }),
       invalidatesTags: ['Auth'],
     }),
@@ -93,4 +142,8 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useUpdatePasswordMutation,
+  useGetFacultiesQuery,
+  useUpdateFacultyMutation,
+  useDeleteFacultyMutation,
+  useCreateFacultyMutation,
 } = authApi;
