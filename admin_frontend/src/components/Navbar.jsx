@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle } from 'lucide-react';
+import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle, Calendar, BookOpen } from 'lucide-react';
 import { useLogoutMutation } from '../store/api/authApi';
 import logo from '../assets/depstar.png';
 import { useState, useRef, useEffect } from 'react';
 
 
 const Navbar = () => {
-   const { user } = useSelector((state) => state.auth);
+   const { user, selectedYearObject, selectedSemester } = useSelector((state) => state.auth);
    const navigate = useNavigate();
    const [logoutMutation] = useLogoutMutation();
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -107,14 +107,41 @@ const Navbar = () => {
                {/* Right Side - User Info and Actions */}
                <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
                   
+                  {/* Current Academic Configuration Display */}
+                  {(selectedYearObject || selectedSemester) && (
+                     <div 
+                        onClick={() => handleNavigation('/admin/settings')}
+                        className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors duration-200"
+                     >
+                        <div className="flex items-center space-x-1">
+                           <Calendar className="h-4 w-4 text-blue-600" />
+                           {selectedYearObject && (
+                              <span className="text-xs lg:text-sm font-medium text-blue-800">
+                                 {selectedYearObject.year.split('/')[0]}
+                              </span>
+                           )}
+                        </div>
+                        {selectedSemester && (
+                           <div className="flex items-center space-x-1">
+                              <BookOpen className="h-4 w-4 text-blue-600" />
+                              <span className="text-xs lg:text-sm font-medium text-blue-800">
+                                 Sem {selectedSemester}
+                              </span>
+                           </div>
+                        )}
+                     </div>
+                  )}
 
-                  {/* Settings - Hidden on small screens */}
-                  <button
-                     onClick={() => handleNavigation('/admin/settings')}
-                     className="hidden sm:block p-2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
-                  >
-                     <Settings className="h-4 w-4 lg:h-5 lg:w-5" />
-                  </button>
+                  {/* Settings Button - Show only when no configuration is set */}
+                  {!(selectedYearObject || selectedSemester) && (
+                     <button
+                        onClick={() => handleNavigation('/admin/settings')}
+                        className="hidden sm:block p-2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
+                        title="Configure Academic Year & Semester"
+                     >
+                        <Settings className="h-4 w-4 lg:h-5 lg:w-5" />
+                     </button>
+                  )}
 
                   {/* User Profile Dropdown */}
                   <div className="relative" ref={dropdownRef}>
@@ -139,6 +166,31 @@ const Navbar = () => {
                      {/* Dropdown Menu */}
                      {isDropdownOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                           {/* Mobile Academic Configuration Display */}
+                           {(selectedYearObject || selectedSemester) && (
+                              <div className="sm:hidden px-4 py-2 border-b border-gray-200">
+                                 <p className="text-xs text-gray-500 mb-1">Current Session</p>
+                                 <div className="flex items-center space-x-2">
+                                    {selectedYearObject && (
+                                       <div className="flex items-center space-x-1">
+                                          <Calendar className="h-3 w-3 text-blue-600" />
+                                          <span className="text-xs font-medium text-blue-800">
+                                             {selectedYearObject.year.split('/')[0]}
+                                          </span>
+                                       </div>
+                                    )}
+                                    {selectedSemester && (
+                                       <div className="flex items-center space-x-1">
+                                          <BookOpen className="h-3 w-3 text-blue-600" />
+                                          <span className="text-xs font-medium text-blue-800">
+                                             Sem {selectedSemester}
+                                          </span>
+                                       </div>
+                                    )}
+                                 </div>
+                              </div>
+                           )}
+                           
                            <button
                               onClick={handleProfileClick}
                               className="flex items-center space-x-2 w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
@@ -146,6 +198,19 @@ const Navbar = () => {
                               <UserCircle className="h-4 w-4" />
                               <span>Profile</span>
                            </button>
+                           
+                           {/* Mobile Settings Link */}
+                           <button
+                              onClick={() => {
+                                 handleNavigation('/admin/settings');
+                                 setIsDropdownOpen(false);
+                              }}
+                              className="sm:hidden flex items-center space-x-2 w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                           >
+                              <Settings className="h-4 w-4" />
+                              <span>Academic Settings</span>
+                           </button>
+                           
                            <hr className="my-1 border-gray-200" />
                            <button
                               onClick={handleLogout}

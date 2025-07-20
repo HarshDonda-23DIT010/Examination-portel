@@ -6,7 +6,7 @@ import {
    ACADEMIC_YEAR_ENDPOINTS
 } from '../../utils/EndPoints.js';
 
-export const authApi = createApi({
+export const yearApi = createApi({
    reducerPath: 'yearApi',
    baseQuery: fetchBaseQuery({
       baseUrl: ACADEMIC_YEAR_ENDPOINTS,
@@ -23,10 +23,11 @@ export const authApi = createApi({
    }),
    tagTypes: ['Year'],
    endpoints: (builder) => ({
-      // getYears: builder.query({
-      //    query: () => '/years',
-      //    providesTags: ['Year'],
-      // }),
+      getYears: builder.query({
+         query: () => '/get-all-years',
+         method: 'GET',
+         providesTags: ['Year'],
+      }),
       addYear: builder.mutation({
          query: (yearData) => ({
             url: '/add-new-year',
@@ -40,5 +41,6 @@ export const authApi = createApi({
 
 export const {
    useAddYearMutation,
-} = authApi;
+   useGetYearsQuery
+} = yearApi;
 

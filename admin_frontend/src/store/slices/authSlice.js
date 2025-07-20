@@ -6,6 +6,8 @@ const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
   isAuthenticated: !!localStorage.getItem('AccessToken'),
   users: [],
+  selectedYearObject: JSON.parse(localStorage.getItem('selectedYearObject')) || null,
+  selectedSemester: JSON.parse(localStorage.getItem('selectedSemester')) || null,
 };
 
 const authSlice = createSlice({
@@ -24,8 +26,12 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.users = [];
+      state.selectedYearObject = null;
+      state.selectedSemester = null;
       localStorage.removeItem('AccessToken');
       localStorage.removeItem('user');
+      localStorage.removeItem('selectedYearObject');
+      localStorage.removeItem('selectedSemester');
     },
     setUsers: (state, action) => {
       state.users = action.payload;
@@ -33,6 +39,35 @@ const authSlice = createSlice({
     addUsers: (state, action) => {
       state.users.push(action.payload);
     },
+    setSelectedYearObject: (state, action) => {
+      state.selectedYearObject = action.payload;
+      if (action.payload === null) {
+        localStorage.removeItem('selectedYearObject');
+      } else {
+        localStorage.setItem('selectedYearObject', JSON.stringify(action.payload));
+      }
+    },
+    setSelectedSemester: (state, action) => {
+      state.selectedSemester = action.payload;
+      if (action.payload === '' || action.payload === null) {
+        localStorage.removeItem('selectedSemester');
+      } else {
+        localStorage.setItem('selectedSemester', JSON.stringify(action.payload));
+      }
+    },
+    setYearAndSemester: (state, action) => {
+      const { yearObject, semester } = action.payload;
+      state.selectedYearObject = yearObject;
+      state.selectedSemester = semester;
+      
+      if (yearObject === null && semester === '') {
+        localStorage.removeItem('selectedYearObject');
+        localStorage.removeItem('selectedSemester');
+      } else {
+        localStorage.setItem('selectedYearObject', JSON.stringify(yearObject));
+        localStorage.setItem('selectedSemester', JSON.stringify(semester));
+      }
+    }
   },
 });
 
@@ -40,6 +75,9 @@ export const {
   setCredentials,
   logout,
   setUsers,
-  addUsers
+  addUsers,
+  setSelectedYearObject,
+  setSelectedSemester,
+  setYearAndSemester
 } = authSlice.actions;
 export default authSlice.reducer;
