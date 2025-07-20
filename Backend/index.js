@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // Cors 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://localhost:5174'],
   credentials: true,
 };
 
@@ -28,6 +28,13 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   res.send('Welcome to the Examination Portal API');
 })
+
+// example for port number 5173
+// app.get("/example",(req,res)=>{
+//   return res.json({
+//     name : "Rolex"
+//   });
+// })
 
 // API end points 
 app.use('/api/v1/user', userRoutes);
