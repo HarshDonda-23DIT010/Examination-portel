@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle } from 'lucide-react';
+import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle,Calendar,BookOpen  } from 'lucide-react';
 import { useLogoutMutation } from '../store/api/authApi';
 import { useState, useRef, useEffect } from 'react';
+import logo from '../assets/depstar.png'; // Ensure the logo path is correct
+
 
 const Navbar = () => {
-   const { user } = useSelector((state) => state.auth);
+   const { user, selectedYearObject, selectedSemester } = useSelector((state) => state.auth);
    const navigate = useNavigate();
    const [logoutMutation] = useLogoutMutation();
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -48,7 +50,7 @@ const Navbar = () => {
                <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-10 h-15 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex items-center justify-center border rounded-lg lg:rounded-xl shadow-sm">
                      <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-600 rounded-lg lg:rounded-xl flex items-center justify-center text-white font-bold">
-                        D
+                        <img src={logo} alt="" className='border rounded-md' />
                      </div>
                   </div>
                   <div>
@@ -58,7 +60,7 @@ const Navbar = () => {
                      >
                         DEPSTAR Faculty
                      </h1>
-                     <p className="text-xs lg:text-sm text-blue-600">Faculty Portal</p>
+                     <p className="text-xs lg:text-sm text-blue-600">Faculty Examination Portal</p>
                   </div>
                </div>
 
@@ -84,8 +86,46 @@ const Navbar = () => {
 
                </nav>
 
+
+
                {/* Right Side - User Info and Actions */}
                <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
+                  {/* Current Academic Configuration Display */}
+                  {(selectedYearObject || selectedSemester) && (
+                     <div
+                        onClick={() => handleNavigation('/settings')}
+                        className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors duration-200"
+                     >
+                        <div className="flex items-center space-x-1">
+                           <Calendar className="h-4 w-4 text-blue-600" />
+                           {selectedYearObject && (
+                              <span className="text-xs lg:text-sm font-medium text-blue-800">
+                                 {selectedYearObject.year.split('/')[0]}
+                              </span>
+                           )}
+                        </div>
+                        {selectedSemester && (
+                           <div className="flex items-center space-x-1">
+                              <BookOpen className="h-4 w-4 text-blue-600" />
+                              <span className="text-xs lg:text-sm font-medium text-blue-800">
+                                 Sem {selectedSemester}
+                              </span>
+                           </div>
+                        )}
+                     </div>
+                  )}
+
+                  {/* Settings Button - Show only when no configuration is set */}
+                  {!(selectedYearObject || selectedSemester) && (
+                     <button
+                        onClick={() => handleNavigation('/settings')}
+                        className="hidden sm:block p-2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
+                        title="Configure Academic Year & Semester"
+                     >
+                        <Settings className="h-4 w-4 lg:h-5 lg:w-5" />
+                     </button>
+                  )}
+
                   {/* User Profile Dropdown */}
                   <div className="relative" ref={dropdownRef}>
                      <button

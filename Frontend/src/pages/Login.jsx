@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Lock, LogIn } from 'lucide-react';
 import { useLoginMutation } from '../store/api/authApi';
+import logo from '../assets/depstar.png'; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ const Login = () => {
             {/* DEPSTAR Logo Area */}
             <div className="mb-8">
               <div className="w-32 h-32 mx-auto bg-blue-700 rounded-full flex items-center justify-center mb-6 text-4xl font-bold">
-                D
+                <img src={logo} alt="" className='border rounded-md' />
               </div>
               <h1 className="text-4xl font-bold mb-2">Welcome to DEPSTAR</h1>
               <p className="text-blue-200 text-lg">Faculty Examination Portal</p>

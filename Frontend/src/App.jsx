@@ -10,6 +10,7 @@ import Welcome from './pages/Welcome';
 import Profile from './pages/profile/Profile';
 import AddFaculties from './pages/hod/AddFaculties';
 import AddStudents from './pages/hod/AddStudents';
+import YearSetting from './pages/setting/YearSetting';
 
 const appRouter = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/add-students',
         element: <ProtectedRoute><AddStudents /></ProtectedRoute>
+      },
+      {
+        path: '/settings',
+        element: <ProtectedRoute><YearSetting /></ProtectedRoute>
       },
       
     ]
