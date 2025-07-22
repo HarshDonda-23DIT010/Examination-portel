@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Lock, LogIn } from 'lucide-react';
 import { useLoginMutation } from '../store/api/authApi';
-import logo from '../assets/depstar.png'; 
+import logo from '../assets/depstar.png';
+import { useDispatch } from 'react-redux';
+import { useGetYearsQuery } from '@/store/api/yearApi';
+import { setYearAndSemester } from '@/store/slices/authSlice';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -23,15 +26,39 @@ const Login = () => {
     setError('');
   };
 
+
+  const dispatch = useDispatch();
+
+  const { data } = useGetYearsQuery();
+  const years = data?.data || [];
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(formData).unwrap();
+
+      const yearObject = years[years.length - 1];
+      
+      // Extract semester from year format (e.g., "2025-2026/odd" or "2025-2026/even")
+      let semester = 5; // default
+      if (yearObject?.year) {
+        const yearStr = yearObject.year.toLowerCase();
+        if (yearStr.includes('/odd')) {
+          semester = 5; // Odd semester
+        } else if (yearStr.includes('/even')) {
+          semester = 4; // Even semester
+        }
+      }
+      
+      dispatch(setYearAndSemester({
+        yearObject: yearObject,
+        semester: semester
+      }));
       navigate('/');
     } catch (err) {
       setError(err?.data?.message || 'Login failed. Please try again.');
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50   to-blue-100 flex items-center justify-center">

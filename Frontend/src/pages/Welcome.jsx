@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { User } from 'lucide-react';
-
 const Welcome = () => {
   const { user } = useSelector((state) => state.auth);
 

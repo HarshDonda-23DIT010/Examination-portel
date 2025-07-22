@@ -72,13 +72,19 @@ const Navbar = () => {
                            onClick={() => handleNavigation('/add-faculty')}
                            className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
                         >
-                           Add Facultys
+                           Add Faculties
                         </button>
                         <button
                            onClick={() => handleNavigation('/add-students')}
                            className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
                         >
                            Add Students
+                        </button>
+                        <button
+                           onClick={() => handleNavigation('/add-subjects')}
+                           className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
+                        >
+                           Add Subjects
                         </button>
                      </>
 

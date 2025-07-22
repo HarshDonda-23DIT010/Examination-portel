@@ -1,7 +1,13 @@
 import prisma from "../DB/db.config.js";
-import { ApiError } from "../utils/apiError.js";
-import { ApiResponse } from "../utils/apiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import {
+    ApiError
+} from "../utils/apiError.js";
+import {
+    ApiResponse
+} from "../utils/apiResponse.js";
+import {
+    asyncHandler
+} from "../utils/asyncHandler.js";
 
 export const addSubject = asyncHandler(async (req, res) => {
     const {
@@ -29,7 +35,9 @@ export const addSubject = asyncHandler(async (req, res) => {
 
     // Ensure coordinator exists
     const user = await prisma.user.findUnique({
-        where: { id: Number(coordinatorId) }
+        where: {
+            id: Number(coordinatorId)
+        }
     });
 
     if (!user) {
@@ -133,16 +141,16 @@ export const updateSubject = asyncHandler(async (req, res) => {
         },
         data: {
             name,
-            coordinatorId,
+            coordinatorId: Number(coordinatorId),
             type,
-            theory_hour,
-            practical_hour,
-            theory_credite,
-            practical_credite,
-            theory_int_marks,
-            practical_int_marks,
-            theory_ext_marks,
-            practical_ext_marks,
+            theory_hour: Number(theory_hour) || null,
+            practical_hour: Number(practical_hour) || null,
+            theory_credite: Number(theory_credite) || null,
+            practical_credite: Number(practical_credite) || null,
+            theory_int_marks: Number(theory_int_marks) || null,
+            practical_int_marks: Number(practical_int_marks) || null,
+            theory_ext_marks: Number(theory_ext_marks) || null,
+            practical_ext_marks: Number(practical_ext_marks) || null,
             ...departmentFlags
         },
     });
@@ -156,3 +164,37 @@ export const updateSubject = asyncHandler(async (req, res) => {
     );
 });
 
+export const getSubjectByYearAnsSemester = asyncHandler(async (req, res) => {
+    const {
+        yearId,
+        semester
+    } = req.params;
+
+    console.log(yearId, semester);
+
+    // Validate parameters
+    if (!yearId || !semester) {
+        throw new ApiError(400, "Year ID and semester are required.");
+    }
+
+    // Fetch subjects for the given year and semester
+    const subjects = await prisma.subject.findMany({
+        where: {
+            yearId: Number(yearId),
+            semester: Number(semester)
+        },
+        include: {
+            subjectCoordinator: true // Include coordinator details
+        }
+    });
+
+    if (subjects.length === 0) {
+        return res.status(404).json(
+            new ApiResponse(404, null, "No subjects found for this year and semester.")
+        );
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, subjects, "Subjects fetched successfully.")
+    );
+});

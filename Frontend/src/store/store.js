@@ -5,8 +5,9 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import authReducer from './slices/authSlice';
 import studentReducer from './slices/studentSlice';
-import { yearApi } from './slices/yearApi';
+import { yearApi } from './api/yearApi';
 import { studentApi } from './api/studentApi';
+import { subjectApi } from './api/subjectApi';
 
 const persistConfig = {
   key: 'faculty-root',
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   student: studentReducer,
   [authApi.reducerPath]: authApi.reducer,
   [studentApi.reducerPath]: studentApi.reducer,
-  [yearApi.reducerPath]: yearApi.reducer
+  [yearApi.reducerPath]: yearApi.reducer,
+  [subjectApi.reducerPath]: subjectApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -31,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(authApi.middleware , studentApi.middleware , yearApi.middleware),
+    }).concat(authApi.middleware , studentApi.middleware , yearApi.middleware , subjectApi.middleware),
 });
 
 export const persistor = persistStore(store);

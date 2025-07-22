@@ -3,10 +3,10 @@ import {
 } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('faculty-user')) || null,
+  user: null,
   isAuthenticated: !!localStorage.getItem('FacultyAccessToken'),
-  selectedYearObject: JSON.parse(localStorage.getItem('selectedYearObject')) || null,
-  selectedSemester: JSON.parse(localStorage.getItem('selectedSemester')) || null,
+  selectedYearObject: null,
+  selectedSemester: null,
 };
 
 const authSlice = createSlice({
@@ -46,10 +46,13 @@ const authSlice = createSlice({
       }
     },
     setYearAndSemester: (state, action) => {
-      const { yearObject, semester } = action.payload;
+      const {
+        yearObject,
+        semester
+      } = action.payload;
       state.selectedYearObject = yearObject;
       state.selectedSemester = semester;
-      
+
       if (yearObject === null && semester === '') {
         localStorage.removeItem('selectedYearObject');
         localStorage.removeItem('selectedSemester');

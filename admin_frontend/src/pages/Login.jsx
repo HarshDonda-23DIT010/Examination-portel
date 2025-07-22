@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Lock, LogIn } from 'lucide-react';
 import { useLoginMutation } from '../store/api/authApi';
 import logo from '../assets/depstar.png';
+import { useDispatch } from 'react-redux';
+import { useGetYearsQuery } from '@/store/api/yearApi';
+import { setYearAndSemester } from '@/store/slices/authSlice';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +14,11 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
+  const dispatch = useDispatch();
+
+  const { data } = useGetYearsQuery();
+  const years = data?.data || [];
 
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
@@ -27,8 +35,11 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(formData).unwrap();
-      // No need to dispatch here - it's handled in authApi.js
-      navigate('/');
+      const yearObject = years[years.length - 1];
+      dispatch(setYearAndSemester({
+        yearObject: yearObject,
+        semester: 5
+      })); navigate('/');
     } catch (err) {
       setError(err?.data?.message || 'Login failed. Please try again.');
     }
@@ -50,7 +61,7 @@ const Login = () => {
               <p className="text-blue-200 text-sm mt-2">Charotar University of Science and Technology (CHARUSAT)</p>
             </div>
 
-            
+
           </div>
         </div>
 

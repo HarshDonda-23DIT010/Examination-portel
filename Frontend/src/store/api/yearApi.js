@@ -13,7 +13,7 @@ export const yearApi = createApi({
       prepareHeaders: (headers, {
          getState
       }) => {
-         const token = localStorage.getItem('AccessToken');
+         const token = localStorage.getItem('FacultyAccessToken');
          if (token) {
             headers.set('authorization', `Bearer ${token}`);
          }
@@ -24,8 +24,10 @@ export const yearApi = createApi({
    tagTypes: ['Year'],
    endpoints: (builder) => ({
       getYears: builder.query({
-         query: () => '/get-all-years',
-         method: 'GET',
+         query: () => ({
+            url: '/get-all-years',
+            method: 'GET',
+         }),
          providesTags: ['Year'],
       }),
    }),

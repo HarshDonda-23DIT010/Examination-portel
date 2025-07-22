@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, BookOpen, ChevronDown } from 'lucide-react';
-import { useGetYearsQuery } from '@/store/slices/yearApi';
-// import { useGetYearsQuery } from '@/store/api/yearApi';
+import { useGetYearsQuery } from '@/store/api/yearApi';
 import { setYearAndSemester } from '@/store/slices/authSlice';
 
 const YearSetting = () => {
