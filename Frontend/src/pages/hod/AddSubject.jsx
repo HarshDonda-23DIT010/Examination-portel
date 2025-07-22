@@ -346,10 +346,6 @@ const AddSubject = () => {
                      <div className="flex justify-center items-center py-12">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                      </div>
-                  ) : error ? (
-                     <div className="text-center py-12">
-                        <p className="text-red-600">Error loading subjects. Please try again.</p>
-                     </div>
                   ) : filteredSubjects.length === 0 ? (
                      <div className="text-center py-12">
                         <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -390,9 +386,9 @@ const AddSubject = () => {
                                  </td>
                                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                                     <span className={`px-2 py-1 text-xs rounded-full ${subject.type === 'major' ? 'bg-blue-100 text-blue-800' :
-                                          subject.type === 'elective' ? 'bg-green-100 text-green-800' :
-                                             subject.type === 'universityElective' ? 'bg-purple-100 text-purple-800' :
-                                                'bg-gray-100 text-gray-800'
+                                       subject.type === 'elective' ? 'bg-green-100 text-green-800' :
+                                          subject.type === 'universityElective' ? 'bg-purple-100 text-purple-800' :
+                                             'bg-gray-100 text-gray-800'
                                        }`}>
                                        {subject.type === 'universityElective' ? 'Univ. Elective' :
                                           subject.type.charAt(0).toUpperCase() + subject.type.slice(1)}

@@ -170,8 +170,6 @@ export const getSubjectByYearAnsSemester = asyncHandler(async (req, res) => {
         semester
     } = req.params;
 
-    console.log(yearId, semester);
-
     // Validate parameters
     if (!yearId || !semester) {
         throw new ApiError(400, "Year ID and semester are required.");
