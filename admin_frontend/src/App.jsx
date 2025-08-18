@@ -12,6 +12,7 @@ import AddFaculties from './pages/faculties/AddFaculties';
 import AdminSetting from './pages/setting/AdminSetting';
 import Profile from './pages/Profile/Profile';
 import AddAcademicYear from './pages/academic_year/AddAcademicYear';
+import AddSubject from './pages/subject/AddSubject';
 
 const appRouter = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const appRouter = createBrowserRouter([
       {
         path: 'academic-year',
         element: <ProtectedRoute><AddAcademicYear/></ProtectedRoute>
+      },
+      {
+        path: 'add-subjects',
+        element: <ProtectedRoute><AddSubject/></ProtectedRoute>
       }
       // Admin routes can be added here later
 

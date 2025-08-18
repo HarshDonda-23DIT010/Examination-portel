@@ -84,6 +84,19 @@ export const addSubject = asyncHandler(async (req, res) => {
         }
     });
 
+    if (!subject) {
+        throw new ApiError(500, "Failed to create subject.");
+    }
+
+    const subjectFaculty = await prisma.subjectFaculty.create({
+        data: {
+            facultyId: Number(coordinatorId),
+            subjectId: subject.id, // Assuming subject.id is Int
+            role: "SubjectCoordinator",
+            yearId: Number(yearId)
+        }
+    });
+
     return res.status(201).json(
         new ApiResponse(201, subject, "Subject created successfully.")
     );
@@ -155,6 +168,39 @@ export const updateSubject = asyncHandler(async (req, res) => {
         },
     });
 
+    if (!subject) {
+        throw new ApiError(404, "Subject not found after update.");
+    }
+
+    const existingFaculty = await prisma.subjectFaculty.findFirst({
+        where: {
+            subjectId: subject.id
+        }
+    });
+
+    if (existingFaculty) {
+        // Update existing SubjectFaculty
+        await prisma.subjectFaculty.update({
+            where: {
+                id: existingFaculty.id
+            },
+            data: {
+                facultyId: Number(coordinatorId),
+                role: "SubjectCoordinator" // or "Faculty" based on your business logic
+            }
+        });
+    } else {
+        // Create new SubjectFaculty if not exists
+        await prisma.subjectFaculty.create({
+            data: {
+                subjectId: subject.id,
+                facultyId: Number(coordinatorId),
+                role: "SubjectCoordinator",
+                yearId: updatedSubject.yearId // Assuming you want to link to the same year
+            }
+        });
+    }
+
     return res.status(200).json(
         new ApiResponse(
             200,
@@ -196,3 +242,69 @@ export const getSubjectByYearAnsSemester = asyncHandler(async (req, res) => {
         new ApiResponse(200, subjects, "Subjects fetched successfully.")
     );
 });
+
+export const getFacultySubjects = asyncHandler(async (req, res) => {
+
+    const { userId, yearId, semester } = req.params;    
+    
+    if (!userId || !yearId || !semester) {
+        throw new ApiError(400, "userId, yearId, and semester are required.");
+    }
+
+    const userIdNum = Number(userId);
+    const yearIdNum = Number(yearId);
+    const semesterNum = Number(semester);
+
+    // 1. Find subjects where faculty is coordinator
+    const coordinatorSubjects = await prisma.subject.findMany({
+        where: {
+            coordinatorId: userIdNum,
+            yearId: yearIdNum,
+            semester: semesterNum
+        }
+    });
+
+    // 2. Find subjects where faculty is listed in SubjectFaculty table
+    const facultySubjects = await prisma.subjectFaculty.findMany({
+        where: {
+            facultyId: userIdNum,
+            yearId: yearIdNum,
+            subject: {
+                semester: semesterNum
+            }
+        },
+        include: {
+            subject: true
+        }
+    });
+
+    // 3. Combine and format the results
+    const resultsMap = new Map();
+
+    // Add coordinator subjects
+    for (const subj of coordinatorSubjects) {
+        resultsMap.set(subj.id, {
+            subject: subj,
+            roles: ['SubjectCoordinator']
+        });
+    }
+
+    // Add faculty subjects
+    for (const fs of facultySubjects) {
+        if (resultsMap.has(fs.subjectId)) {
+            resultsMap.get(fs.subjectId).roles.push('Faculty');
+        } else {
+            resultsMap.set(fs.subjectId, {
+                subject: fs.subject,
+                roles: ['Faculty']
+            });
+        }
+    }
+
+    const result = Array.from(resultsMap.values());
+
+    return res.status(200).json(
+        new ApiResponse(200, result, "Faculty roles fetched successfully.")
+    );
+});
+

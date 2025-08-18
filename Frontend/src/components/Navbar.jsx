@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle,Calendar,BookOpen  } from 'lucide-react';
+import { LogOut, User, Bell, Settings, Menu, X, ChevronDown, UserCircle, Calendar, BookOpen } from 'lucide-react';
 import { useLogoutMutation } from '../store/api/authApi';
 import { useState, useRef, useEffect } from 'react';
 import logo from '../assets/depstar.png'; // Ensure the logo path is correct
@@ -88,6 +88,17 @@ const Navbar = () => {
                         </button>
                      </>
 
+                  }
+                  {
+                     user.role == "Faculty" &&
+                     <>
+                        <button
+                           onClick={() => handleNavigation('/my-subjects')}
+                           className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
+                        >
+                           My Subjects
+                        </button>
+                     </>
                   }
 
                </nav>

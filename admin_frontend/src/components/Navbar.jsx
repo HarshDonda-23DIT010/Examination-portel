@@ -90,18 +90,13 @@ const Navbar = () => {
                   >
                      Add Academic Year
                   </button>
-                  {/* <button
-                     onClick={() => handleNavigation('/admin/courses')}
-                     className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base"
-                  >
-                     Courses
-                  </button>
                   <button
-                     onClick={() => handleNavigation('/admin/reports')}
+                     onClick={() => handleNavigation('/add-subjects')}
                      className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base"
                   >
-                     Reports
-                  </button> */}
+                     Add Subjects
+                  </button>
+                 
                </nav>
 
                {/* Right Side - User Info and Actions */}

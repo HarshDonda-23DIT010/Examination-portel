@@ -12,6 +12,7 @@ import AddFaculties from './pages/hod/AddFaculties';
 import AddStudents from './pages/hod/AddStudents';
 import AddSubject from './pages/hod/AddSubject';
 import YearSetting from './pages/setting/YearSetting';
+import MySubjects from './pages/faculties/MySubjects';
 
 const appRouter = createBrowserRouter([
   {
@@ -45,6 +46,15 @@ const appRouter = createBrowserRouter([
       {
         path: '/settings',
         element: <ProtectedRoute><YearSetting /></ProtectedRoute>
+      },
+
+
+
+      
+      // for the Faculties only
+      {
+        path: '/my-subjects',
+        element: <ProtectedRoute><MySubjects /></ProtectedRoute>
       },
       
     ]

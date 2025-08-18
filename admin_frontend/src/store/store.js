@@ -5,6 +5,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import { yearApi } from './api/yearApi';
 import authReducer from './slices/authSlice';
+import { subjectApi } from './api/subjectApi';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [yearApi.reducerPath]: yearApi.reducer,
+  [subjectApi.reducerPath]: subjectApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -27,7 +29,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(authApi.middleware, yearApi.middleware),
+    }).concat(authApi.middleware, yearApi.middleware, subjectApi.middleware),
 });
 
 export const persistor = persistStore(store);

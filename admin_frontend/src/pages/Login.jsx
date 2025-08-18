@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Lock, LogIn } from 'lucide-react';
 import { useLoginMutation } from '../store/api/authApi';
@@ -15,14 +15,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const dispatch = useDispatch();
-
-  const { data } = useGetYearsQuery();
-  const years = data?.data || [];
-
+  
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
-
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -30,16 +26,41 @@ const Login = () => {
     });
     setError('');
   };
+  
+  const dispatch = useDispatch();
+
+  const { data, refetch } = useGetYearsQuery();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(formData).unwrap();
+      
+      // Refetch years and wait for the response
+      const yearsResponse = await refetch();
+      const years = yearsResponse?.data?.data || [];
+
       const yearObject = years[years.length - 1];
-      dispatch(setYearAndSemester({
-        yearObject: yearObject,
-        semester: 5
-      })); navigate('/');
+      
+      let semester = 5; // default
+      if (yearObject?.year) {
+        const yearStr = yearObject.year.toLowerCase();
+        if (yearStr.includes('/odd')) {
+          semester = 5; // Odd semester
+        } else if (yearStr.includes('/even')) {
+          semester = 4; // Even semester
+        }
+      }
+      
+      // Only dispatch if we have a valid year object
+      if (yearObject) {
+        dispatch(setYearAndSemester({
+          yearObject: yearObject,
+          semester: semester
+        }));
+      }
+      
+      navigate('/');
     } catch (err) {
       setError(err?.data?.message || 'Login failed. Please try again.');
     }

@@ -29,13 +29,17 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const { data } = useGetYearsQuery();
-  const years = data?.data || [];
+  const { data, refetch } = useGetYearsQuery();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(formData).unwrap();
-
+      
+      // Refetch years and wait for the response
+      const yearsResponse = await refetch();
+      const years = yearsResponse?.data?.data || [];
+      
+      // Get the latest year object
       const yearObject = years[years.length - 1];
       
       // Extract semester from year format (e.g., "2025-2026/odd" or "2025-2026/even")
@@ -49,10 +53,14 @@ const Login = () => {
         }
       }
       
-      dispatch(setYearAndSemester({
-        yearObject: yearObject,
-        semester: semester
-      }));
+      // Only dispatch if we have a valid year object
+      if (yearObject) {
+        dispatch(setYearAndSemester({
+          yearObject: yearObject,
+          semester: semester
+        }));
+      }
+      
       navigate('/');
     } catch (err) {
       setError(err?.data?.message || 'Login failed. Please try again.');

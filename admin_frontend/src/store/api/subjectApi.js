@@ -46,19 +46,11 @@ export const subjectApi = createApi({
          }),
          invalidatesTags: ['Subject'],
       }),
-      getFacultySubjects: builder.query({
-         query: ({ userId, yearId, semester }) => ({
-            url: `/get-faculty-subjects/${userId}/${yearId}/${semester}`,
-            method: 'GET',
-         }),
-         providesTags: ['Subject'],
-      }),
    })
 });
 
 export const {
    useAddSubjectMutation,
    useGetSubjectByYearAndSemQuery,
-   useUpdateSubjectMutation,
-   useGetFacultySubjectsQuery
+   useUpdateSubjectMutation
 } = subjectApi;

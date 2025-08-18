@@ -127,6 +127,7 @@ export const login = asyncHandler(async (req, res) => {
     .json(new ApiResponse(
       200,
       {
+        id: user.id,
         userId: user.userId,
         name: user.name,
         email: user.email,
