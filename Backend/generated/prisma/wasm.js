@@ -162,6 +162,7 @@ exports.Prisma.SubjectFacultyScalarFieldEnum = {
   id: 'id',
   facultyId: 'facultyId',
   subjectId: 'subjectId',
+  department: 'department',
   role: 'role',
   yearId: 'yearId'
 };
@@ -173,7 +174,8 @@ exports.Prisma.StudentScalarFieldEnum = {
   email: 'email',
   department: 'department',
   semester: 'semester',
-  div: 'div'
+  div: 'div',
+  batch: 'batch'
 };
 
 exports.Prisma.ExamScalarFieldEnum = {
@@ -241,6 +243,22 @@ exports.SubjectType = exports.$Enums.SubjectType = {
 exports.SubjectFacultyRole = exports.$Enums.SubjectFacultyRole = {
   SubjectCoordinator: 'SubjectCoordinator',
   Faculty: 'Faculty'
+};
+
+exports.Div = exports.$Enums.Div = {
+  DIT1: 'DIT1',
+  DIT2: 'DIT2',
+  DCS1: 'DCS1',
+  DCS2: 'DCS2',
+  DCE1: 'DCE1',
+  DCE2: 'DCE2'
+};
+
+exports.Batch = exports.$Enums.Batch = {
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D'
 };
 
 exports.ExamStatus = exports.$Enums.ExamStatus = {

@@ -47,7 +47,8 @@ const ViewStudents = () => {
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.div.toLowerCase().includes(searchTerm.toLowerCase())
+    student.div.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (student.batch && student.batch.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Group students by department
@@ -64,13 +65,14 @@ const ViewStudents = () => {
     if (students.length === 0) return;
 
     const csvData = [
-      ['Student ID', 'Name', 'Email', 'Department', 'Division', 'Semester'],
+      ['Student ID', 'Name', 'Email', 'Department', 'Division', 'Batch', 'Semester'],
       ...students.map(student => [
         student.studentId,
         student.name,
         student.email,
         student.department,
         student.div,
+        student.batch || 'N/A',
         student.semester
       ])
     ];
@@ -160,7 +162,7 @@ const ViewStudents = () => {
           <Search className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search students by name, student ID, email, or division..."
+            placeholder="Search students by name, student ID, email, division, or batch..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -242,6 +244,9 @@ const ViewStudents = () => {
                             Division
                           </th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Batch
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Semester
                           </th>
                         </tr>
@@ -276,6 +281,11 @@ const ViewStudents = () => {
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                 Div {student.div}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Batch {student.batch || 'N/A'}
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

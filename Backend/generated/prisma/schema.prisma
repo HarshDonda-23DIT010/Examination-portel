@@ -40,6 +40,22 @@ enum UserRole {
   Admin
 }
 
+enum Batch {
+  A
+  B
+  C
+  D
+}
+
+enum Div {
+  DIT1
+  DIT2
+  DCS1
+  DCS2
+  DCE1
+  DCE2
+}
+
 model User {
   id                 Int              @id @unique @default(autoincrement())
   userId             String           @unique
@@ -98,13 +114,13 @@ enum SubjectFacultyRole {
 }
 
 model SubjectFaculty {
-  id        String             @id @unique @default(uuid())
-  facultyId Int
-  faculty   User               @relation(fields: [facultyId], references: [id])
-  subjectId Int
-  subject   Subject            @relation(fields: [subjectId], references: [id])
-  // department
-  role      SubjectFacultyRole
+  id         String             @id @unique @default(uuid())
+  facultyId  Int
+  faculty    User               @relation(fields: [facultyId], references: [id])
+  subjectId  Int
+  subject    Subject            @relation(fields: [subjectId], references: [id])
+  department Department
+  role       SubjectFacultyRole
 
   yearId Int
   year   Year @relation(fields: [yearId], references: [id])
@@ -117,7 +133,8 @@ model Student {
   email      String     @unique
   department Department
   semester   Int
-  div        String
+  div        Div
+  batch      Batch
   subjects   Subject[]
   exams      Exam[]
   marks      Marks[]

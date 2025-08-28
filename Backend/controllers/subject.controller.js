@@ -93,6 +93,7 @@ export const addSubject = asyncHandler(async (req, res) => {
             facultyId: Number(coordinatorId),
             subjectId: subject.id, // Assuming subject.id is Int
             role: "SubjectCoordinator",
+            department: user.department,
             yearId: Number(yearId)
         }
     });
@@ -441,7 +442,8 @@ export const getSubjectStudents = asyncHandler(async (req, res) => {
                     email: true,
                     department: true,
                     semester: true,
-                    div: true
+                    div: true,
+                    batch: true
                 }
             }
         }
@@ -549,7 +551,8 @@ export const updateSubjectStudents = asyncHandler(async (req, res) => {
                     email: true,
                     department: true,
                     semester: true,
-                    div: true
+                    div: true,
+                    batch: true
                 }
             }
         }

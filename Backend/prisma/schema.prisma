@@ -17,10 +17,10 @@ datasource db {
 // models
 
 model Year {
-  id             Int             @id @unique @default(autoincrement())
-  year           String          @unique
-  startDate      DateTime        @db.Date
-  endDate        DateTime        @db.Date
+  id             Int              @id @unique @default(autoincrement())
+  year           String           @unique
+  startDate      DateTime         @db.Date
+  endDate        DateTime         @db.Date
   subject        Subject[]
   subjectFaculty SubjectFaculty[]
   exam           Exam[]
@@ -38,6 +38,22 @@ enum UserRole {
   Faculty
   HOD
   Admin
+}
+
+enum Batch {
+  A
+  B
+  C
+  D
+}
+
+enum Div {
+  DIT1
+  DIT2
+  DCS1
+  DCS2
+  DCE1
+  DCE2
 }
 
 model User {
@@ -60,12 +76,12 @@ enum SubjectType {
 }
 
 model Subject {
-  id                 Int    @id @default(autoincrement())
-  code               String @unique
+  id                 Int         @id @default(autoincrement())
+  code               String      @unique
   name               String
   semester           Int
   coordinatorId      Int
-  subjectCoordinator User   @relation(fields: [coordinatorId], references: [id])
+  subjectCoordinator User        @relation(fields: [coordinatorId], references: [id])
   type               SubjectType
 
   dep_IT    Boolean?
@@ -92,33 +108,33 @@ model Subject {
   year   Year @relation(fields: [yearId], references: [id])
 }
 
-
 enum SubjectFacultyRole {
   SubjectCoordinator
   Faculty
 }
 
 model SubjectFaculty {
-  id        String             @id @unique @default(uuid())
-  facultyId Int
-  faculty   User               @relation(fields: [facultyId], references: [id])
-  subjectId Int
-  subject   Subject            @relation(fields: [subjectId], references: [id])
-  // department
-  role      SubjectFacultyRole
+  id         String             @id @unique @default(uuid())
+  facultyId  Int
+  faculty    User               @relation(fields: [facultyId], references: [id])
+  subjectId  Int
+  subject    Subject            @relation(fields: [subjectId], references: [id])
+  department Department
+  role       SubjectFacultyRole
 
-  yearId Int  
+  yearId Int
   year   Year @relation(fields: [yearId], references: [id])
 }
 
 model Student {
   id         String     @id @unique @default(uuid())
-  studentId  String        @unique
+  studentId  String     @unique
   name       String
   email      String     @unique
   department Department
   semester   Int
-  div      String
+  div        Div
+  batch      Batch
   subjects   Subject[]
   exams      Exam[]
   marks      Marks[]
@@ -148,7 +164,7 @@ model Exam {
   detain           Detain[]
   status           ExamStatus?
 
-  yearId Int  
+  yearId Int
   year   Year @relation(fields: [yearId], references: [id])
 }
 
@@ -162,7 +178,7 @@ model Marks {
   examId         String @unique
   exam           Exam   @relation(fields: [examId], references: [id])
 
-  yearId Int  
+  yearId Int
   year   Year @relation(fields: [yearId], references: [id])
 }
 
@@ -173,6 +189,6 @@ model Detain {
   examId    String
   exam      Exam    @relation(fields: [examId], references: [id])
 
-  yearId Int  
+  yearId Int
   year   Year @relation(fields: [yearId], references: [id])
 }
