@@ -13,7 +13,7 @@ export const subjectApi = createApi({
       prepareHeaders: (headers, {
          getState
       }) => {
-         const token = localStorage.getItem('AccessToken');
+         const token = localStorage.getItem('FacultyAccessToken');
          if (token) {
             headers.set('authorization', `Bearer ${token}`);
          }
@@ -53,6 +53,29 @@ export const subjectApi = createApi({
          }),
          providesTags: ['Subject'],
       }),
+      addStudentsInSubject: builder.mutation({
+         query: (data) => ({
+            url: '/add-students-in-subject',
+            method: 'POST',
+            body: data,
+         }),
+         invalidatesTags: ['Subject'],
+      }),
+      getSubjectStudents: builder.query({
+         query: (subjectId) => ({
+            url: `/subject-students/${subjectId}`,
+            method: 'GET',
+         }),
+         providesTags: ['Subject'],
+      }),
+      updateSubjectStudents: builder.mutation({
+         query: ({ subjectId, ...data }) => ({
+            url: `/update-subject-students/${subjectId}`,
+            method: 'PUT',
+            body: data,
+         }),
+         invalidatesTags: ['Subject'],
+      }),
    })
 });
 
@@ -60,5 +83,8 @@ export const {
    useAddSubjectMutation,
    useGetSubjectByYearAndSemQuery,
    useUpdateSubjectMutation,
-   useGetFacultySubjectsQuery
+   useGetFacultySubjectsQuery,
+   useAddStudentsInSubjectMutation,
+   useGetSubjectStudentsQuery,
+   useUpdateSubjectStudentsMutation
 } = subjectApi;

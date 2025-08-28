@@ -275,3 +275,35 @@ export const selectedStudentPromote = asyncHandler(async (req, res) => {
         )
     );
 });
+
+export const getStudentsBySemesterAndDepartment = asyncHandler(async (req, res) => {
+    const { semester, department } = req.params;
+
+    if (!semester || !department) {
+        throw new ApiError(400, "Semester and Department are required.");
+    }
+
+    const students = await prisma.student.findMany({
+        where: {
+            semester: Number(semester),
+            department: department
+        },
+        select: {
+            id: true,
+            studentId: true,
+            name: true,
+            email: true,
+            department: true,
+            semester: true,
+            div: true
+        }
+    });
+
+    if (students.length === 0) {
+        throw new ApiError(404, "No students found for given semester and department.");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, students, "Students fetched successfully.")
+    );
+});

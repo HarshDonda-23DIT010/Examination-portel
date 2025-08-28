@@ -4,9 +4,15 @@ import prisma from '../DB/db.config.js';
 import {
   generateToken
 } from '../utils/helper.js';
-import { ApiResponse } from '../utils/apiResponse.js';
-import { ApiError } from '../utils/apiError.js';
-import { asyncHandler } from '../utils/asyncHandler.js';
+import {
+  ApiResponse
+} from '../utils/apiResponse.js';
+import {
+  ApiError
+} from '../utils/apiError.js';
+import {
+  asyncHandler
+} from '../utils/asyncHandler.js';
 
 
 export const register = asyncHandler(async (req, res) => {
@@ -39,9 +45,12 @@ export const register = asyncHandler(async (req, res) => {
 
   const existingUser = await prisma.user.findFirst({
     where: {
-      OR: [
-        { userId: userId },
-        { email: email }
+      OR: [{
+          userId: userId
+        },
+        {
+          email: email
+        }
       ]
     }
   });
@@ -69,8 +78,7 @@ export const register = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json(new ApiResponse(
-    200,
-    {
+    200, {
       userId: user.userId,
       name: user.name,
       email: user.email,
@@ -81,7 +89,7 @@ export const register = asyncHandler(async (req, res) => {
   ));
 })
 
-export const login = asyncHandler(async (req, res) => {
+export const loginAdmin = asyncHandler(async (req, res) => {
   const {
     userId,
     password
@@ -107,6 +115,12 @@ export const login = asyncHandler(async (req, res) => {
     error: 'User not found'
   });
 
+  if (user.role !== 'Admin') {
+    return res.status(403).json({
+      error: 'Access denied'
+    });
+  }
+
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(401).json({
     error: 'Invalid password'
@@ -125,8 +139,69 @@ export const login = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("AccessToken", accessToken, options)
     .json(new ApiResponse(
-      200,
-      {
+      200, {
+        id: user.id,
+        userId: user.userId,
+        name: user.name,
+        email: user.email,
+        department: user.department,
+        role: user.role
+      },
+      "Login Successful"
+    ))
+})
+
+export const loginFaculties = asyncHandler(async (req, res) => {
+  const {
+    userId,
+    password
+  } = req.body;
+
+  if (
+    !userId ||
+    !password
+  ) {
+    throw new ApiError(
+      400,
+      "Fill all the fields."
+    )
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      userId
+    }
+  });
+
+  if (!user) return res.status(401).json({
+    error: 'User not found'
+  });
+
+  if (user.role == 'Admin') {
+    return res.status(403).json({
+      error: 'Access denied'
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).json({
+    error: 'Invalid password'
+  });
+
+  const accessToken = generateToken(user.id);
+
+  const options = {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  }
+
+  return res
+    .status(200)
+    .cookie("AccessToken", accessToken, options)
+    .json(new ApiResponse(
+      200, {
         id: user.id,
         userId: user.userId,
         name: user.name,
@@ -185,9 +260,12 @@ export const userUpdateByAdminAndHOD = asyncHandler(async (req, res) => {
 
   const existingUser = await prisma.user.findFirst({
     where: {
-      OR: [
-        { userId: userId },
-        { email: email }
+      OR: [{
+          userId: userId
+        },
+        {
+          email: email
+        }
       ]
     }
   });
@@ -224,12 +302,19 @@ export const userUpdateByAdminAndHOD = asyncHandler(async (req, res) => {
 })
 
 export const changePassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-  const { userId } = req.params;
+  const {
+    oldPassword,
+    newPassword
+  } = req.body;
+  const {
+    userId
+  } = req.params;
 
   // 1. Find the user
   const user = await prisma.user.findUnique({
-    where: { userId }
+    where: {
+      userId
+    }
   });
 
   if (!user) {
@@ -247,7 +332,9 @@ export const changePassword = asyncHandler(async (req, res) => {
 
   // 4. Update password in DB
   await prisma.user.update({
-    where: { userId },
+    where: {
+      userId
+    },
     data: {
       password: hashedNewPassword
     }
@@ -261,11 +348,15 @@ export const changePassword = asyncHandler(async (req, res) => {
 
 
 export const removeUser = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
+  const {
+    userId
+  } = req.params;
 
   // 1. Check if user exists
   const user = await prisma.user.findUnique({
-    where: { userId }
+    where: {
+      userId
+    }
   });
 
   if (!user) {
@@ -274,7 +365,9 @@ export const removeUser = asyncHandler(async (req, res) => {
 
   // 2. Delete user
   await prisma.user.delete({
-    where: { userId }
+    where: {
+      userId
+    }
   });
 
   // 3. Return success response
@@ -303,4 +396,3 @@ export const getAllUsers = asyncHandler(async (req, res) => {
   );
 
 })
-

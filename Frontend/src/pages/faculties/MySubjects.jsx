@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useGetFacultySubjectsQuery } from '../../store/api/subjectApi';
-import { Book, User, Clock, BookOpen, Users, Award, Briefcase } from 'lucide-react';
+import { Book, BookOpen, Users, Award } from 'lucide-react';
+import SubjectCard from '../SubjectCard';
 
 const MySubjects = () => {
+  const navigate = useNavigate();
+  
   // Extract only required details from store
   const { user, selectedYearObject, selectedSemester } = useSelector((state) => state.auth);
   
@@ -29,16 +33,69 @@ const MySubjects = () => {
 
   const subjects = subjectsData?.data || [];
 
-  const getRoleBadgeColor = (role) => {
-    switch (role) {
-      case 'SubjectCoordinator':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Faculty':
-        return 'bg-green-100 text-green-800 border-green-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
+  // Check if year and semester are configured
+  const isConfigured = yearId && semester;
+
+  // Handler functions for student management
+  const handleAddStudents = (subject) => {
+    navigate('/add-students-to-subject', { 
+      state: { 
+        subject,
+        yearId,
+        semester
+      } 
+    });
   };
+
+  const handleEditStudents = (subject) => {
+    navigate('/edit-students-in-subject', { 
+      state: { 
+        subject,
+        yearId,
+        semester
+      } 
+    });
+  };
+
+  const handleViewStudents = (subject) => {
+    navigate('/view-students', { 
+      state: { 
+        subject,
+        yearId,
+        semester
+      } 
+    });
+  };
+
+  // Show configuration error if year or semester is not selected
+  if (!isConfigured) {
+    return (
+      <div className="p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-lg font-medium text-red-800">Configuration Required</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p className="mb-2">Please configure the following to view your subjects:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  {!yearId && <li>Select an academic year</li>}
+                  {!semester && <li>Select a semester</li>}
+                </ul>
+                <p className="mt-3">
+                  Go to your profile or settings to configure the academic year and semester.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -129,119 +186,27 @@ const MySubjects = () => {
 
       {/* Subjects List */}
       {subjects.length === 0 ? (
-        <div className="text-center py-12">
-          <Book className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-sm font-medium text-gray-900">No subjects found</h3>
-          <p className="mt-1 text-sm text-gray-500">
-            You are not assigned to any subjects for the selected year and semester.
+        <div className="text-center py-16">
+          <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <Book className="h-12 w-12 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No subjects found</h3>
+          <p className="text-gray-500 max-w-md mx-auto">
+            You are not assigned to any subjects for the selected year and semester. 
+            Contact your administrator if you believe this is an error.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {subjects.map((subjectData) => {
-            const { subject, roles } = subjectData;
-            
-            return (
-              <div 
-                key={subject.id} 
-                className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="p-6">
-                  {/* Subject Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                        {subject.name}
-                      </h3>
-                      <p className="text-sm text-gray-500 font-mono">
-                        Code: {subject.code}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {[...new Set(roles)]
-                        .filter(role => ['SubjectCoordinator', 'Faculty'].includes(role))
-                        .map((role) => (
-                        <span
-                          key={role}
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getRoleBadgeColor(role)}`}
-                        >
-                          {role === 'SubjectCoordinator' ? (
-                            <>
-                              <Award className="w-3 h-3 mr-1" />
-                              Coordinator
-                            </>
-                          ) : (
-                            <>
-                              <User className="w-3 h-3 mr-1" />
-                              Faculty
-                            </>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Subject Details */}
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Briefcase className="w-4 h-4 mr-2" />
-                      <span className="capitalize">{subject.type?.toLowerCase()}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="w-4 h-4 mr-2" />
-                      <span>Semester {subject.semester}</span>
-                    </div>
-                  </div>
-
-                  {/* Department Info */}
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-500 mb-2">Departments:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {subject.dep_CSE && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
-                          DCS
-                        </span>
-                      )}
-                      {subject.dep_CE && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
-                          DCE
-                        </span>
-                      )}
-                      {subject.dep_IT && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
-                          DIT
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Academic Details */}
-                  <div className="border-t pt-4">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-500">Theory</p>
-                        <p className="font-medium text-gray-900">
-                          {subject.theory_hour || 0}h • {subject.theory_credite || 0} credits
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Internal: {subject.theory_int_marks || 0} • External: {subject.theory_ext_marks || 0}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Practical</p>
-                        <p className="font-medium text-gray-900">
-                          {subject.practical_hour || 0}h • {subject.practical_credite || 0} credits
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Internal: {subject.practical_int_marks || 0} • External: {subject.practical_ext_marks || 0}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          {subjects.map((subjectData) => (
+            <SubjectCard
+              key={subjectData.subject.id}
+              subjectData={subjectData}
+              onAddStudents={handleAddStudents}
+              onEditStudents={handleEditStudents}
+              onViewStudents={handleViewStudents}
+            />
+          ))}
         </div>
       )}
     </div>
