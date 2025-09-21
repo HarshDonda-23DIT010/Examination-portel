@@ -83,7 +83,8 @@ const AddStudentsToSubject = () => {
       const filtered = studentsData.data.filter(student =>
         student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.email.toLowerCase().includes(searchTerm.toLowerCase())
+        student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (student.batch && student.batch.toLowerCase().includes(searchTerm.toLowerCase()))
       );
       setFilteredStudents(filtered);
     }

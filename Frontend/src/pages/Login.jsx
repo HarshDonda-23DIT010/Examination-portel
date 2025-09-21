@@ -57,7 +57,8 @@ const Login = () => {
       if (yearObject) {
         dispatch(setYearAndSemester({
           yearObject: yearObject,
-          semester: semester
+          semester: semester,
+          currentYear: yearObject
         }));
       }
       

@@ -32,6 +32,7 @@ enum Department {
   DCS
   DIT
   DCE
+  NONE
 }
 
 enum UserRole {
@@ -54,6 +55,13 @@ enum Div {
   DCS2
   DCE1
   DCE2
+}
+
+enum BatchEnum {
+  A
+  B
+  C
+  D
 }
 
 model User {
@@ -124,6 +132,15 @@ model SubjectFaculty {
 
   yearId Int
   year   Year @relation(fields: [yearId], references: [id])
+
+  batches BatchAssignment[]
+}
+
+model BatchAssignment {
+  id               Int            @id @default(autoincrement())
+  batch            BatchEnum
+  subjectFacultyId String
+  subjectFaculty   SubjectFaculty @relation(fields: [subjectFacultyId], references: [id])
 }
 
 model Student {

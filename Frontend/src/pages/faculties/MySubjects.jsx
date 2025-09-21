@@ -67,6 +67,19 @@ const MySubjects = () => {
     });
   };
 
+  const handleManageSubject = (subject) => {
+    // Navigate to subject management page (to be implemented)
+    console.log('Managing subject:', subject);
+    // For now, you can navigate to a management page or show a modal
+    // navigate('/manage-subject', { 
+    //   state: { 
+    //     subject,
+    //     yearId,
+    //     semester
+    //   } 
+    // });
+  };
+
   // Show configuration error if year or semester is not selected
   if (!isConfigured) {
     return (
@@ -197,7 +210,7 @@ const MySubjects = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {subjects.map((subjectData) => (
             <SubjectCard
               key={subjectData.subject.id}
@@ -205,6 +218,7 @@ const MySubjects = () => {
               onAddStudents={handleAddStudents}
               onEditStudents={handleEditStudents}
               onViewStudents={handleViewStudents}
+              onManageSubject={handleManageSubject}
             />
           ))}
         </div>

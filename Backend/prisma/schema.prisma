@@ -32,6 +32,7 @@ enum Department {
   DCS
   DIT
   DCE
+  NONE
 }
 
 enum UserRole {
@@ -121,6 +122,10 @@ model SubjectFaculty {
   subject    Subject            @relation(fields: [subjectId], references: [id])
   department Department
   role       SubjectFacultyRole
+  aBatch     Boolean?
+  bBatch     Boolean?
+  cBatch     Boolean?
+  dBatch     Boolean?
 
   yearId Int
   year   Year @relation(fields: [yearId], references: [id])

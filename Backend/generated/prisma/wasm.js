@@ -164,6 +164,10 @@ exports.Prisma.SubjectFacultyScalarFieldEnum = {
   subjectId: 'subjectId',
   department: 'department',
   role: 'role',
+  aBatch: 'aBatch',
+  bBatch: 'bBatch',
+  cBatch: 'cBatch',
+  dBatch: 'dBatch',
   yearId: 'yearId'
 };
 
@@ -225,7 +229,8 @@ exports.Prisma.NullsOrder = {
 exports.Department = exports.$Enums.Department = {
   DCS: 'DCS',
   DIT: 'DIT',
-  DCE: 'DCE'
+  DCE: 'DCE',
+  NONE: 'NONE'
 };
 
 exports.UserRole = exports.$Enums.UserRole = {
