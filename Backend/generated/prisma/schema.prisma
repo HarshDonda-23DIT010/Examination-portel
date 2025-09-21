@@ -57,13 +57,6 @@ enum Div {
   DCE2
 }
 
-enum BatchEnum {
-  A
-  B
-  C
-  D
-}
-
 model User {
   id                 Int              @id @unique @default(autoincrement())
   userId             String           @unique
@@ -129,18 +122,13 @@ model SubjectFaculty {
   subject    Subject            @relation(fields: [subjectId], references: [id])
   department Department
   role       SubjectFacultyRole
+  aBatch     Boolean?
+  bBatch     Boolean?
+  cBatch     Boolean?
+  dBatch     Boolean?
 
   yearId Int
   year   Year @relation(fields: [yearId], references: [id])
-
-  batches BatchAssignment[]
-}
-
-model BatchAssignment {
-  id               Int            @id @default(autoincrement())
-  batch            BatchEnum
-  subjectFacultyId String
-  subjectFaculty   SubjectFaculty @relation(fields: [subjectFacultyId], references: [id])
 }
 
 model Student {
