@@ -46,6 +46,7 @@ enum Batch {
   B
   C
   D
+  NONE
 }
 
 enum Div {
@@ -147,15 +148,14 @@ model Student {
 }
 
 enum ExamStatus {
-  taken
-  notTaken
-  pending
+  Taken
+  Pending
 }
 
 model Exam {
   id               String      @id @unique @default(uuid())
   name             String
-  date             DateTime?   @db.Date
+  date             DateTime    @db.Date
   subjectId        Int
   subject          Subject     @relation(fields: [subjectId], references: [id])
   facultyId        Int
@@ -163,8 +163,8 @@ model Exam {
   eligibleStudents Student[]
   totalMarks       Int?
   effectiveMarks   Int? // exam effective marks
-  class1           Boolean?
-  class2           Boolean?
+  division         Div
+  batch            Batch
   marks            Marks?
   detain           Detain[]
   status           ExamStatus?
