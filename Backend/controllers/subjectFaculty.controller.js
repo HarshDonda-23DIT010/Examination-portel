@@ -3,7 +3,7 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-export const AddSubjectFaculties = asyncHandler(async (req, res) => {
+export const addSubjectFaculties = asyncHandler(async (req, res) => {
    const {
       subjectId,
       facultyId,
@@ -50,3 +50,36 @@ export const AddSubjectFaculties = asyncHandler(async (req, res) => {
       )
    )
 })
+
+export const getFacultyBySubject = asyncHandler(async (req, res) => {
+
+  const subjectId = Number(req.params.subjectId);
+
+  if (isNaN(subjectId)) {
+    throw new ApiError(400, "Invalid subjectId.");
+  }
+
+  const existSubject = await prisma.subject.findFirst({
+    where: { id: subjectId }
+  });
+
+  if (!existSubject) {
+    throw new ApiError(409, "Subject is not available in the database.");
+  }
+
+  const faculties = await prisma.subjectFaculty.findMany({
+    where: { subjectId: subjectId },
+    include: {
+      faculty: true // populate faculty details
+    }
+  });
+
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      faculties,
+      "Subject faculty fetched successfully."
+    )
+  );
+
+});
