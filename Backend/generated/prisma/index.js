@@ -266,7 +266,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Examination-portel\\Backend\\generated\\prisma",
+      "value": "C:\\Desktop\\Projects\\SGP-2\\Examination-portel\\Backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -280,7 +280,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Examination-portel\\Backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Desktop\\Projects\\SGP-2\\Examination-portel\\Backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
