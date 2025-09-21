@@ -2,7 +2,7 @@ import express from 'express';
 
 import { protect } from '../middlewares/auth.middlware.js';
 import { adminAndHodProtect } from '../middlewares/adminAndHod.middlware.js';
-import { addOneStudent, bulkPromoteStudent, bulkUploadStudents, getDepartmentStudent, selectedStudentPromote, updateStudent } from '../controllers/student.controller.js';
+import { addOneStudent, bulkPromoteStudent, bulkUploadStudents, getDepartmentStudent,getStudentsBySemesterAndDepartment , selectedStudentPromote, updateStudent } from '../controllers/student.controller.js';
 import upload from '../utils/multer/upload.js';
 
 const router = express.Router();
@@ -24,7 +24,7 @@ router.put(
     bulkPromoteStudent
 )
 router.put('/promote-selected-student',protect,adminAndHodProtect,selectedStudentPromote)
+router.get("/students/:semester/:department",protect,getStudentsBySemesterAndDepartment);
 
 
-
-export default router   
+export default router

@@ -5,9 +5,9 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import xlsx from 'xlsx';
 
 export const addOneStudent = asyncHandler(async (req, res) => {
-    const { studentId, name, email, department, semester, div } = req.body;
+    const { studentId, name, email, department, semester, div, batch } = req.body;
 
-    if (!studentId || !name || !email || !department || !semester || !div) {
+    if (!studentId || !name || !email || !department || !semester || !div || !batch) {
         throw new ApiError(400, "All fields are required.")
     }
 
@@ -27,7 +27,8 @@ export const addOneStudent = asyncHandler(async (req, res) => {
         email,
         department,
         semester: Number(semester),
-        div
+        div,
+        batch
     }
 
     const student = await prisma.student.create({
@@ -64,14 +65,15 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
     });
 
     const students = cleanedData
-        .filter(row => row.name && row.email && row.studentId && row.semester && row.department && row.div)
+        .filter(row => row.name && row.email && row.studentId && row.semester && row.department && row.div && row.batch)
         .map(row => ({
             studentId: row.studentId,
             name: row.name,
             email: row.email,
             department: row.department,
             semester: Number(row.semester),
-            div: row.div
+            div: row.div,
+            batch: row.batch
         }));
 
     if (students.length === 0) {
@@ -114,9 +116,9 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
 
 
 export const updateStudent = asyncHandler(async (req, res) => {
-    const { studentId, name, div } = req.body;
+    const { studentId, name, div,batch } = req.body;
 
-    if (!studentId || !name || !div) {
+    if (!studentId || !name || !div || !batch) {
         throw new ApiError(400, "All fields are required.")
     }
 
@@ -132,7 +134,8 @@ export const updateStudent = asyncHandler(async (req, res) => {
         where: { studentId },
         data: {
             name,
-            div
+            div,
+            batch
         }
     })
 
@@ -273,5 +276,38 @@ export const selectedStudentPromote = asyncHandler(async (req, res) => {
             },
             'Selected students promoted successfully'
         )
+    );
+});
+
+export const getStudentsBySemesterAndDepartment = asyncHandler(async (req, res) => {
+    const { semester, department } = req.params;
+
+    if (!semester || !department) {
+        throw new ApiError(400, "Semester and Department are required.");
+    }
+
+    const students = await prisma.student.findMany({
+        where: {
+            semester: Number(semester),
+            department: department
+        },
+        select: {
+            id: true,
+            studentId: true,
+            name: true,
+            email: true,
+            department: true,
+            semester: true,
+            div: true,
+            batch: true
+        }
+    });
+
+    if (students.length === 0) {
+        throw new ApiError(404, "No students found for given semester and department.");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, students, "Students fetched successfully.")
     );
 });

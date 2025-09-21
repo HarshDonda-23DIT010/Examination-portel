@@ -10,6 +10,9 @@ import Welcome from './pages/Welcome';
 import Profile from './pages/profile/Profile';
 import AddFaculties from './pages/hod/AddFaculties';
 import AddStudents from './pages/hod/AddStudents';
+import AddStudentsToSubject from './pages/faculties/AddStudentsToSubject';
+import ViewStudents from './pages/faculties/ViewStudents';
+import EditStudents from './pages/faculties/EditStudents';
 import AddSubject from './pages/hod/AddSubject';
 import YearSetting from './pages/setting/YearSetting';
 import MySubjects from './pages/faculties/MySubjects';
@@ -55,6 +58,18 @@ const appRouter = createBrowserRouter([
       {
         path: '/my-subjects',
         element: <ProtectedRoute><MySubjects /></ProtectedRoute>
+      },
+      {
+        path: '/add-students-to-subject',
+        element: <ProtectedRoute><AddStudentsToSubject /></ProtectedRoute>
+      },
+      {
+        path: '/view-students',
+        element: <ProtectedRoute><ViewStudents /></ProtectedRoute>
+      },
+      {
+        path: '/edit-students-in-subject',
+        element: <ProtectedRoute><EditStudents /></ProtectedRoute>
       },
       
     ]

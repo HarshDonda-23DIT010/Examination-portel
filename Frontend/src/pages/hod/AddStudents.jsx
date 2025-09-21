@@ -27,13 +27,15 @@ const AddStudents = () => {
       email: '',
       department: user?.department || '',
       semester: '',
-      div: ''
+      div: '',
+      batch: ''
    });
    
    const [updateFormData, setUpdateFormData] = useState({
       studentId: '',
       name: '',
-      div: ''
+      div: '',
+      batch: ''
    });
    
    const [formErrors, setFormErrors] = useState({});
@@ -60,7 +62,8 @@ const AddStudents = () => {
       student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.semester.toString().includes(searchTerm) ||
-      student.div.toLowerCase().includes(searchTerm.toLowerCase())
+      student.div.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (student.batch && student.batch.toLowerCase().includes(searchTerm.toLowerCase()))
    );
 
    const handleInputChange = (e) => {
@@ -102,6 +105,7 @@ const AddStudents = () => {
       if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid';
       if (!formData.semester) errors.semester = 'Semester is required';
       if (!formData.div.trim()) errors.div = 'Division is required';
+      if (!formData.batch.trim()) errors.batch = 'Batch is required';
 
       setFormErrors(errors);
       return Object.keys(errors).length === 0;
@@ -113,6 +117,7 @@ const AddStudents = () => {
       if (!updateFormData.studentId.trim()) errors.studentId = 'Student ID is required';
       if (!updateFormData.name.trim()) errors.name = 'Name is required';
       if (!updateFormData.div.trim()) errors.div = 'Division is required';
+      if (!updateFormData.batch.trim()) errors.batch = 'Batch is required';
 
       setUpdateFormErrors(errors);
       return Object.keys(errors).length === 0;
@@ -136,7 +141,8 @@ const AddStudents = () => {
             email: '',
             department: user?.department || '',
             semester: '',
-            div: ''
+            div: '',
+            batch: ''
          });
          setIsDialogOpen(false);
          refetch();
@@ -168,7 +174,8 @@ const AddStudents = () => {
       setUpdateFormData({
          studentId: student.studentId,
          name: student.name,
-         div: student.div
+         div: student.div,
+         batch: student.batch || ''
       });
       setUpdateFormErrors({});
       setIsUpdateDialogOpen(true);
@@ -219,23 +226,26 @@ const AddStudents = () => {
             email: 'student@example.com',
             department:'DCE',
             semester: 5,
-            div: 'IT1'
+            div: 'DCE1',
+            batch: 'A'
          },
          {
             studentId: '23DCS001',
-            name: 'Sample Student',
-            email: 'student@example.com',
+            name: 'Sample Student 2',
+            email: 'student2@example.com',
             department: 'DCS',
             semester: 3,
-            div: 'CE1'
+            div: 'DCS1',
+            batch: 'B'
          },
          {
             studentId: '23DIT001',
-            name: 'Sample Student',
-            email: 'student@example.com',
+            name: 'Sample Student 3',
+            email: 'student3@example.com',
             department:'DIT',
             semester: 4,
-            div: 'CSE1'
+            div: 'DIT1',
+            batch: 'C'
          }
       ];
       
@@ -263,7 +273,8 @@ const AddStudents = () => {
          email: '',
          department: user?.department || '',
          semester: '',
-         div: ''
+         div: '',
+         batch: ''
       });
       setFormErrors({});
    };
@@ -325,7 +336,7 @@ const AddStudents = () => {
                      </div>
                      <input
                         type="text"
-                        placeholder="Search students by name, email, ID, semester, or division..."
+                        placeholder="Search students by name, email, ID, semester, division, or batch..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -377,6 +388,9 @@ const AddStudents = () => {
                                  Division
                               </th>
                               <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                 Batch
+                              </th>
+                              <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                  Actions
                               </th>
                            </tr>
@@ -401,6 +415,9 @@ const AddStudents = () => {
                                  </td>
                                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                                     {student.div}
+                                 </td>
+                                 <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    {student.batch || 'N/A'}
                                  </td>
                                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                                     <div className="flex items-center justify-center space-x-2">
@@ -574,17 +591,49 @@ const AddStudents = () => {
                                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Users className="h-5 w-5 text-gray-400" />
                                  </div>
-                                 <input
+                                 <select
                                     id="div"
                                     name="div"
-                                    type="text"
                                     value={formData.div}
                                     onChange={handleInputChange}
                                     className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.div ? 'border-red-300' : 'border-gray-300'}`}
-                                    placeholder="Enter division (e.g., A, B, C)"
-                                 />
+                                 >
+                                    <option value="">Select Division</option>
+                                    <option value="DIT1">DIT1</option>
+                                    <option value="DIT2">DIT2</option>
+                                    <option value="DCS1">DCS1</option>
+                                    <option value="DCS2">DCS2</option>
+                                    <option value="DCE1">DCE1</option>
+                                    <option value="DCE2">DCE2</option>
+                                 </select>
                               </div>
                               {formErrors.div && <p className="text-red-500 text-xs mt-1">{formErrors.div}</p>}
+                           </div>
+
+                           {/* Batch */}
+                           <div>
+                              <label htmlFor="batch" className="block text-sm font-medium text-gray-700 mb-2">
+                                 Batch
+                              </label>
+                              <div className="relative">
+                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Users className="h-5 w-5 text-gray-400" />
+                                 </div>
+                                 <select
+                                    id="batch"
+                                    name="batch"
+                                    value={formData.batch}
+                                    onChange={handleInputChange}
+                                    className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formErrors.batch ? 'border-red-300' : 'border-gray-300'}`}
+                                 >
+                                    <option value="">Select Batch</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                 </select>
+                              </div>
+                              {formErrors.batch && <p className="text-red-500 text-xs mt-1">{formErrors.batch}</p>}
                            </div>
                         </div>
                      </div>
@@ -692,17 +741,49 @@ const AddStudents = () => {
                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                               <Users className="h-5 w-5 text-gray-400" />
                            </div>
-                           <input
+                           <select
                               id="updateDiv"
                               name="div"
-                              type="text"
                               value={updateFormData.div}
                               onChange={handleUpdateInputChange}
                               className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${updateFormErrors.div ? 'border-red-300' : 'border-gray-300'}`}
-                              placeholder="Enter division (e.g., A, B, C)"
-                           />
+                           >
+                              <option value="">Select Division</option>
+                              <option value="DIT1">DIT1</option>
+                              <option value="DIT2">DIT2</option>
+                              <option value="DCS1">DCS1</option>
+                              <option value="DCS2">DCS2</option>
+                              <option value="DCE1">DCE1</option>
+                              <option value="DCE2">DCE2</option>
+                           </select>
                         </div>
                         {updateFormErrors.div && <p className="text-red-500 text-xs mt-1">{updateFormErrors.div}</p>}
+                     </div>
+
+                     {/* Batch */}
+                     <div>
+                        <label htmlFor="updateBatch" className="block text-sm font-medium text-gray-700 mb-2">
+                           Batch
+                        </label>
+                        <div className="relative">
+                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <Users className="h-5 w-5 text-gray-400" />
+                           </div>
+                           <select
+                              id="updateBatch"
+                              name="batch"
+                              value={updateFormData.batch}
+                              onChange={handleUpdateInputChange}
+                              className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${updateFormErrors.batch ? 'border-red-300' : 'border-gray-300'}`}
+                           >
+                              <option value="">Select Batch</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                              <option value="C">C</option>
+                              <option value="D">D</option>
+                           </select>
+                        </div>
+                        {updateFormErrors.batch && <p className="text-red-500 text-xs mt-1">{updateFormErrors.batch}</p>}
                      </div>
 
                      {/* Footer */}

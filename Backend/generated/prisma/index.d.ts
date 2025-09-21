@@ -61,7 +61,8 @@ export namespace $Enums {
   export const Department: {
   DCS: 'DCS',
   DIT: 'DIT',
-  DCE: 'DCE'
+  DCE: 'DCE',
+  NONE: 'NONE'
 };
 
 export type Department = (typeof Department)[keyof typeof Department]
@@ -74,6 +75,28 @@ export const UserRole: {
 };
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const Batch: {
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D'
+};
+
+export type Batch = (typeof Batch)[keyof typeof Batch]
+
+
+export const Div: {
+  DIT1: 'DIT1',
+  DIT2: 'DIT2',
+  DCS1: 'DCS1',
+  DCS2: 'DCS2',
+  DCE1: 'DCE1',
+  DCE2: 'DCE2'
+};
+
+export type Div = (typeof Div)[keyof typeof Div]
 
 
 export const SubjectType: {
@@ -110,6 +133,14 @@ export const Department: typeof $Enums.Department
 export type UserRole = $Enums.UserRole
 
 export const UserRole: typeof $Enums.UserRole
+
+export type Batch = $Enums.Batch
+
+export const Batch: typeof $Enums.Batch
+
+export type Div = $Enums.Div
+
+export const Div: typeof $Enums.Div
 
 export type SubjectType = $Enums.SubjectType
 
@@ -5653,7 +5684,12 @@ export namespace Prisma {
     id: string | null
     facultyId: number | null
     subjectId: number | null
+    department: $Enums.Department | null
     role: $Enums.SubjectFacultyRole | null
+    aBatch: boolean | null
+    bBatch: boolean | null
+    cBatch: boolean | null
+    dBatch: boolean | null
     yearId: number | null
   }
 
@@ -5661,7 +5697,12 @@ export namespace Prisma {
     id: string | null
     facultyId: number | null
     subjectId: number | null
+    department: $Enums.Department | null
     role: $Enums.SubjectFacultyRole | null
+    aBatch: boolean | null
+    bBatch: boolean | null
+    cBatch: boolean | null
+    dBatch: boolean | null
     yearId: number | null
   }
 
@@ -5669,7 +5710,12 @@ export namespace Prisma {
     id: number
     facultyId: number
     subjectId: number
+    department: number
     role: number
+    aBatch: number
+    bBatch: number
+    cBatch: number
+    dBatch: number
     yearId: number
     _all: number
   }
@@ -5691,7 +5737,12 @@ export namespace Prisma {
     id?: true
     facultyId?: true
     subjectId?: true
+    department?: true
     role?: true
+    aBatch?: true
+    bBatch?: true
+    cBatch?: true
+    dBatch?: true
     yearId?: true
   }
 
@@ -5699,7 +5750,12 @@ export namespace Prisma {
     id?: true
     facultyId?: true
     subjectId?: true
+    department?: true
     role?: true
+    aBatch?: true
+    bBatch?: true
+    cBatch?: true
+    dBatch?: true
     yearId?: true
   }
 
@@ -5707,7 +5763,12 @@ export namespace Prisma {
     id?: true
     facultyId?: true
     subjectId?: true
+    department?: true
     role?: true
+    aBatch?: true
+    bBatch?: true
+    cBatch?: true
+    dBatch?: true
     yearId?: true
     _all?: true
   }
@@ -5802,7 +5863,12 @@ export namespace Prisma {
     id: string
     facultyId: number
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch: boolean | null
+    bBatch: boolean | null
+    cBatch: boolean | null
+    dBatch: boolean | null
     yearId: number
     _count: SubjectFacultyCountAggregateOutputType | null
     _avg: SubjectFacultyAvgAggregateOutputType | null
@@ -5829,7 +5895,12 @@ export namespace Prisma {
     id?: boolean
     facultyId?: boolean
     subjectId?: boolean
+    department?: boolean
     role?: boolean
+    aBatch?: boolean
+    bBatch?: boolean
+    cBatch?: boolean
+    dBatch?: boolean
     yearId?: boolean
     faculty?: boolean | UserDefaultArgs<ExtArgs>
     subject?: boolean | SubjectDefaultArgs<ExtArgs>
@@ -5840,7 +5911,12 @@ export namespace Prisma {
     id?: boolean
     facultyId?: boolean
     subjectId?: boolean
+    department?: boolean
     role?: boolean
+    aBatch?: boolean
+    bBatch?: boolean
+    cBatch?: boolean
+    dBatch?: boolean
     yearId?: boolean
     faculty?: boolean | UserDefaultArgs<ExtArgs>
     subject?: boolean | SubjectDefaultArgs<ExtArgs>
@@ -5851,7 +5927,12 @@ export namespace Prisma {
     id?: boolean
     facultyId?: boolean
     subjectId?: boolean
+    department?: boolean
     role?: boolean
+    aBatch?: boolean
+    bBatch?: boolean
+    cBatch?: boolean
+    dBatch?: boolean
     yearId?: boolean
     faculty?: boolean | UserDefaultArgs<ExtArgs>
     subject?: boolean | SubjectDefaultArgs<ExtArgs>
@@ -5862,11 +5943,16 @@ export namespace Prisma {
     id?: boolean
     facultyId?: boolean
     subjectId?: boolean
+    department?: boolean
     role?: boolean
+    aBatch?: boolean
+    bBatch?: boolean
+    cBatch?: boolean
+    dBatch?: boolean
     yearId?: boolean
   }
 
-  export type SubjectFacultyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "facultyId" | "subjectId" | "role" | "yearId", ExtArgs["result"]["subjectFaculty"]>
+  export type SubjectFacultyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "facultyId" | "subjectId" | "department" | "role" | "aBatch" | "bBatch" | "cBatch" | "dBatch" | "yearId", ExtArgs["result"]["subjectFaculty"]>
   export type SubjectFacultyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     faculty?: boolean | UserDefaultArgs<ExtArgs>
     subject?: boolean | SubjectDefaultArgs<ExtArgs>
@@ -5894,7 +5980,12 @@ export namespace Prisma {
       id: string
       facultyId: number
       subjectId: number
+      department: $Enums.Department
       role: $Enums.SubjectFacultyRole
+      aBatch: boolean | null
+      bBatch: boolean | null
+      cBatch: boolean | null
+      dBatch: boolean | null
       yearId: number
     }, ExtArgs["result"]["subjectFaculty"]>
     composites: {}
@@ -6325,7 +6416,12 @@ export namespace Prisma {
     readonly id: FieldRef<"SubjectFaculty", 'String'>
     readonly facultyId: FieldRef<"SubjectFaculty", 'Int'>
     readonly subjectId: FieldRef<"SubjectFaculty", 'Int'>
+    readonly department: FieldRef<"SubjectFaculty", 'Department'>
     readonly role: FieldRef<"SubjectFaculty", 'SubjectFacultyRole'>
+    readonly aBatch: FieldRef<"SubjectFaculty", 'Boolean'>
+    readonly bBatch: FieldRef<"SubjectFaculty", 'Boolean'>
+    readonly cBatch: FieldRef<"SubjectFaculty", 'Boolean'>
+    readonly dBatch: FieldRef<"SubjectFaculty", 'Boolean'>
     readonly yearId: FieldRef<"SubjectFaculty", 'Int'>
   }
     
@@ -6768,7 +6864,8 @@ export namespace Prisma {
     email: string | null
     department: $Enums.Department | null
     semester: number | null
-    div: string | null
+    div: $Enums.Div | null
+    batch: $Enums.Batch | null
   }
 
   export type StudentMaxAggregateOutputType = {
@@ -6778,7 +6875,8 @@ export namespace Prisma {
     email: string | null
     department: $Enums.Department | null
     semester: number | null
-    div: string | null
+    div: $Enums.Div | null
+    batch: $Enums.Batch | null
   }
 
   export type StudentCountAggregateOutputType = {
@@ -6789,6 +6887,7 @@ export namespace Prisma {
     department: number
     semester: number
     div: number
+    batch: number
     _all: number
   }
 
@@ -6809,6 +6908,7 @@ export namespace Prisma {
     department?: true
     semester?: true
     div?: true
+    batch?: true
   }
 
   export type StudentMaxAggregateInputType = {
@@ -6819,6 +6919,7 @@ export namespace Prisma {
     department?: true
     semester?: true
     div?: true
+    batch?: true
   }
 
   export type StudentCountAggregateInputType = {
@@ -6829,6 +6930,7 @@ export namespace Prisma {
     department?: true
     semester?: true
     div?: true
+    batch?: true
     _all?: true
   }
 
@@ -6925,7 +7027,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     _count: StudentCountAggregateOutputType | null
     _avg: StudentAvgAggregateOutputType | null
     _sum: StudentSumAggregateOutputType | null
@@ -6955,6 +7058,7 @@ export namespace Prisma {
     department?: boolean
     semester?: boolean
     div?: boolean
+    batch?: boolean
     subjects?: boolean | Student$subjectsArgs<ExtArgs>
     exams?: boolean | Student$examsArgs<ExtArgs>
     marks?: boolean | Student$marksArgs<ExtArgs>
@@ -6970,6 +7074,7 @@ export namespace Prisma {
     department?: boolean
     semester?: boolean
     div?: boolean
+    batch?: boolean
   }, ExtArgs["result"]["student"]>
 
   export type StudentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6980,6 +7085,7 @@ export namespace Prisma {
     department?: boolean
     semester?: boolean
     div?: boolean
+    batch?: boolean
   }, ExtArgs["result"]["student"]>
 
   export type StudentSelectScalar = {
@@ -6990,9 +7096,10 @@ export namespace Prisma {
     department?: boolean
     semester?: boolean
     div?: boolean
+    batch?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "name" | "email" | "department" | "semester" | "div", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "name" | "email" | "department" | "semester" | "div" | "batch", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subjects?: boolean | Student$subjectsArgs<ExtArgs>
     exams?: boolean | Student$examsArgs<ExtArgs>
@@ -7018,7 +7125,8 @@ export namespace Prisma {
       email: string
       department: $Enums.Department
       semester: number
-      div: string
+      div: $Enums.Div
+      batch: $Enums.Batch
     }, ExtArgs["result"]["student"]>
     composites: {}
   }
@@ -7452,7 +7560,8 @@ export namespace Prisma {
     readonly email: FieldRef<"Student", 'String'>
     readonly department: FieldRef<"Student", 'Department'>
     readonly semester: FieldRef<"Student", 'Int'>
-    readonly div: FieldRef<"Student", 'String'>
+    readonly div: FieldRef<"Student", 'Div'>
+    readonly batch: FieldRef<"Student", 'Batch'>
   }
     
 
@@ -11531,7 +11640,12 @@ export namespace Prisma {
     id: 'id',
     facultyId: 'facultyId',
     subjectId: 'subjectId',
+    department: 'department',
     role: 'role',
+    aBatch: 'aBatch',
+    bBatch: 'bBatch',
+    cBatch: 'cBatch',
+    dBatch: 'dBatch',
     yearId: 'yearId'
   };
 
@@ -11545,7 +11659,8 @@ export namespace Prisma {
     email: 'email',
     department: 'department',
     semester: 'semester',
-    div: 'div'
+    div: 'div',
+    batch: 'batch'
   };
 
   export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
@@ -11721,6 +11836,34 @@ export namespace Prisma {
    * Reference to a field of type 'SubjectFacultyRole[]'
    */
   export type ListEnumSubjectFacultyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubjectFacultyRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Div'
+   */
+  export type EnumDivFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Div'>
+    
+
+
+  /**
+   * Reference to a field of type 'Div[]'
+   */
+  export type ListEnumDivFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Div[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Batch'
+   */
+  export type EnumBatchFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Batch'>
+    
+
+
+  /**
+   * Reference to a field of type 'Batch[]'
+   */
+  export type ListEnumBatchFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Batch[]'>
     
 
 
@@ -12033,7 +12176,12 @@ export namespace Prisma {
     id?: StringFilter<"SubjectFaculty"> | string
     facultyId?: IntFilter<"SubjectFaculty"> | number
     subjectId?: IntFilter<"SubjectFaculty"> | number
+    department?: EnumDepartmentFilter<"SubjectFaculty"> | $Enums.Department
     role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    aBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    bBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    cBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    dBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
     yearId?: IntFilter<"SubjectFaculty"> | number
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
@@ -12044,7 +12192,12 @@ export namespace Prisma {
     id?: SortOrder
     facultyId?: SortOrder
     subjectId?: SortOrder
+    department?: SortOrder
     role?: SortOrder
+    aBatch?: SortOrderInput | SortOrder
+    bBatch?: SortOrderInput | SortOrder
+    cBatch?: SortOrderInput | SortOrder
+    dBatch?: SortOrderInput | SortOrder
     yearId?: SortOrder
     faculty?: UserOrderByWithRelationInput
     subject?: SubjectOrderByWithRelationInput
@@ -12058,7 +12211,12 @@ export namespace Prisma {
     NOT?: SubjectFacultyWhereInput | SubjectFacultyWhereInput[]
     facultyId?: IntFilter<"SubjectFaculty"> | number
     subjectId?: IntFilter<"SubjectFaculty"> | number
+    department?: EnumDepartmentFilter<"SubjectFaculty"> | $Enums.Department
     role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    aBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    bBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    cBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    dBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
     yearId?: IntFilter<"SubjectFaculty"> | number
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
@@ -12069,7 +12227,12 @@ export namespace Prisma {
     id?: SortOrder
     facultyId?: SortOrder
     subjectId?: SortOrder
+    department?: SortOrder
     role?: SortOrder
+    aBatch?: SortOrderInput | SortOrder
+    bBatch?: SortOrderInput | SortOrder
+    cBatch?: SortOrderInput | SortOrder
+    dBatch?: SortOrderInput | SortOrder
     yearId?: SortOrder
     _count?: SubjectFacultyCountOrderByAggregateInput
     _avg?: SubjectFacultyAvgOrderByAggregateInput
@@ -12085,7 +12248,12 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"SubjectFaculty"> | string
     facultyId?: IntWithAggregatesFilter<"SubjectFaculty"> | number
     subjectId?: IntWithAggregatesFilter<"SubjectFaculty"> | number
+    department?: EnumDepartmentWithAggregatesFilter<"SubjectFaculty"> | $Enums.Department
     role?: EnumSubjectFacultyRoleWithAggregatesFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    aBatch?: BoolNullableWithAggregatesFilter<"SubjectFaculty"> | boolean | null
+    bBatch?: BoolNullableWithAggregatesFilter<"SubjectFaculty"> | boolean | null
+    cBatch?: BoolNullableWithAggregatesFilter<"SubjectFaculty"> | boolean | null
+    dBatch?: BoolNullableWithAggregatesFilter<"SubjectFaculty"> | boolean | null
     yearId?: IntWithAggregatesFilter<"SubjectFaculty"> | number
   }
 
@@ -12099,7 +12267,8 @@ export namespace Prisma {
     email?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    div?: StringFilter<"Student"> | string
+    div?: EnumDivFilter<"Student"> | $Enums.Div
+    batch?: EnumBatchFilter<"Student"> | $Enums.Batch
     subjects?: SubjectListRelationFilter
     exams?: ExamListRelationFilter
     marks?: MarksListRelationFilter
@@ -12114,6 +12283,7 @@ export namespace Prisma {
     department?: SortOrder
     semester?: SortOrder
     div?: SortOrder
+    batch?: SortOrder
     subjects?: SubjectOrderByRelationAggregateInput
     exams?: ExamOrderByRelationAggregateInput
     marks?: MarksOrderByRelationAggregateInput
@@ -12130,7 +12300,8 @@ export namespace Prisma {
     name?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    div?: StringFilter<"Student"> | string
+    div?: EnumDivFilter<"Student"> | $Enums.Div
+    batch?: EnumBatchFilter<"Student"> | $Enums.Batch
     subjects?: SubjectListRelationFilter
     exams?: ExamListRelationFilter
     marks?: MarksListRelationFilter
@@ -12145,6 +12316,7 @@ export namespace Prisma {
     department?: SortOrder
     semester?: SortOrder
     div?: SortOrder
+    batch?: SortOrder
     _count?: StudentCountOrderByAggregateInput
     _avg?: StudentAvgOrderByAggregateInput
     _max?: StudentMaxOrderByAggregateInput
@@ -12162,7 +12334,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Student"> | string
     department?: EnumDepartmentWithAggregatesFilter<"Student"> | $Enums.Department
     semester?: IntWithAggregatesFilter<"Student"> | number
-    div?: StringWithAggregatesFilter<"Student"> | string
+    div?: EnumDivWithAggregatesFilter<"Student"> | $Enums.Div
+    batch?: EnumBatchWithAggregatesFilter<"Student"> | $Enums.Batch
   }
 
   export type ExamWhereInput = {
@@ -12694,7 +12867,12 @@ export namespace Prisma {
 
   export type SubjectFacultyCreateInput = {
     id?: string
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     faculty: UserCreateNestedOneWithoutSubjectFacultyInput
     subject: SubjectCreateNestedOneWithoutFacultiesInput
     year: YearCreateNestedOneWithoutSubjectFacultyInput
@@ -12704,13 +12882,23 @@ export namespace Prisma {
     id?: string
     facultyId: number
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
   export type SubjectFacultyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     faculty?: UserUpdateOneRequiredWithoutSubjectFacultyNestedInput
     subject?: SubjectUpdateOneRequiredWithoutFacultiesNestedInput
     year?: YearUpdateOneRequiredWithoutSubjectFacultyNestedInput
@@ -12720,7 +12908,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -12728,20 +12921,35 @@ export namespace Prisma {
     id?: string
     facultyId: number
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
   export type SubjectFacultyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type SubjectFacultyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -12752,7 +12960,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
@@ -12766,7 +12975,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
@@ -12780,7 +12990,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
@@ -12794,7 +13005,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
@@ -12808,7 +13020,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
   }
 
   export type StudentUpdateManyMutationInput = {
@@ -12818,7 +13031,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
   }
 
   export type StudentUncheckedUpdateManyInput = {
@@ -12828,7 +13042,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
   }
 
   export type ExamCreateInput = {
@@ -13469,7 +13684,12 @@ export namespace Prisma {
     id?: SortOrder
     facultyId?: SortOrder
     subjectId?: SortOrder
+    department?: SortOrder
     role?: SortOrder
+    aBatch?: SortOrder
+    bBatch?: SortOrder
+    cBatch?: SortOrder
+    dBatch?: SortOrder
     yearId?: SortOrder
   }
 
@@ -13483,7 +13703,12 @@ export namespace Prisma {
     id?: SortOrder
     facultyId?: SortOrder
     subjectId?: SortOrder
+    department?: SortOrder
     role?: SortOrder
+    aBatch?: SortOrder
+    bBatch?: SortOrder
+    cBatch?: SortOrder
+    dBatch?: SortOrder
     yearId?: SortOrder
   }
 
@@ -13491,7 +13716,12 @@ export namespace Prisma {
     id?: SortOrder
     facultyId?: SortOrder
     subjectId?: SortOrder
+    department?: SortOrder
     role?: SortOrder
+    aBatch?: SortOrder
+    bBatch?: SortOrder
+    cBatch?: SortOrder
+    dBatch?: SortOrder
     yearId?: SortOrder
   }
 
@@ -13511,6 +13741,20 @@ export namespace Prisma {
     _max?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
   }
 
+  export type EnumDivFilter<$PrismaModel = never> = {
+    equals?: $Enums.Div | EnumDivFieldRefInput<$PrismaModel>
+    in?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    not?: NestedEnumDivFilter<$PrismaModel> | $Enums.Div
+  }
+
+  export type EnumBatchFilter<$PrismaModel = never> = {
+    equals?: $Enums.Batch | EnumBatchFieldRefInput<$PrismaModel>
+    in?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    not?: NestedEnumBatchFilter<$PrismaModel> | $Enums.Batch
+  }
+
   export type StudentCountOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
@@ -13519,6 +13763,7 @@ export namespace Prisma {
     department?: SortOrder
     semester?: SortOrder
     div?: SortOrder
+    batch?: SortOrder
   }
 
   export type StudentAvgOrderByAggregateInput = {
@@ -13533,6 +13778,7 @@ export namespace Prisma {
     department?: SortOrder
     semester?: SortOrder
     div?: SortOrder
+    batch?: SortOrder
   }
 
   export type StudentMinOrderByAggregateInput = {
@@ -13543,10 +13789,31 @@ export namespace Prisma {
     department?: SortOrder
     semester?: SortOrder
     div?: SortOrder
+    batch?: SortOrder
   }
 
   export type StudentSumOrderByAggregateInput = {
     semester?: SortOrder
+  }
+
+  export type EnumDivWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Div | EnumDivFieldRefInput<$PrismaModel>
+    in?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    not?: NestedEnumDivWithAggregatesFilter<$PrismaModel> | $Enums.Div
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDivFilter<$PrismaModel>
+    _max?: NestedEnumDivFilter<$PrismaModel>
+  }
+
+  export type EnumBatchWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Batch | EnumBatchFieldRefInput<$PrismaModel>
+    in?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    not?: NestedEnumBatchWithAggregatesFilter<$PrismaModel> | $Enums.Batch
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBatchFilter<$PrismaModel>
+    _max?: NestedEnumBatchFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -14358,6 +14625,14 @@ export namespace Prisma {
     connect?: DetainWhereUniqueInput | DetainWhereUniqueInput[]
   }
 
+  export type EnumDivFieldUpdateOperationsInput = {
+    set?: $Enums.Div
+  }
+
+  export type EnumBatchFieldUpdateOperationsInput = {
+    set?: $Enums.Batch
+  }
+
   export type SubjectUpdateManyWithoutStudentsNestedInput = {
     create?: XOR<SubjectCreateWithoutStudentsInput, SubjectUncheckedCreateWithoutStudentsInput> | SubjectCreateWithoutStudentsInput[] | SubjectUncheckedCreateWithoutStudentsInput[]
     connectOrCreate?: SubjectCreateOrConnectWithoutStudentsInput | SubjectCreateOrConnectWithoutStudentsInput[]
@@ -14925,6 +15200,40 @@ export namespace Prisma {
     _max?: NestedEnumSubjectFacultyRoleFilter<$PrismaModel>
   }
 
+  export type NestedEnumDivFilter<$PrismaModel = never> = {
+    equals?: $Enums.Div | EnumDivFieldRefInput<$PrismaModel>
+    in?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    not?: NestedEnumDivFilter<$PrismaModel> | $Enums.Div
+  }
+
+  export type NestedEnumBatchFilter<$PrismaModel = never> = {
+    equals?: $Enums.Batch | EnumBatchFieldRefInput<$PrismaModel>
+    in?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    not?: NestedEnumBatchFilter<$PrismaModel> | $Enums.Batch
+  }
+
+  export type NestedEnumDivWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Div | EnumDivFieldRefInput<$PrismaModel>
+    in?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Div[] | ListEnumDivFieldRefInput<$PrismaModel>
+    not?: NestedEnumDivWithAggregatesFilter<$PrismaModel> | $Enums.Div
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDivFilter<$PrismaModel>
+    _max?: NestedEnumDivFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBatchWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Batch | EnumBatchFieldRefInput<$PrismaModel>
+    in?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Batch[] | ListEnumBatchFieldRefInput<$PrismaModel>
+    not?: NestedEnumBatchWithAggregatesFilter<$PrismaModel> | $Enums.Batch
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBatchFilter<$PrismaModel>
+    _max?: NestedEnumBatchFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -15024,7 +15333,12 @@ export namespace Prisma {
 
   export type SubjectFacultyCreateWithoutYearInput = {
     id?: string
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     faculty: UserCreateNestedOneWithoutSubjectFacultyInput
     subject: SubjectCreateNestedOneWithoutFacultiesInput
   }
@@ -15033,7 +15347,12 @@ export namespace Prisma {
     id?: string
     facultyId: number
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
   }
 
   export type SubjectFacultyCreateOrConnectWithoutYearInput = {
@@ -15198,7 +15517,12 @@ export namespace Prisma {
     id?: StringFilter<"SubjectFaculty"> | string
     facultyId?: IntFilter<"SubjectFaculty"> | number
     subjectId?: IntFilter<"SubjectFaculty"> | number
+    department?: EnumDepartmentFilter<"SubjectFaculty"> | $Enums.Department
     role?: EnumSubjectFacultyRoleFilter<"SubjectFaculty"> | $Enums.SubjectFacultyRole
+    aBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    bBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    cBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
+    dBatch?: BoolNullableFilter<"SubjectFaculty"> | boolean | null
     yearId?: IntFilter<"SubjectFaculty"> | number
   }
 
@@ -15346,7 +15670,12 @@ export namespace Prisma {
 
   export type SubjectFacultyCreateWithoutFacultyInput = {
     id?: string
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     subject: SubjectCreateNestedOneWithoutFacultiesInput
     year: YearCreateNestedOneWithoutSubjectFacultyInput
   }
@@ -15354,7 +15683,12 @@ export namespace Prisma {
   export type SubjectFacultyUncheckedCreateWithoutFacultyInput = {
     id?: string
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
@@ -15493,7 +15827,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -15506,7 +15841,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -15519,7 +15855,12 @@ export namespace Prisma {
 
   export type SubjectFacultyCreateWithoutSubjectInput = {
     id?: string
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     faculty: UserCreateNestedOneWithoutSubjectFacultyInput
     year: YearCreateNestedOneWithoutSubjectFacultyInput
   }
@@ -15527,7 +15868,12 @@ export namespace Prisma {
   export type SubjectFacultyUncheckedCreateWithoutSubjectInput = {
     id?: string
     facultyId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
@@ -15669,7 +16015,8 @@ export namespace Prisma {
     email?: StringFilter<"Student"> | string
     department?: EnumDepartmentFilter<"Student"> | $Enums.Department
     semester?: IntFilter<"Student"> | number
-    div?: StringFilter<"Student"> | string
+    div?: EnumDivFilter<"Student"> | $Enums.Div
+    batch?: EnumBatchFilter<"Student"> | $Enums.Batch
   }
 
   export type SubjectFacultyUpsertWithWhereUniqueWithoutSubjectInput = {
@@ -16245,7 +16592,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -16258,7 +16606,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -16525,7 +16874,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     detain?: DetainCreateNestedManyWithoutStudentInput
@@ -16538,7 +16888,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     detain?: DetainUncheckedCreateNestedManyWithoutStudentInput
@@ -16630,7 +16981,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -16643,7 +16995,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -16731,7 +17084,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectCreateNestedManyWithoutStudentsInput
     exams?: ExamCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksCreateNestedManyWithoutStudentInput
@@ -16744,7 +17098,8 @@ export namespace Prisma {
     email: string
     department: $Enums.Department
     semester: number
-    div: string
+    div: $Enums.Div
+    batch: $Enums.Batch
     subjects?: SubjectUncheckedCreateNestedManyWithoutStudentsInput
     exams?: ExamUncheckedCreateNestedManyWithoutEligibleStudentsInput
     marks?: MarksUncheckedCreateNestedManyWithoutStudentInput
@@ -16836,7 +17191,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
@@ -16849,7 +17205,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
@@ -16954,7 +17311,12 @@ export namespace Prisma {
     id?: string
     facultyId: number
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
   }
 
   export type ExamCreateManyYearInput = {
@@ -17051,7 +17413,12 @@ export namespace Prisma {
 
   export type SubjectFacultyUpdateWithoutYearInput = {
     id?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     faculty?: UserUpdateOneRequiredWithoutSubjectFacultyNestedInput
     subject?: SubjectUpdateOneRequiredWithoutFacultiesNestedInput
   }
@@ -17060,14 +17427,24 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type SubjectFacultyUncheckedUpdateManyWithoutYearInput = {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ExamUpdateWithoutYearInput = {
@@ -17179,7 +17556,12 @@ export namespace Prisma {
   export type SubjectFacultyCreateManyFacultyInput = {
     id?: string
     subjectId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
@@ -17263,7 +17645,12 @@ export namespace Prisma {
 
   export type SubjectFacultyUpdateWithoutFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subject?: SubjectUpdateOneRequiredWithoutFacultiesNestedInput
     year?: YearUpdateOneRequiredWithoutSubjectFacultyNestedInput
   }
@@ -17271,14 +17658,24 @@ export namespace Prisma {
   export type SubjectFacultyUncheckedUpdateWithoutFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
   export type SubjectFacultyUncheckedUpdateManyWithoutFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
     subjectId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -17330,7 +17727,12 @@ export namespace Prisma {
   export type SubjectFacultyCreateManySubjectInput = {
     id?: string
     facultyId: number
+    department: $Enums.Department
     role: $Enums.SubjectFacultyRole
+    aBatch?: boolean | null
+    bBatch?: boolean | null
+    cBatch?: boolean | null
+    dBatch?: boolean | null
     yearId: number
   }
 
@@ -17354,7 +17756,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     exams?: ExamUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -17367,7 +17770,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     exams?: ExamUncheckedUpdateManyWithoutEligibleStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -17380,12 +17784,18 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
   }
 
   export type SubjectFacultyUpdateWithoutSubjectInput = {
     id?: StringFieldUpdateOperationsInput | string
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     faculty?: UserUpdateOneRequiredWithoutSubjectFacultyNestedInput
     year?: YearUpdateOneRequiredWithoutSubjectFacultyNestedInput
   }
@@ -17393,14 +17803,24 @@ export namespace Prisma {
   export type SubjectFacultyUncheckedUpdateWithoutSubjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
   export type SubjectFacultyUncheckedUpdateManyWithoutSubjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     facultyId?: IntFieldUpdateOperationsInput | number
+    department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     role?: EnumSubjectFacultyRoleFieldUpdateOperationsInput | $Enums.SubjectFacultyRole
+    aBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    dBatch?: NullableBoolFieldUpdateOperationsInput | boolean | null
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -17629,7 +18049,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUpdateManyWithoutStudentsNestedInput
     marks?: MarksUpdateManyWithoutStudentNestedInput
     detain?: DetainUpdateManyWithoutStudentNestedInput
@@ -17642,7 +18063,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     subjects?: SubjectUncheckedUpdateManyWithoutStudentsNestedInput
     marks?: MarksUncheckedUpdateManyWithoutStudentNestedInput
     detain?: DetainUncheckedUpdateManyWithoutStudentNestedInput
@@ -17655,7 +18077,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     semester?: IntFieldUpdateOperationsInput | number
-    div?: StringFieldUpdateOperationsInput | string
+    div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
+    batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
   }
 
   export type DetainUpdateWithoutExamInput = {

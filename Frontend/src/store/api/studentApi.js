@@ -89,6 +89,23 @@ export const studentApi = createApi({
          },
          invalidatesTags: ['Student'],
       }),
+      getStudentsBySemesterAndDepartment: builder.query({
+         query: ({ semester, department }) => ({
+            url: `/students/${semester}/${department}`,
+            method: 'GET',
+         }),
+         async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            try {
+               const { data } = await queryFulfilled;
+               if (data.success && data.data) {
+                  dispatch(setStudents(data.data));
+               }
+            } catch (error) {
+               console.error('Failed to fetch students by semester and department:', error);
+            }
+         },
+         providesTags: ['Student'],
+      }),
    })
 });
 
@@ -96,5 +113,6 @@ export const {
    useAddOneStudentMutation,
    useBulkUploadStudentsMutation,
    useGetDepartmentStudentsQuery,
-   useUpdateStudentMutation
+   useUpdateStudentMutation,
+   useGetStudentsBySemesterAndDepartmentQuery
 } = studentApi;
