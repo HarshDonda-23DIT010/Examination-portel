@@ -93,7 +93,7 @@ export const addSubject = asyncHandler(async (req, res) => {
             facultyId: Number(coordinatorId),
             subjectId: subject.id, // Assuming subject.id is Int
             role: "SubjectCoordinator",
-            department: user.department,
+            department: "NONE",
             yearId: Number(yearId)
         }
     });
@@ -151,7 +151,7 @@ export const updateSubject = asyncHandler(async (req, res) => {
     // Update subject
     const updatedSubject = await prisma.subject.update({
         where: {
-            code: code, // Use code as unique identifier
+            code: code,
         },
         data: {
             name,
@@ -187,7 +187,8 @@ export const updateSubject = asyncHandler(async (req, res) => {
             },
             data: {
                 facultyId: Number(coordinatorId),
-                role: "SubjectCoordinator" // or "Faculty" based on your business logic
+                role: "SubjectCoordinator" ,
+                department: "NONE",
             }
         });
     } else {
@@ -197,7 +198,8 @@ export const updateSubject = asyncHandler(async (req, res) => {
                 subjectId: subject.id,
                 facultyId: Number(coordinatorId),
                 role: "SubjectCoordinator",
-                yearId: updatedSubject.yearId // Assuming you want to link to the same year
+                yearId: updatedSubject.yearId ,
+                department: "NONE",
             }
         });
     }

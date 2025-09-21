@@ -25,10 +25,7 @@ export const AddSubjectFaculties = asyncHandler(async (req, res) => {
    if (!subjectId || !department || !role || !yearId) {
       throw new ApiError(400, "All fields are required.")
    }
-   if (role === "BATCH" && !aBatch && !bBatch && !cBatch && !dBatch) {
-
-      throw new ApiError(400, "At least one batch must be selected for BATCH role.")
-   }
+   
    const existFaculty = await prisma.subjectFaculty.findFirst({
       where: {
          facultyId,

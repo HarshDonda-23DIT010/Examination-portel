@@ -67,17 +67,16 @@ const MySubjects = () => {
     });
   };
 
-  const handleManageSubject = (subject) => {
-    // Navigate to subject management page (to be implemented)
-    console.log('Managing subject:', subject);
-    // For now, you can navigate to a management page or show a modal
-    // navigate('/manage-subject', { 
-    //   state: { 
-    //     subject,
-    //     yearId,
-    //     semester
-    //   } 
-    // });
+  const handleManageSubject = (subjectData) => {
+    const subject = subjectData?.subject || subjectData;
+    navigate(`/manage-subject/${subject.id}`, { 
+      state: { 
+        subject,
+        subjectData,
+        yearId,
+        semester
+      } 
+    });    
   };
 
   // Show configuration error if year or semester is not selected
