@@ -163,11 +163,12 @@ model Exam {
   eligibleStudents Student[]
   totalMarks       Int?
   effectiveMarks   Int? // exam effective marks
+  department       Department
   division         Div
   batch            Batch
   marks            Marks?
   detain           Detain[]
-  status           ExamStatus?
+  status           ExamStatus @default(Pending)
 
   yearId Int
   year   Year @relation(fields: [yearId], references: [id])

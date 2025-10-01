@@ -15,7 +15,7 @@ export const addSubject = asyncHandler(async (req, res) => {
         name,
         semester,
         coordinatorId,
-        departments, // e.g., ['IT', 'CE']
+        departments,
         type,
         theory_hour,
         practical_hour,
@@ -247,11 +247,7 @@ export const getSubjectByYearAnsSemester = asyncHandler(async (req, res) => {
 });
 
 export const getFacultySubjects = asyncHandler(async (req, res) => {
-    const {
-        userId,
-        yearId,
-        semester
-    } = req.params;
+    const { userId, yearId, semester } = req.params;
 
     if (!userId || !yearId || !semester) {
         throw new ApiError(400, "userId, yearId, and semester are required.");
@@ -261,7 +257,7 @@ export const getFacultySubjects = asyncHandler(async (req, res) => {
     const yearIdNum = Number(yearId);
     const semesterNum = Number(semester);
 
-    // 1. Find subjects where faculty is coordinator
+    // 1. Subjects where faculty is coordinator
     const coordinatorSubjects = await prisma.subject.findMany({
         where: {
             coordinatorId: userIdNum,
@@ -269,66 +265,61 @@ export const getFacultySubjects = asyncHandler(async (req, res) => {
             semester: semesterNum
         },
         include: {
-            _count: {
-                select: {
-                    students: true
-                }
-            }
+            _count: { select: { students: true } }
         }
     });
 
-    // 2. Find subjects where faculty is listed in SubjectFaculty table
+    // 2. Subjects where faculty is assigned in SubjectFaculty
     const facultySubjects = await prisma.subjectFaculty.findMany({
         where: {
             facultyId: userIdNum,
             yearId: yearIdNum,
-            subject: {
-                semester: semesterNum
-            }
+            subject: { semester: semesterNum }
         },
         include: {
             subject: {
                 include: {
-                    _count: {
-                        select: {
-                            students: true
-                        }
-                    }
+                    _count: { select: { students: true } }
                 }
             }
         }
     });
 
-    // 3. Combine and format the results
+    // 3. Combine results with roles and department info from SubjectFaculty
     const resultsMap = new Map();
 
-    // Add coordinator subjects
+    // Coordinator subjects
     for (const subj of coordinatorSubjects) {
         resultsMap.set(subj.id, {
             subject: {
                 ...subj,
                 hasStudents: subj._count.students > 0
             },
-            roles: ['SubjectCoordinator']
+            roles: ['SubjectCoordinator'],
+            departments: [] // empty, since coordinator role may not have department info
         });
     }
 
+    // Faculty assigned subjects
     for (const fs of facultySubjects) {
         const hasStudents = fs.subject._count.students > 0;
+        const dept = fs.department; // get department from SubjectFaculty
 
         if (fs.role === 'Faculty') {
             if (resultsMap.has(fs.subjectId)) {
-                const roles = resultsMap.get(fs.subjectId).roles;
-                if (!roles.includes('Faculty')) {
-                    roles.push('Faculty');
+                const data = resultsMap.get(fs.subjectId);
+                if (!data.roles.includes('Faculty')) {
+                    data.roles.push('Faculty');
+                }
+                // Add department if not already present
+                if (!data.departments.includes(dept)) {
+                    data.departments.push(dept);
                 }
             } else {
                 resultsMap.set(fs.subjectId, {
-                    subject: {
-                        ...fs.subject,
-                        hasStudents
-                    },
-                    roles: ['Faculty']
+                    subject: { ...fs.subject, hasStudents },
+                    roles: ['Faculty'],
+                    departments: [dept]
                 });
             }
         }
@@ -337,9 +328,10 @@ export const getFacultySubjects = asyncHandler(async (req, res) => {
     const result = Array.from(resultsMap.values());
 
     return res.status(200).json(
-        new ApiResponse(200, result, "Faculty roles with student presence fetched successfully.")
+        new ApiResponse(200, result, "Faculty roles with departments and student presence fetched successfully.")
     );
 });
+
 
 
 export const addStudentsInSubject = asyncHandler(async (req, res) => {

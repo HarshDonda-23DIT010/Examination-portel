@@ -3,7 +3,7 @@ import { BookOpen, Users, Award, Plus, Edit, Eye, Clock, User, Settings } from '
 import { useSelector } from 'react-redux';
 
 const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudents, onManageSubject }) => {
-   const { subject, roles } = subjectData;
+   const { subject, roles, departments } = subjectData;
    const { currentYear, selectedYearObject } = useSelector((state) => state.auth);
 
    // Check if current year and selected year are the same
@@ -71,18 +71,41 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                   <span>{subject._count?.students || 0}</span>
                </div>
             </div>
+         </div>
 
-            {/* Department badges */}
-            <div className="flex gap-1">
-               {getDepartmentBadges().map(dept => (
-                  <span
-                     key={dept}
-                     className="px-2 py-1 text-xs font-medium rounded bg-purple-100 text-purple-700"
-                  >
-                     {dept}
-                  </span>
-               ))}
+         {/* Department Information */}
+         <div className="mb-3 space-y-2">
+            {/* Subject Available Departments */}
+            <div>
+               <div className="text-xs font-medium text-gray-500 mb-1">Subject Available In:</div>
+               <div className="flex gap-1 flex-wrap">
+                  {getDepartmentBadges().map(dept => (
+                     <span
+                        key={dept}
+                        className="px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-700"
+                     >
+                        {dept}
+                     </span>
+                  ))}
+               </div>
             </div>
+
+            {/* Faculty Assigned Departments */}
+            {departments && departments.length > 0 && (
+               <div>
+                  <div className="text-xs font-medium text-gray-500 mb-1">You are Faculty in:</div>
+                  <div className="flex gap-1 flex-wrap">
+                     {departments.map(dept => (
+                        <span
+                           key={dept}
+                           className="px-2 py-1 text-xs font-medium rounded bg-green-100 text-green-700"
+                        >
+                           {dept}
+                        </span>
+                     ))}
+                  </div>
+               </div>
+            )}
          </div>
 
          {/* Academic Details - Compact */}

@@ -190,6 +190,7 @@ exports.Prisma.ExamScalarFieldEnum = {
   facultyId: 'facultyId',
   totalMarks: 'totalMarks',
   effectiveMarks: 'effectiveMarks',
+  department: 'department',
   division: 'division',
   batch: 'batch',
   status: 'status',

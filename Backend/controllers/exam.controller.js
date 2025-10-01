@@ -11,6 +11,7 @@ export const createExam = asyncHandler(async (req, res) => {
         facultyId,
         totalMarks,
         effectiveMarks,
+        department,
         division,
         batch,
         status,
@@ -25,9 +26,9 @@ export const createExam = asyncHandler(async (req, res) => {
         !facultyId ||
         !totalMarks ||
         !effectiveMarks ||
+        !department ||
         !division ||
         !batch ||
-        !status ||
         !yearId
     ) {
         throw new ApiError(400, "All fields are required.");
@@ -42,9 +43,10 @@ export const createExam = asyncHandler(async (req, res) => {
             facultyId,
             totalMarks,
             effectiveMarks,
+            department,
             division,
             batch,
-            status,
+            status: status || 'Pending', // Default to Pending if not provided
             yearId
         }
     });
@@ -63,6 +65,7 @@ export const updateExam = asyncHandler(async (req, res) => {
     facultyId,
     totalMarks,
     effectiveMarks,
+    department,
     division,
     batch,
     status,
@@ -75,7 +78,7 @@ export const updateExam = asyncHandler(async (req, res) => {
 
   // 1. Check if exam exists
   const existingExam = await prisma.exam.findUnique({
-    where: { id: Number(examId) },
+    where: { id: examId },
   });
 
   if (!existingExam) {
@@ -84,7 +87,7 @@ export const updateExam = asyncHandler(async (req, res) => {
 
   // 2. Update exam record
   const updatedExam = await prisma.exam.update({
-    where: { id: Number(examId) },
+    where: { id: examId },
     data: {
       ...(name && { name }),
       ...(date && { date: new Date(date) }),
@@ -92,6 +95,7 @@ export const updateExam = asyncHandler(async (req, res) => {
       ...(facultyId && { facultyId }),
       ...(totalMarks && { totalMarks }),
       ...(effectiveMarks && { effectiveMarks }),
+      ...(department && { department }),
       ...(division && { division }),
       ...(batch && { batch }),
       ...(status && { status }),
@@ -107,8 +111,7 @@ export const updateExam = asyncHandler(async (req, res) => {
 
 
 export const addExamStudents = asyncHandler(async (req, res) => {
-    
-    const { examId } = Number(req.params.examId);
+    const { examId } = req.params;
     const { studentIds } = req.body;
 
     if (!examId || !studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
@@ -117,7 +120,7 @@ export const addExamStudents = asyncHandler(async (req, res) => {
 
     // 1. Check if exam exists
     const exam = await prisma.exam.findUnique({
-        where: { id: Number(examId) },
+        where: { id: examId },
         select: { id: true },
     });
 
@@ -128,7 +131,7 @@ export const addExamStudents = asyncHandler(async (req, res) => {
     // 2. Find all students that exist
     const students = await prisma.student.findMany({
         where: {
-            id: { in: studentIds.map((id) => String(id)) }, // assuming UUID string
+            id: { in: studentIds.map((id) => String(id)) },
         },
         select: { id: true },
     });
@@ -142,13 +145,26 @@ export const addExamStudents = asyncHandler(async (req, res) => {
 
     // 3. Connect students to the exam (many-to-many)
     const updatedExam = await prisma.exam.update({
-        where: { id: Number(examId) },
+        where: { id: examId },
         data: {
-            students: {
+            eligibleStudents: {
                 connect: studentIds.map((id) => ({ id: String(id) })),
             },
         },
-        include: { students: true },
+        include: { 
+            eligibleStudents: {
+                select: {
+                    id: true,
+                    studentId: true,
+                    name: true,
+                    email: true,
+                    department: true,
+                    semester: true,
+                    div: true,
+                    batch: true
+                }
+            }
+        },
     });
 
     res.status(200).json(
@@ -161,8 +177,7 @@ export const addExamStudents = asyncHandler(async (req, res) => {
 });
 
 export const updateExamStudents = asyncHandler(async (req, res) => {
-
-    const { examId } = Number(req.params.examId);
+    const { examId } = req.params;
     const { studentIds } = req.body;
 
     if (!examId) {
@@ -175,10 +190,10 @@ export const updateExamStudents = asyncHandler(async (req, res) => {
 
     // 1. Get the exam
     const exam = await prisma.exam.findUnique({
-        where: { id: Number(examId) },
+        where: { id: examId },
         select: {
             id: true,
-            students: {
+            eligibleStudents: {
                 select: { id: true }
             }
         }
@@ -192,7 +207,7 @@ export const updateExamStudents = asyncHandler(async (req, res) => {
     if (studentIds.length > 0) {
         const students = await prisma.student.findMany({
             where: {
-                id: { in: studentIds.map(id => String(id)) } // assuming UUID string
+                id: { in: studentIds.map(id => String(id)) }
             },
             select: { id: true }
         });
@@ -206,14 +221,14 @@ export const updateExamStudents = asyncHandler(async (req, res) => {
 
     // 3. Disconnect all current students and connect new ones
     const updatedExam = await prisma.exam.update({
-        where: { id: Number(examId) },
+        where: { id: examId },
         data: {
-            students: {
+            eligibleStudents: {
                 set: studentIds.map(id => ({ id: String(id) }))
             }
         },
         include: {
-            students: {
+            eligibleStudents: {
                 select: {
                     id: true,
                     studentId: true,
@@ -234,6 +249,131 @@ export const updateExamStudents = asyncHandler(async (req, res) => {
             updatedExam,
             "Exam students updated successfully."
         )
+    );
+});
+
+export const getExamsBySubject = asyncHandler(async (req, res) => {
+    const { subjectId } = req.params;
+
+    if (!subjectId) {
+        throw new ApiError(400, "Subject ID is required.");
+    }
+
+    const exams = await prisma.exam.findMany({
+        where: { subjectId: Number(subjectId) },
+        include: {
+            faculty: {
+                select: {
+                    id: true,
+                    name: true,
+                    userId: true,
+                    department: true
+                }
+            },
+            subject: {
+                select: {
+                    id: true,
+                    name: true,
+                    code: true
+                }
+            },
+            eligibleStudents: {
+                select: {
+                    id: true,
+                    studentId: true,
+                    name: true,
+                    department: true,
+                    semester: true,
+                    div: true,
+                    batch: true
+                }
+            },
+            _count: {
+                select: {
+                    eligibleStudents: true
+                }
+            }
+        },
+        orderBy: {
+            date: 'desc'
+        }
+    });
+
+    res.status(200).json(
+        new ApiResponse(200, exams, "Exams fetched successfully.")
+    );
+});
+
+export const getExamById = asyncHandler(async (req, res) => {
+    const { examId } = req.params;
+
+    if (!examId) {
+        throw new ApiError(400, "Exam ID is required.");
+    }
+
+    const exam = await prisma.exam.findUnique({
+        where: { id: examId },
+        include: {
+            faculty: {
+                select: {
+                    id: true,
+                    name: true,
+                    userId: true,
+                    department: true
+                }
+            },
+            subject: {
+                select: {
+                    id: true,
+                    name: true,
+                    code: true
+                }
+            },
+            eligibleStudents: {
+                select: {
+                    id: true,
+                    studentId: true,
+                    name: true,
+                    email: true,
+                    department: true,
+                    semester: true,
+                    div: true,
+                    batch: true
+                }
+            }
+        }
+    });
+
+    if (!exam) {
+        throw new ApiError(404, "Exam not found.");
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, exam, "Exam fetched successfully.")
+    );
+});
+
+export const deleteExam = asyncHandler(async (req, res) => {
+    const { examId } = req.params;
+
+    if (!examId) {
+        throw new ApiError(400, "Exam ID is required.");
+    }
+
+    const existingExam = await prisma.exam.findUnique({
+        where: { id: examId }
+    });
+
+    if (!existingExam) {
+        throw new ApiError(404, "Exam not found.");
+    }
+
+    await prisma.exam.delete({
+        where: { id: examId }
+    });
+
+    res.status(200).json(
+        new ApiResponse(200, null, "Exam deleted successfully.")
     );
 });
 
