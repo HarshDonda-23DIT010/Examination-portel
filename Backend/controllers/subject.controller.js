@@ -299,7 +299,6 @@ export const getFacultySubjects = asyncHandler(async (req, res) => {
         }
     });
 
-    console.log(facultySubjects);
     // 3. Combine and format the results
     const resultsMap = new Map();
 

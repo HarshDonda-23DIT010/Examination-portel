@@ -51,6 +51,65 @@ export const addSubjectFaculties = asyncHandler(async (req, res) => {
    )
 })
 
+export const updateSubjectFaculty = asyncHandler(async (req, res) => {
+   const { facultyAssignmentId } = req.params;
+   const {
+      facultyId,
+      department,
+      aBatch,
+      bBatch,
+      cBatch,
+      dBatch
+   } = req.body;
+
+   if (!facultyAssignmentId) {
+      throw new ApiError(400, "Faculty assignment ID is required.");
+   }
+
+   const existingAssignment = await prisma.subjectFaculty.findFirst({
+      where: { id: facultyAssignmentId }
+   });
+
+   if (!existingAssignment) {
+      throw new ApiError(404, "Faculty assignment not found.");
+   }
+
+   // If facultyId is provided, verify the faculty exists
+   if (facultyId) {
+      const existFaculty = await prisma.user.findFirst({
+         where: { id: facultyId },
+      });
+
+      if (!existFaculty) {
+         throw new ApiError(409, "Faculty is not present in the database.");
+      }
+   }
+
+   const updatedSubjectFaculty = await prisma.subjectFaculty.update({
+      where: { id: facultyAssignmentId },
+      data: {
+         ...(facultyId && { facultyId }),
+         ...(department && { department }),
+         role: "Faculty", // Always set role as Faculty as per requirement
+         ...(aBatch !== undefined && { aBatch }),
+         ...(bBatch !== undefined && { bBatch }),
+         ...(cBatch !== undefined && { cBatch }),
+         ...(dBatch !== undefined && { dBatch }),
+      },
+      include: {
+         faculty: true
+      }
+   });
+
+   res.status(200).json(
+      new ApiResponse(
+         200,
+         updatedSubjectFaculty,
+         "Subject Faculty updated successfully."
+      )
+   );
+});
+
 export const getFacultyBySubject = asyncHandler(async (req, res) => {
 
   const subjectId = Number(req.params.subjectId);
@@ -81,5 +140,32 @@ export const getFacultyBySubject = asyncHandler(async (req, res) => {
       "Subject faculty fetched successfully."
     )
   );
+});
 
+export const removeSubjectFaculty = asyncHandler(async (req, res) => {
+  const { facultyAssignmentId } = req.params;
+
+  if (!facultyAssignmentId) {
+    throw new ApiError(400, "Faculty assignment ID is required.");
+  }
+
+  const existingAssignment = await prisma.subjectFaculty.findFirst({
+    where: { id: facultyAssignmentId }
+  });
+
+  if (!existingAssignment) {
+    throw new ApiError(404, "Faculty assignment not found.");
+  }
+
+  await prisma.subjectFaculty.delete({
+    where: { id: facultyAssignmentId }
+  });
+
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      null,
+      "Faculty removed from subject successfully."
+    )
+  );
 });

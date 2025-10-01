@@ -14,6 +14,7 @@ import AddStudentsToSubject from './pages/faculties/AddStudentsToSubject';
 import ViewStudents from './pages/faculties/ViewStudents';
 import EditStudents from './pages/faculties/EditStudents';
 import ManageSubject from './pages/faculties/ManageSubject';
+import ManageFaculty from './pages/faculties/ManageFaculty';
 import AddSubject from './pages/hod/AddSubject';
 import YearSetting from './pages/setting/YearSetting';
 import MySubjects from './pages/faculties/MySubjects';
@@ -63,6 +64,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/manage-subject/:subjectId',
         element: <ProtectedRoute><ManageSubject /></ProtectedRoute>
+      },
+      {
+        path: '/manage-faculty/:subjectId',
+        element: <ProtectedRoute><ManageFaculty /></ProtectedRoute>
       },
       {
         path: '/add-students-to-subject',

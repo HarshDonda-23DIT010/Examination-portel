@@ -8,7 +8,7 @@ import studentReducer from './slices/studentSlice';
 import { yearApi } from './api/yearApi';
 import { studentApi } from './api/studentApi';
 import { subjectApi } from './api/subjectApi';
-import { subjectFacultyApi } from './api/subjectFaculty';
+import { subjectFacultyApi } from './api/subjectFacultyApi';
 
 const persistConfig = {
   key: 'faculty-root',

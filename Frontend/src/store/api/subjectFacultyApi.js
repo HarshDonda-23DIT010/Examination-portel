@@ -3,10 +3,6 @@ import {
    fetchBaseQuery
 } from '@reduxjs/toolkit/query/react';
 import {
-   setCredentials,
-   logout,
-} from '../slices/authSlice';
-import {
    SUBJECT_FACULTY_ENDPOINTS
 } from '../../utils/EndPoints.js';
 
@@ -35,5 +31,34 @@ export const subjectFacultyApi = createApi({
          }),
          invalidatesTags: ['SubjectFaculty'],
       }),
+      getSubjectFaculty: builder.query({
+         query: (subjectId) => ({
+            url: `/assigned-faculty/${subjectId}`,
+            method: 'GET',
+         }),
+         providesTags: ['SubjectFaculty'],
+      }),
+      updateSubjectFaculty: builder.mutation({
+         query: ({ facultyAssignmentId, ...updateData }) => ({
+            url: `/update/${facultyAssignmentId}`,
+            method: 'PUT',
+            body: updateData,
+         }),
+         invalidatesTags: ['SubjectFaculty'],
+      }),
+      removeSubjectFaculty: builder.mutation({
+         query: (facultyAssignmentId) => ({
+            url: `/remove/${facultyAssignmentId}`,
+            method: 'DELETE',
+         }),
+         invalidatesTags: ['SubjectFaculty'],
+      })
    })
 })
+
+export const {
+   useAddSubjectFacultyMutation,
+   useGetSubjectFacultyQuery,
+   useUpdateSubjectFacultyMutation,
+   useRemoveSubjectFacultyMutation
+} = subjectFacultyApi;

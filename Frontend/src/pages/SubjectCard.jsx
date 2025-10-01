@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudents, onManageSubject }) => {
    const { subject, roles } = subjectData;
    const { currentYear, selectedYearObject } = useSelector((state) => state.auth);
-   
+
    // Check if current year and selected year are the same
-   const isCurrentYear = currentYear && selectedYearObject && 
-                        currentYear.id === selectedYearObject.id;
+   const isCurrentYear = currentYear && selectedYearObject &&
+      currentYear.id === selectedYearObject.id;
 
    const getRoleBadgeColor = (role) => {
       switch (role) {
@@ -42,7 +42,7 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                </div>
                <p className="text-sm text-gray-500 font-mono">{subject.code}</p>
             </div>
-            
+
             {/* Role Badge */}
             <div className="flex-shrink-0">
                {roles.includes('SubjectCoordinator') ? (
@@ -71,7 +71,7 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                   <span>{subject._count?.students || 0}</span>
                </div>
             </div>
-            
+
             {/* Department badges */}
             <div className="flex gap-1">
                {getDepartmentBadges().map(dept => (
@@ -98,7 +98,7 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                      Int: {subject.theory_int_marks || 0} | Ext: {subject.theory_ext_marks || 0}
                   </div>
                </div>
-               
+
                {/* Practical */}
                <div className="space-y-1">
                   <div className="font-medium text-green-700">Practical</div>
@@ -117,11 +117,10 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
             {/* First row - Status and student management */}
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                {/* Status */}
-               <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  subject.hasStudents
+               <div className={`px-2 py-1 rounded-full text-xs font-medium ${subject.hasStudents
                      ? 'bg-green-100 text-green-700'
                      : 'bg-yellow-100 text-yellow-700'
-               }`}>
+                  }`}>
                   {subject.hasStudents ? 'Active' : 'No Students'}
                </div>
 
@@ -132,11 +131,10 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                         <button
                            onClick={() => onAddStudents(subject)}
                            disabled={!isCurrentYear}
-                           className={`inline-flex items-center px-3 py-1.5 text-xs font-medium rounded transition-colors ${
-                              isCurrentYear 
-                                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                           className={`inline-flex items-center px-3 py-1.5 text-xs font-medium rounded transition-colors ${isCurrentYear
+                                 ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                           }`}
+                              }`}
                            title={!isCurrentYear ? 'Only available for current academic year' : ''}
                         >
                            <Plus className="w-3 h-3 mr-1" />
@@ -154,11 +152,10 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
                            <button
                               onClick={() => onEditStudents(subject)}
                               disabled={!isCurrentYear}
-                              className={`inline-flex items-center px-2 py-1.5 text-xs font-medium rounded transition-colors ${
-                                 isCurrentYear 
-                                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                              className={`inline-flex items-center px-2 py-1.5 text-xs font-medium rounded transition-colors ${isCurrentYear
+                                    ? 'bg-green-600 hover:bg-green-700 text-white'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                              }`}
+                                 }`}
                               title={!isCurrentYear ? 'Only available for current academic year' : ''}
                            >
                               <Edit className="w-3 h-3 mr-1" />
@@ -181,17 +178,15 @@ const SubjectCard = ({ subjectData, onAddStudents, onEditStudents, onViewStudent
             </div>
 
             {/* Second row - Manage Subject button (always available) */}
-            {roles.includes('SubjectCoordinator') && (
-               <div className="flex justify-center">
-                  <button
-                     onClick={() => onManageSubject(subject)}
-                     className="inline-flex items-center px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded transition-colors w-full justify-center"
-                  >
-                     <Settings className="w-3 h-3 mr-1" />
-                     Manage Subject
-                  </button>
-               </div>
-            )}
+            <div className="flex justify-center">
+               <button
+                  onClick={() => onManageSubject(subject)}
+                  className="inline-flex items-center px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded transition-colors w-full justify-center"
+               >
+                  <Settings className="w-3 h-3 mr-1" />
+                  Manage Subject
+               </button>
+            </div>
          </div>
       </div>
    );
