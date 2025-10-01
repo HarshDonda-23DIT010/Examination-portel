@@ -190,8 +190,8 @@ exports.Prisma.ExamScalarFieldEnum = {
   facultyId: 'facultyId',
   totalMarks: 'totalMarks',
   effectiveMarks: 'effectiveMarks',
-  class1: 'class1',
-  class2: 'class2',
+  division: 'division',
+  batch: 'batch',
   status: 'status',
   yearId: 'yearId'
 };
@@ -263,13 +263,13 @@ exports.Batch = exports.$Enums.Batch = {
   A: 'A',
   B: 'B',
   C: 'C',
-  D: 'D'
+  D: 'D',
+  NONE: 'NONE'
 };
 
 exports.ExamStatus = exports.$Enums.ExamStatus = {
-  taken: 'taken',
-  notTaken: 'notTaken',
-  pending: 'pending'
+  Taken: 'Taken',
+  Pending: 'Pending'
 };
 
 exports.Prisma.ModelName = {
