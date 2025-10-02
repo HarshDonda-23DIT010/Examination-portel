@@ -5,7 +5,9 @@ import {
   useGetSubjectStudentsQuery 
 } from '../../store/api/subjectApi';
 import { 
-  useAddExamStudentsMutation 
+  useAddExamStudentsMutation,
+  useUpdateExamStudentsMutation,
+  useGetExamStudentsQuery 
 } from '../../store/api/examApi';
 import { 
   ChevronRight, 
@@ -33,12 +35,13 @@ const AssignStudentsToExam = () => {
   const { selectedYearObject } = useSelector((state) => state.auth);
 
   // Get exam data from navigation state
-  const { exam, subject, subjectData } = location.state || {};
+  const { exam, subject, subjectData, editMode = false } = location.state || {};
 
   // State management
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredStudents, setFilteredStudents] = useState([]);
+  const [initiallyAssignedStudents, setInitiallyAssignedStudents] = useState([]);
 
   const { 
     data: studentsData, 
@@ -49,6 +52,15 @@ const AssignStudentsToExam = () => {
   });
 
   const [addExamStudents, { isLoading: isAssigning }] = useAddExamStudentsMutation();
+  const [updateExamStudents, { isLoading: updating }] = useUpdateExamStudentsMutation();
+
+  // Get currently assigned students if in edit mode
+  const { 
+    data: examStudentsData, 
+    isLoading: examStudentsLoading 
+  } = useGetExamStudentsQuery(examId, {
+    skip: !editMode || !examId
+  });
 
   // Get department color for UI consistency
   const getDepartmentColor = (dept) => {
@@ -93,6 +105,15 @@ const AssignStudentsToExam = () => {
     setFilteredStudents(filtered);
   }, [studentsData, exam, searchTerm]);
 
+  // Set initially assigned students when in edit mode
+  useEffect(() => {
+    if (editMode && examStudentsData?.data?.students) {
+      const assignedStudentIds = examStudentsData.data.students.map(s => s.id);
+      setInitiallyAssignedStudents(assignedStudentIds);
+      setSelectedStudents(examStudentsData.data.students);
+    }
+  }, [editMode, examStudentsData]);
+
   // Get available divisions and batches from students for display
   const getAvailableOptions = () => {
     if (!studentsData?.data?.students) return { divisions: [], batches: [] };
@@ -134,16 +155,29 @@ const AssignStudentsToExam = () => {
 
     try {
       const studentIds = selectedStudents.map(s => s.id);
-      await addExamStudents({ 
-        examId: exam.id, 
-        studentIds 
-      }).unwrap();
       
-      toast.success(`Successfully assigned ${selectedStudents.length} students to the exam!`);
+      if (editMode) {
+        // Update existing student assignments
+        await updateExamStudents({ 
+          examId: exam.id, 
+          studentIds 
+        }).unwrap();
+        
+        toast.success(`Successfully updated student assignments for the exam!`);
+      } else {
+        // Add new student assignments
+        await addExamStudents({ 
+          examId: exam.id, 
+          studentIds 
+        }).unwrap();
+        
+        toast.success(`Successfully assigned ${selectedStudents.length} students to the exam!`);
+      }
+      
       navigate(-1); // Go back to previous page
     } catch (error) {
-      console.error('Error assigning students:', error);
-      toast.error(error?.data?.message || 'Failed to assign students to exam');
+      console.error('Error with student assignments:', error);
+      toast.error(error?.data?.message || `Failed to ${editMode ? 'update' : 'assign'} students`);
     }
   };
 
@@ -203,7 +237,9 @@ const AssignStudentsToExam = () => {
           Manage Subject
         </button>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-900 font-medium">Assign Students to Exam</span>
+        <span className="text-gray-900 font-medium">
+          {editMode ? 'Edit Students for Exam' : 'Assign Students to Exam'}
+        </span>
       </nav>
 
       {/* Header */}

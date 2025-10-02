@@ -75,6 +75,20 @@ export const examApi = createApi({
             body: { studentIds },
          }),
          invalidatesTags: ['Exam'],
+      }),
+      getExamStudents: builder.query({
+         query: (examId) => ({
+            url: `/students/${examId}`,
+            method: 'GET',
+         }),
+         providesTags: ['Exam'],
+      }),
+      getExamAnalysis: builder.query({
+         query: (examId) => ({
+            url: `/analysis/${examId}`,
+            method: 'GET',
+         }),
+         providesTags: ['Exam'],
       })
    })
 })
@@ -86,5 +100,7 @@ export const {
    useGetExamByIdQuery,
    useDeleteExamMutation,
    useAddExamStudentsMutation,
-   useUpdateExamStudentsMutation
+   useUpdateExamStudentsMutation,
+   useGetExamStudentsQuery,
+   useGetExamAnalysisQuery
 } = examApi;

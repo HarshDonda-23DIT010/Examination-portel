@@ -10,16 +10,18 @@ import {
   Edit,
   Trash2,
   Eye,
-  Settings
+  Settings,
+  BarChart3
 } from 'lucide-react';
 
 const ExamCard = ({ 
   exam, 
-  onAssignStudents, 
-  onEditExam, 
-  onDeleteExam,
+  onAssignStudents,
   onViewExam,
   onManageExam,
+  onViewStudents,
+  onEditStudents,
+  onAnalyzeExam,
   showActions = true 
 }) => {
   const formatDate = (dateString) => {
@@ -136,16 +138,16 @@ const ExamCard = ({
       </div>
 
       {/* Card Actions */}
-      {showActions && (
+      {showActions&& (
         <div className="px-6 pb-6">
           <div className="grid grid-cols-2 gap-3 mb-3">
-            <button
+            {exam.status == 'Pending' && (<button
               onClick={() => onAssignStudents(exam)}
               className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
             >
               <UserPlus className="w-4 h-4 mr-2" />
               Assign Students
-            </button>
+            </button>)}
             
             {onManageExam && (
               <button
@@ -158,36 +160,46 @@ const ExamCard = ({
             )}
           </div>
           
+          {/* Student Management Buttons */}
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            {onViewStudents && (
+              <button
+                onClick={() => onViewStudents(exam)}
+                className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                View Students
+              </button>
+            )}
+            
+            {onEditStudents && (
+              <button
+                onClick={() => onEditStudents(exam)}
+                className="inline-flex items-center justify-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                <Edit className="w-4 h-4 mr-2" />
+                Edit Students
+              </button>
+            )}
+          </div>
+          
           <div className="flex items-center space-x-3">
-            {onViewExam && (
+            {onAnalyzeExam && (
               <button
-                onClick={() => onViewExam(exam)}
-                className="flex-1 inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium rounded-lg transition-colors"
+                onClick={() => onAnalyzeExam(exam)}
+                disabled={exam.status !== 'Taken'}
+                className={`flex-1 inline-flex items-center justify-center px-3 py-2 border text-sm font-medium rounded-lg transition-colors ${
+                  exam.status === 'Taken'
+                    ? 'border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400'
+                    : 'border-gray-200 text-gray-400 cursor-not-allowed bg-gray-50'
+                }`}
+                title={exam.status === 'Taken' ? 'View exam analysis and statistics' : 'Analysis available only for completed exams'}
               >
-                <Eye className="w-4 h-4 mr-2" />
-                View Details
+                <BarChart3 className="w-4 h-4 mr-2" />
+                Analysis
               </button>
             )}
-            
-            {onEditExam && (
-              <button
-                onClick={() => onEditExam(exam)}
-                className="inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium rounded-lg transition-colors"
-                title="Edit Exam"
-              >
-                <Edit className="w-4 h-4" />
-              </button>
-            )}
-            
-            {onDeleteExam && (
-              <button
-                onClick={() => onDeleteExam(exam)}
-                className="inline-flex items-center justify-center px-3 py-2 border border-red-300 text-red-700 hover:bg-red-50 text-sm font-medium rounded-lg transition-colors"
-                title="Delete Exam"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            )}
+      
           </div>
         </div>
       )}

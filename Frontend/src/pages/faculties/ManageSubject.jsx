@@ -96,32 +96,54 @@ const ManageSubject = () => {
      });
    };
 
-   const handleEditExam = (exam) => {
-     navigate(`/manage-exam/${subjectId}`, {
+   const handleViewExam = (exam) => {
+     // Navigate to exam details view
+     navigate(`/exam-details/${exam.id}`, {
        state: {
+         exam,
+         subject,
+         subjectData
+       }
+     });
+   };
+
+   const handleManageExam = (exam) => {
+     // Navigate to marks management
+     navigate(`/manage-exam-marks/${exam.id}`, {
+       state: {
+         exam,
+         subject,
+         subjectData
+       }
+     });
+   };
+
+   const handleViewStudents = (exam) => {
+     // Navigate to view students for this exam
+     navigate(`/exam-students/${exam.id}`, {
+       state: {
+         exam,
+         subject,
+         subjectData
+       }
+     });
+   };
+
+   const handleEditStudents = (exam) => {
+     // Navigate to edit students for this exam (similar to assign but for editing)
+     navigate(`/assign-students-to-exam/${exam.id}`, {
+       state: {
+         exam,
          subject,
          subjectData,
-         editExam: exam
+         editMode: true
        }
      });
    };
 
-   const handleDeleteExam = async (exam) => {
-     if (!confirm(`Are you sure you want to delete the exam "${exam.name}"?`)) {
-       return;
-     }
-
-     try {
-       await deleteExam(exam.id).unwrap();
-       toast.success('Exam deleted successfully!');
-     } catch (error) {
-       console.error('Error deleting exam:', error);
-       toast.error('Failed to delete exam');
-     }
-   };
-
-   const handleViewExam = (exam) => {
-     navigate(`/view-exam/${exam.id}`, {
+   const handleAnalyzeExam = (exam) => {
+     // Navigate to exam analysis page
+     navigate(`/exam-analysis/${exam.id}`, {
        state: {
          exam,
          subject,
@@ -130,17 +152,7 @@ const ManageSubject = () => {
      });
    };
 
-   const handleManageIndividualExam = (exam) => {
-     navigate(`/manage-individual-exam/${exam.id}`, {
-       state: {
-         exam,
-         subject,
-         subjectData
-       }
-     });
-   };
-
-   const handleManageExam = () => {
+   const handleCreateExam = () => {
       navigate(`/manage-exam/${subjectId}`, {
          state: {
             subject: subjectData?.subject || subjectData,
@@ -215,7 +227,7 @@ const ManageSubject = () => {
 
                      {/* Manage Exam Button */}
                      <button
-                        onClick={handleManageExam}
+                        onClick={handleCreateExam}
                         className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm"
                      >
                         <BookOpen className="w-5 h-5 mr-2" />
@@ -283,7 +295,7 @@ const ManageSubject = () => {
                   </p>
                   {(!searchTerm && statusFilter === 'all') && isSubjectCoordinator && (
                      <button
-                        onClick={handleManageExam}
+                        onClick={handleCreateExam}
                         className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                      >
                         <Plus className="w-5 h-5 mr-2" />
@@ -298,10 +310,11 @@ const ManageSubject = () => {
                         key={exam.id}
                         exam={exam}
                         onAssignStudents={handleAssignStudents}
-                        onEditExam={handleEditExam}
-                        onDeleteExam={handleDeleteExam}
                         onViewExam={handleViewExam}
-                        onManageExam={handleManageIndividualExam}
+                        onManageExam={handleManageExam}
+                        onViewStudents={handleViewStudents}
+                        onEditStudents={handleEditStudents}
+                        onAnalyzeExam={handleAnalyzeExam}
                         showActions={true}
                      />
                   ))}

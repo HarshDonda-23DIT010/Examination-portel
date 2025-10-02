@@ -10,6 +10,7 @@ import { studentApi } from './api/studentApi';
 import { subjectApi } from './api/subjectApi';
 import { subjectFacultyApi } from './api/subjectFacultyApi';
 import { examApi } from './api/examApi';
+import { marksApi } from './api/marksApi';
 
 const persistConfig = {
   key: 'faculty-root',
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   [subjectApi.reducerPath]: subjectApi.reducer,
   [subjectFacultyApi.reducerPath]: subjectFacultyApi.reducer,
   [examApi.reducerPath]: examApi.reducer,
+  [marksApi.reducerPath]: marksApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,7 +39,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(authApi.middleware , studentApi.middleware , yearApi.middleware , subjectApi.middleware, subjectFacultyApi.middleware, examApi.middleware),
+    }).concat(authApi.middleware , studentApi.middleware , yearApi.middleware , subjectApi.middleware, subjectFacultyApi.middleware, examApi.middleware, marksApi.middleware),
 });
 
 export const persistor = persistStore(store);

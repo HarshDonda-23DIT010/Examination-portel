@@ -1830,11 +1830,13 @@ export namespace Prisma {
 
   export type ExamCountOutputType = {
     eligibleStudents: number
+    marks: number
     detain: number
   }
 
   export type ExamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     eligibleStudents?: boolean | ExamCountOutputTypeCountEligibleStudentsArgs
+    marks?: boolean | ExamCountOutputTypeCountMarksArgs
     detain?: boolean | ExamCountOutputTypeCountDetainArgs
   }
 
@@ -1854,6 +1856,13 @@ export namespace Prisma {
    */
   export type ExamCountOutputTypeCountEligibleStudentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentWhereInput
+  }
+
+  /**
+   * ExamCountOutputType without action
+   */
+  export type ExamCountOutputTypeCountMarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarksWhereInput
   }
 
   /**
@@ -8421,7 +8430,7 @@ export namespace Prisma {
       subject: Prisma.$SubjectPayload<ExtArgs>
       faculty: Prisma.$UserPayload<ExtArgs>
       eligibleStudents: Prisma.$StudentPayload<ExtArgs>[]
-      marks: Prisma.$MarksPayload<ExtArgs> | null
+      marks: Prisma.$MarksPayload<ExtArgs>[]
       detain: Prisma.$DetainPayload<ExtArgs>[]
       year: Prisma.$YearPayload<ExtArgs>
     }
@@ -8835,7 +8844,7 @@ export namespace Prisma {
     subject<T extends SubjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubjectDefaultArgs<ExtArgs>>): Prisma__SubjectClient<$Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     faculty<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     eligibleStudents<T extends Exam$eligibleStudentsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$eligibleStudentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    marks<T extends Exam$marksArgs<ExtArgs> = {}>(args?: Subset<T, Exam$marksArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    marks<T extends Exam$marksArgs<ExtArgs> = {}>(args?: Subset<T, Exam$marksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     detain<T extends Exam$detainArgs<ExtArgs> = {}>(args?: Subset<T, Exam$detainArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     year<T extends YearDefaultArgs<ExtArgs> = {}>(args?: Subset<T, YearDefaultArgs<ExtArgs>>): Prisma__YearClient<$Result.GetResult<Prisma.$YearPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -9315,6 +9324,11 @@ export namespace Prisma {
      */
     include?: MarksInclude<ExtArgs> | null
     where?: MarksWhereInput
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    cursor?: MarksWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
   }
 
   /**
@@ -12371,7 +12385,7 @@ export namespace Prisma {
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     eligibleStudents?: StudentListRelationFilter
-    marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
+    marks?: MarksListRelationFilter
     detain?: DetainListRelationFilter
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
   }
@@ -12392,7 +12406,7 @@ export namespace Prisma {
     subject?: SubjectOrderByWithRelationInput
     faculty?: UserOrderByWithRelationInput
     eligibleStudents?: StudentOrderByRelationAggregateInput
-    marks?: MarksOrderByWithRelationInput
+    marks?: MarksOrderByRelationAggregateInput
     detain?: DetainOrderByRelationAggregateInput
     year?: YearOrderByWithRelationInput
   }
@@ -12416,7 +12430,7 @@ export namespace Prisma {
     subject?: XOR<SubjectScalarRelationFilter, SubjectWhereInput>
     faculty?: XOR<UserScalarRelationFilter, UserWhereInput>
     eligibleStudents?: StudentListRelationFilter
-    marks?: XOR<MarksNullableScalarRelationFilter, MarksWhereInput> | null
+    marks?: MarksListRelationFilter
     detain?: DetainListRelationFilter
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
   }, "id" | "id">
@@ -12488,18 +12502,18 @@ export namespace Prisma {
 
   export type MarksWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    examId?: string
     AND?: MarksWhereInput | MarksWhereInput[]
     OR?: MarksWhereInput[]
     NOT?: MarksWhereInput | MarksWhereInput[]
     studentId?: StringFilter<"Marks"> | string
     earnedMarks?: IntFilter<"Marks"> | number
     effectiveMarks?: IntFilter<"Marks"> | number
+    examId?: StringFilter<"Marks"> | string
     yearId?: IntFilter<"Marks"> | number
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
     year?: XOR<YearScalarRelationFilter, YearWhereInput>
-  }, "id" | "id" | "examId">
+  }, "id" | "id">
 
   export type MarksOrderByWithAggregationInput = {
     id?: SortOrder
@@ -13078,7 +13092,7 @@ export namespace Prisma {
     subject: SubjectCreateNestedOneWithoutExamInput
     faculty: UserCreateNestedOneWithoutExamInput
     eligibleStudents?: StudentCreateNestedManyWithoutExamsInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     detain?: DetainCreateNestedManyWithoutExamInput
     year: YearCreateNestedOneWithoutExamInput
   }
@@ -13097,7 +13111,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     yearId: number
     eligibleStudents?: StudentUncheckedCreateNestedManyWithoutExamsInput
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
     detain?: DetainUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -13114,7 +13128,7 @@ export namespace Prisma {
     subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
     faculty?: UserUpdateOneRequiredWithoutExamNestedInput
     eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     detain?: DetainUpdateManyWithoutExamNestedInput
     year?: YearUpdateOneRequiredWithoutExamNestedInput
   }
@@ -13133,7 +13147,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     yearId?: IntFieldUpdateOperationsInput | number
     eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
     detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -13847,11 +13861,6 @@ export namespace Prisma {
     in?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ExamStatus[] | ListEnumExamStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumExamStatusFilter<$PrismaModel> | $Enums.ExamStatus
-  }
-
-  export type MarksNullableScalarRelationFilter = {
-    is?: MarksWhereInput | null
-    isNot?: MarksWhereInput | null
   }
 
   export type ExamCountOrderByAggregateInput = {
@@ -14763,10 +14772,11 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
-  export type MarksCreateNestedOneWithoutExamInput = {
-    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutExamInput
-    connect?: MarksWhereUniqueInput
+  export type MarksCreateNestedManyWithoutExamInput = {
+    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput> | MarksCreateWithoutExamInput[] | MarksUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutExamInput | MarksCreateOrConnectWithoutExamInput[]
+    createMany?: MarksCreateManyExamInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
   }
 
   export type DetainCreateNestedManyWithoutExamInput = {
@@ -14788,10 +14798,11 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
-  export type MarksUncheckedCreateNestedOneWithoutExamInput = {
-    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutExamInput
-    connect?: MarksWhereUniqueInput
+  export type MarksUncheckedCreateNestedManyWithoutExamInput = {
+    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput> | MarksCreateWithoutExamInput[] | MarksUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutExamInput | MarksCreateOrConnectWithoutExamInput[]
+    createMany?: MarksCreateManyExamInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
   }
 
   export type DetainUncheckedCreateNestedManyWithoutExamInput = {
@@ -14834,14 +14845,18 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
-  export type MarksUpdateOneWithoutExamNestedInput = {
-    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutExamInput
-    upsert?: MarksUpsertWithoutExamInput
-    disconnect?: MarksWhereInput | boolean
-    delete?: MarksWhereInput | boolean
-    connect?: MarksWhereUniqueInput
-    update?: XOR<XOR<MarksUpdateToOneWithWhereWithoutExamInput, MarksUpdateWithoutExamInput>, MarksUncheckedUpdateWithoutExamInput>
+  export type MarksUpdateManyWithoutExamNestedInput = {
+    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput> | MarksCreateWithoutExamInput[] | MarksUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutExamInput | MarksCreateOrConnectWithoutExamInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutExamInput | MarksUpsertWithWhereUniqueWithoutExamInput[]
+    createMany?: MarksCreateManyExamInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutExamInput | MarksUpdateWithWhereUniqueWithoutExamInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutExamInput | MarksUpdateManyWithWhereWithoutExamInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
   }
 
   export type DetainUpdateManyWithoutExamNestedInput = {
@@ -14879,14 +14894,18 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
-  export type MarksUncheckedUpdateOneWithoutExamNestedInput = {
-    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
-    connectOrCreate?: MarksCreateOrConnectWithoutExamInput
-    upsert?: MarksUpsertWithoutExamInput
-    disconnect?: MarksWhereInput | boolean
-    delete?: MarksWhereInput | boolean
-    connect?: MarksWhereUniqueInput
-    update?: XOR<XOR<MarksUpdateToOneWithWhereWithoutExamInput, MarksUpdateWithoutExamInput>, MarksUncheckedUpdateWithoutExamInput>
+  export type MarksUncheckedUpdateManyWithoutExamNestedInput = {
+    create?: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput> | MarksCreateWithoutExamInput[] | MarksUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutExamInput | MarksCreateOrConnectWithoutExamInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutExamInput | MarksUpsertWithWhereUniqueWithoutExamInput[]
+    createMany?: MarksCreateManyExamInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutExamInput | MarksUpdateWithWhereUniqueWithoutExamInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutExamInput | MarksUpdateManyWithWhereWithoutExamInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
   }
 
   export type DetainUncheckedUpdateManyWithoutExamNestedInput = {
@@ -15353,7 +15372,7 @@ export namespace Prisma {
     subject: SubjectCreateNestedOneWithoutExamInput
     faculty: UserCreateNestedOneWithoutExamInput
     eligibleStudents?: StudentCreateNestedManyWithoutExamsInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     detain?: DetainCreateNestedManyWithoutExamInput
   }
 
@@ -15370,7 +15389,7 @@ export namespace Prisma {
     batch: $Enums.Batch
     status?: $Enums.ExamStatus
     eligibleStudents?: StudentUncheckedCreateNestedManyWithoutExamsInput
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
     detain?: DetainUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -15692,7 +15711,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     subject: SubjectCreateNestedOneWithoutExamInput
     eligibleStudents?: StudentCreateNestedManyWithoutExamsInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     detain?: DetainCreateNestedManyWithoutExamInput
     year: YearCreateNestedOneWithoutExamInput
   }
@@ -15710,7 +15729,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     yearId: number
     eligibleStudents?: StudentUncheckedCreateNestedManyWithoutExamsInput
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
     detain?: DetainUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -15879,7 +15898,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     faculty: UserCreateNestedOneWithoutExamInput
     eligibleStudents?: StudentCreateNestedManyWithoutExamsInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     detain?: DetainCreateNestedManyWithoutExamInput
     year: YearCreateNestedOneWithoutExamInput
   }
@@ -15897,7 +15916,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     yearId: number
     eligibleStudents?: StudentUncheckedCreateNestedManyWithoutExamsInput
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
     detain?: DetainUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -16353,7 +16372,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     subject: SubjectCreateNestedOneWithoutExamInput
     faculty: UserCreateNestedOneWithoutExamInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     detain?: DetainCreateNestedManyWithoutExamInput
     year: YearCreateNestedOneWithoutExamInput
   }
@@ -16371,7 +16390,7 @@ export namespace Prisma {
     batch: $Enums.Batch
     status?: $Enums.ExamStatus
     yearId: number
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
     detain?: DetainUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -16623,6 +16642,11 @@ export namespace Prisma {
     create: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
   }
 
+  export type MarksCreateManyExamInputEnvelope = {
+    data: MarksCreateManyExamInput | MarksCreateManyExamInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DetainCreateWithoutExamInput = {
     student: StudentCreateNestedOneWithoutDetainInput
     year: YearCreateNestedOneWithoutDetainInput
@@ -16776,31 +16800,20 @@ export namespace Prisma {
     data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyWithoutExamsInput>
   }
 
-  export type MarksUpsertWithoutExamInput = {
+  export type MarksUpsertWithWhereUniqueWithoutExamInput = {
+    where: MarksWhereUniqueInput
     update: XOR<MarksUpdateWithoutExamInput, MarksUncheckedUpdateWithoutExamInput>
     create: XOR<MarksCreateWithoutExamInput, MarksUncheckedCreateWithoutExamInput>
-    where?: MarksWhereInput
   }
 
-  export type MarksUpdateToOneWithWhereWithoutExamInput = {
-    where?: MarksWhereInput
+  export type MarksUpdateWithWhereUniqueWithoutExamInput = {
+    where: MarksWhereUniqueInput
     data: XOR<MarksUpdateWithoutExamInput, MarksUncheckedUpdateWithoutExamInput>
   }
 
-  export type MarksUpdateWithoutExamInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    earnedMarks?: IntFieldUpdateOperationsInput | number
-    effectiveMarks?: IntFieldUpdateOperationsInput | number
-    student?: StudentUpdateOneRequiredWithoutMarksNestedInput
-    year?: YearUpdateOneRequiredWithoutMarksNestedInput
-  }
-
-  export type MarksUncheckedUpdateWithoutExamInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    studentId?: StringFieldUpdateOperationsInput | string
-    earnedMarks?: IntFieldUpdateOperationsInput | number
-    effectiveMarks?: IntFieldUpdateOperationsInput | number
-    yearId?: IntFieldUpdateOperationsInput | number
+  export type MarksUpdateManyWithWhereWithoutExamInput = {
+    where: MarksScalarWhereInput
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyWithoutExamInput>
   }
 
   export type DetainUpsertWithWhereUniqueWithoutExamInput = {
@@ -17111,7 +17124,7 @@ export namespace Prisma {
     subject: SubjectCreateNestedOneWithoutExamInput
     faculty: UserCreateNestedOneWithoutExamInput
     eligibleStudents?: StudentCreateNestedManyWithoutExamsInput
-    marks?: MarksCreateNestedOneWithoutExamInput
+    marks?: MarksCreateNestedManyWithoutExamInput
     year: YearCreateNestedOneWithoutExamInput
   }
 
@@ -17129,7 +17142,7 @@ export namespace Prisma {
     status?: $Enums.ExamStatus
     yearId: number
     eligibleStudents?: StudentUncheckedCreateNestedManyWithoutExamsInput
-    marks?: MarksUncheckedCreateNestedOneWithoutExamInput
+    marks?: MarksUncheckedCreateNestedManyWithoutExamInput
   }
 
   export type ExamCreateOrConnectWithoutDetainInput = {
@@ -17226,7 +17239,7 @@ export namespace Prisma {
     subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
     faculty?: UserUpdateOneRequiredWithoutExamNestedInput
     eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     year?: YearUpdateOneRequiredWithoutExamNestedInput
   }
 
@@ -17244,7 +17257,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     yearId?: IntFieldUpdateOperationsInput | number
     eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
   }
 
   export type YearUpsertWithoutDetainInput = {
@@ -17453,7 +17466,7 @@ export namespace Prisma {
     subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
     faculty?: UserUpdateOneRequiredWithoutExamNestedInput
     eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     detain?: DetainUpdateManyWithoutExamNestedInput
   }
 
@@ -17470,7 +17483,7 @@ export namespace Prisma {
     batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
     detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -17688,7 +17701,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
     eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     detain?: DetainUpdateManyWithoutExamNestedInput
     year?: YearUpdateOneRequiredWithoutExamNestedInput
   }
@@ -17706,7 +17719,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     yearId?: IntFieldUpdateOperationsInput | number
     eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
     detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -17837,7 +17850,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     faculty?: UserUpdateOneRequiredWithoutExamNestedInput
     eligibleStudents?: StudentUpdateManyWithoutExamsNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     detain?: DetainUpdateManyWithoutExamNestedInput
     year?: YearUpdateOneRequiredWithoutExamNestedInput
   }
@@ -17855,7 +17868,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     yearId?: IntFieldUpdateOperationsInput | number
     eligibleStudents?: StudentUncheckedUpdateManyWithoutExamsNestedInput
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
     detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -17965,7 +17978,7 @@ export namespace Prisma {
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     subject?: SubjectUpdateOneRequiredWithoutExamNestedInput
     faculty?: UserUpdateOneRequiredWithoutExamNestedInput
-    marks?: MarksUpdateOneWithoutExamNestedInput
+    marks?: MarksUpdateManyWithoutExamNestedInput
     detain?: DetainUpdateManyWithoutExamNestedInput
     year?: YearUpdateOneRequiredWithoutExamNestedInput
   }
@@ -17983,7 +17996,7 @@ export namespace Prisma {
     batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
     status?: EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
     yearId?: IntFieldUpdateOperationsInput | number
-    marks?: MarksUncheckedUpdateOneWithoutExamNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutExamNestedInput
     detain?: DetainUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -18043,6 +18056,14 @@ export namespace Prisma {
     yearId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type MarksCreateManyExamInput = {
+    id?: string
+    studentId: string
+    earnedMarks: number
+    effectiveMarks: number
+    yearId: number
+  }
+
   export type DetainCreateManyExamInput = {
     id?: number
     studentId: string
@@ -18086,6 +18107,30 @@ export namespace Prisma {
     semester?: IntFieldUpdateOperationsInput | number
     div?: EnumDivFieldUpdateOperationsInput | $Enums.Div
     batch?: EnumBatchFieldUpdateOperationsInput | $Enums.Batch
+  }
+
+  export type MarksUpdateWithoutExamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    student?: StudentUpdateOneRequiredWithoutMarksNestedInput
+    year?: YearUpdateOneRequiredWithoutMarksNestedInput
+  }
+
+  export type MarksUncheckedUpdateWithoutExamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    yearId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MarksUncheckedUpdateManyWithoutExamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    earnedMarks?: IntFieldUpdateOperationsInput | number
+    effectiveMarks?: IntFieldUpdateOperationsInput | number
+    yearId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DetainUpdateWithoutExamInput = {

@@ -166,7 +166,7 @@ model Exam {
   department       Department
   division         Div
   batch            Batch
-  marks            Marks?
+  marks            Marks[]
   detain           Detain[]
   status           ExamStatus @default(Pending)
 
@@ -181,7 +181,7 @@ model Marks {
 
   earnedMarks    Int
   effectiveMarks Int // for each student
-  examId         String @unique
+  examId         String
   exam           Exam   @relation(fields: [examId], references: [id])
 
   yearId Int
