@@ -22,7 +22,8 @@ const ExamCard = ({
   onViewStudents,
   onEditStudents,
   onAnalyzeExam,
-  showActions = true 
+  showActions = true,
+  canManageExams = true
 }) => {
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -83,6 +84,11 @@ const ExamCard = ({
               <Clock className="w-3 h-3 mr-1" />
               {exam.status}
             </span>
+            {!canManageExams && (
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700 border border-yellow-200">
+                Previous Year
+              </span>
+            )}
           </div>
         </div>
 
@@ -143,7 +149,13 @@ const ExamCard = ({
           <div className="grid grid-cols-2 gap-3 mb-3">
             {exam.status == 'Pending' && (<button
               onClick={() => onAssignStudents(exam)}
-              className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+              disabled={!canManageExams}
+              className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                canManageExams 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+              title={!canManageExams ? 'Only available for current academic year' : ''}
             >
               <UserPlus className="w-4 h-4 mr-2" />
               Assign Students
@@ -152,7 +164,13 @@ const ExamCard = ({
             {onManageExam && (
               <button
                 onClick={() => onManageExam(exam)}
-                className="inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors"
+                disabled={!canManageExams}
+                className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  canManageExams 
+                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                title={!canManageExams ? 'Only available for current academic year' : ''}
               >
                 <Settings className="w-4 h-4 mr-2" />
                 Manage
@@ -165,7 +183,13 @@ const ExamCard = ({
             {onViewStudents && (
               <button
                 onClick={() => onViewStudents(exam)}
-                className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
+                disabled={!canManageExams}
+                className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  canManageExams 
+                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                title={!canManageExams ? 'Only available for current academic year' : ''}
               >
                 <Users className="w-4 h-4 mr-2" />
                 View Students
@@ -175,7 +199,13 @@ const ExamCard = ({
             {onEditStudents && (
               <button
                 onClick={() => onEditStudents(exam)}
-                className="inline-flex items-center justify-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
+                disabled={!canManageExams}
+                className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  canManageExams 
+                    ? 'bg-orange-600 hover:bg-orange-700 text-white' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                title={!canManageExams ? 'Only available for current academic year' : ''}
               >
                 <Edit className="w-4 h-4 mr-2" />
                 Edit Students

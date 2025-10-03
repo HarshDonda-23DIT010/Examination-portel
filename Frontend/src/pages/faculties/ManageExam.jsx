@@ -42,13 +42,32 @@ const ManageExam = () => {
   const subjectData = location.state?.subjectData;
   const subject = subjectData?.subject || subjectData;
 
+  // Check if user is Subject Coordinator
+  const isSubjectCoordinator = user.id == subjectData?.coordinatorId;
+
   // API hooks
   const { data: facultiesData, isLoading: facultiesLoading } = useGetFacultiesQuery();
   const { data: subjectFacultyData, isLoading: subjectFacultyLoading } = useGetSubjectFacultyQuery(subjectId);
-  const { data: examsData, isLoading: examsLoading } = useGetExamsBySubjectQuery(subjectId);
+  const { data: examsData, isLoading: examsLoading } = useGetExamsBySubjectQuery(
+    { subjectId },
+    { skip: !subjectId }
+  );
   const [createExam, { isLoading: isCreating }] = useCreateExamMutation();
   const [updateExam, { isLoading: isUpdating }] = useUpdateExamMutation();
   const [deleteExam, { isLoading: isDeleting }] = useDeleteExamMutation();
+
+  // Get appropriate exams based on user role
+  const getAllExams = () => {
+    return examsData?.data || [];
+  };
+
+  const getFacultyExams = () => {
+    const allExams = getAllExams();
+    return allExams.filter(exam => exam.facultyId === user.id);
+  };
+
+  // Show all exams if coordinator, only assigned exams if faculty
+  const exams = isSubjectCoordinator ? getAllExams() : getFacultyExams();
 
   // Local state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -128,18 +147,18 @@ const ManageExam = () => {
   };
 
   // Get available divisions based on available departments and selected department
-  const getAvailableDivisions = () => {
+  const getAvailableDivisions = (department = formData.department) => {
     const divisions = [];
     
-    // If a specific department is selected, only show divisions for that department
-    if (formData.department) {
-      if (formData.department === 'DCS' && subject?.dep_CSE) {
+    // If a specific department is provided, only show divisions for that department
+    if (department) {
+      if (department === 'DCS' && subject?.dep_CSE) {
         divisions.push({ value: 'DCS1', label: 'DCS1' });
         divisions.push({ value: 'DCS2', label: 'DCS2' });
-      } else if (formData.department === 'DIT' && subject?.dep_IT) {
+      } else if (department === 'DIT' && subject?.dep_IT) {
         divisions.push({ value: 'DIT1', label: 'DIT1' });
         divisions.push({ value: 'DIT2', label: 'DIT2' });
-      } else if (formData.department === 'DCE' && subject?.dep_CE) {
+      } else if (department === 'DCE' && subject?.dep_CE) {
         divisions.push({ value: 'DCE1', label: 'DCE1' });
         divisions.push({ value: 'DCE2', label: 'DCE2' });
       }
@@ -181,15 +200,24 @@ const ManageExam = () => {
     
     if (name === 'department') {
       // When department changes, update division to the first available division for that department
-      const availableDivisions = getAvailableDivisions();
-      const departmentSpecificDivisions = availableDivisions.filter(div => 
-        div.value.startsWith(value)
-      );
+      // We need to calculate divisions based on the NEW department value, not the current formData.department
+      const divisions = [];
+      
+      if (value === 'DCS' && subject?.dep_CSE) {
+        divisions.push({ value: 'DCS1', label: 'DCS1' });
+        divisions.push({ value: 'DCS2', label: 'DCS2' });
+      } else if (value === 'DIT' && subject?.dep_IT) {
+        divisions.push({ value: 'DIT1', label: 'DIT1' });
+        divisions.push({ value: 'DIT2', label: 'DIT2' });
+      } else if (value === 'DCE' && subject?.dep_CE) {
+        divisions.push({ value: 'DCE1', label: 'DCE1' });
+        divisions.push({ value: 'DCE2', label: 'DCE2' });
+      }
       
       setFormData(prev => ({ 
         ...prev, 
         [name]: value,
-        division: departmentSpecificDivisions[0]?.value || availableDivisions[0]?.value || 'DCS1'
+        division: divisions[0]?.value || 'DCS1'
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -306,8 +334,6 @@ const ManageExam = () => {
     resetForm();
   };
 
-  const exams = examsData?.data || [];
-
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -370,14 +396,16 @@ const ManageExam = () => {
             <span className="text-gray-900 font-medium">Manage Exams</span>
           </nav>
 
-          {/* Add Exam Button */}
-          <button
-            onClick={() => setIsDialogOpen(true)}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Add Exam
-          </button>
+          {/* Add Exam Button - Only for Subject Coordinators */}
+          {isSubjectCoordinator && (
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Add Exam
+            </button>
+          )}
         </div>
 
         {/* Subject Info */}
@@ -388,9 +416,28 @@ const ManageExam = () => {
                 {subject.name} ({subject.code})
               </h1>
               <p className="text-gray-600">Semester {subject.semester} • Manage Exams</p>
+              
+              {/* Role and View Indicator */}
+              <div className="mt-3 flex items-center space-x-4">
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  isSubjectCoordinator 
+                    ? 'bg-purple-100 text-purple-800' 
+                    : 'bg-blue-100 text-blue-800'
+                }`}>
+                  {isSubjectCoordinator ? 'Subject Coordinator' : 'Faculty Member'}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {isSubjectCoordinator 
+                    ? 'Viewing all exams in this subject' 
+                    : 'Viewing your assigned exams only'
+                  }
+                </span>
+              </div>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-500">Total Exams</div>
+              <div className="text-sm text-gray-500">
+                {isSubjectCoordinator ? 'Total Exams' : 'Your Exams'}
+              </div>
               <div className="text-2xl font-bold text-blue-600">{exams.length}</div>
             </div>
           </div>
@@ -410,15 +457,24 @@ const ManageExam = () => {
           ) : exams.length === 0 ? (
             <div className="p-12 text-center">
               <Trophy className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No exams created yet</h3>
-              <p className="text-gray-500 mb-4">Get started by creating your first exam</p>
-              <button
-                onClick={() => setIsDialogOpen(true)}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Create Exam
-              </button>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                {isSubjectCoordinator ? 'No exams created yet' : 'No exams assigned to you'}
+              </h3>
+              <p className="text-gray-500 mb-4">
+                {isSubjectCoordinator 
+                  ? 'Get started by creating your first exam'
+                  : 'Contact the subject coordinator to get exams assigned to you'
+                }
+              </p>
+              {isSubjectCoordinator && (
+                <button
+                  onClick={() => setIsDialogOpen(true)}
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Exam
+                </button>
+              )}
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -509,23 +565,31 @@ const ManageExam = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <div className="flex items-center justify-center space-x-2">
-                          <button
-                            onClick={() => handleEditExam(exam)}
-                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            title="Edit Exam"
-                          >
-                            <Edit className="w-3 h-3 mr-1" />
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteExam(exam.id)}
-                            disabled={isDeleting}
-                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
-                            title="Delete Exam"
-                          >
-                            <Trash2 className="w-3 h-3 mr-1" />
-                            Delete
-                          </button>
+                          {isSubjectCoordinator ? (
+                            <>
+                              <button
+                                onClick={() => handleEditExam(exam)}
+                                className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                title="Edit Exam"
+                              >
+                                <Edit className="w-3 h-3 mr-1" />
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteExam(exam.id)}
+                                disabled={isDeleting}
+                                className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
+                                title="Delete Exam"
+                              >
+                                <Trash2 className="w-3 h-3 mr-1" />
+                                Delete
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-xs text-gray-500 italic">
+                              View Only
+                            </span>
+                          )}
                         </div>
                       </td>
                     </tr>

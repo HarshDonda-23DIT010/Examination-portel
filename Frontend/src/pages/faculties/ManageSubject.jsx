@@ -26,15 +26,22 @@ const ManageSubject = () => {
    const navigate = useNavigate();
    const location = useLocation();
    const { subjectId } = useParams();
-   const { user } = useSelector((state) => state.auth);
+   const { user, selectedYearObject, currentYear } = useSelector((state) => state.auth);
 
    // Get subject data from location state or fetch from API
    const [subjectData, setSubjectData] = useState(location.state?.subjectData || null);
    const [searchTerm, setSearchTerm] = useState('');
    const [statusFilter, setStatusFilter] = useState('all');
 
+   // Check if current year matches selected year
+   const isCurrentYear = selectedYearObject?.id === currentYear?.id;
+   const canManageExams = isCurrentYear;
+
    // API hooks
-   const { data: examsData, isLoading: examsLoading } = useGetExamsBySubjectQuery(subjectId);
+   const { data: examsData, isLoading: examsLoading } = useGetExamsBySubjectQuery(
+      { subjectId },
+      { skip: !subjectId }
+   );
    const [deleteExam, { isLoading: isDeleting }] = useDeleteExamMutation();
 
    // Extract roles from the subject data structure
@@ -48,12 +55,22 @@ const ManageSubject = () => {
 
    const exams = examsData?.data || [];
 
-   // Get faculty's exams (exams assigned to this faculty)
-   const facultyExams = exams.filter(exam => exam.facultyId === user.id);
+   // Get exams based on user role
+   const getRelevantExams = () => {
+     if (isSubjectCoordinator) {
+       // Coordinators can see all exams for the subject
+       return exams;
+     } else {
+       // Faculty members can only see exams assigned to them
+       return exams.filter(exam => exam.facultyId === user.id);
+     }
+   };
+
+   const relevantExams = getRelevantExams();
 
    // Filter exams based on search and status
    const getFilteredExams = () => {
-     let filtered = facultyExams;
+     let filtered = relevantExams;
 
      // Apply search filter
      if (searchTerm) {
@@ -87,6 +104,7 @@ const ManageSubject = () => {
 
    // Handler functions
    const handleAssignStudents = (exam) => {
+     if (!canManageExams) return;
      navigate(`/assign-students-to-exam/${exam.id}`, {
        state: {
          exam,
@@ -97,6 +115,7 @@ const ManageSubject = () => {
    };
 
    const handleViewExam = (exam) => {
+     if (!canManageExams) return;
      // Navigate to exam details view
      navigate(`/exam-details/${exam.id}`, {
        state: {
@@ -108,6 +127,7 @@ const ManageSubject = () => {
    };
 
    const handleManageExam = (exam) => {
+     if (!canManageExams) return;
      // Navigate to marks management
      navigate(`/manage-exam-marks/${exam.id}`, {
        state: {
@@ -119,6 +139,7 @@ const ManageSubject = () => {
    };
 
    const handleViewStudents = (exam) => {
+     if (!canManageExams) return;
      // Navigate to view students for this exam
      navigate(`/exam-students/${exam.id}`, {
        state: {
@@ -130,6 +151,7 @@ const ManageSubject = () => {
    };
 
    const handleEditStudents = (exam) => {
+     if (!canManageExams) return;
      // Navigate to edit students for this exam (similar to assign but for editing)
      navigate(`/assign-students-to-exam/${exam.id}`, {
        state: {
@@ -236,15 +258,62 @@ const ManageSubject = () => {
                   </div>
                )}
             </div>
+
+            {/* Year Information Banner */}
+            {!canManageExams && (
+               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                  <div className="flex items-center">
+                     <div className="flex-shrink-0">
+                        <Calendar className="h-5 w-5 text-yellow-600" />
+                     </div>
+                     <div className="ml-3">
+                        <h3 className="text-sm font-medium text-yellow-800">
+                           Viewing Previous Academic Year
+                        </h3>
+                        <div className="mt-1 text-sm text-yellow-700">
+                           <p>
+                              You are viewing exams from a previous academic year. 
+                              Exam management features (assign students, manage marks, edit students) are disabled. 
+                              You can still view exam analysis and results.
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            )}
  
 
             {/* Search and Filters */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+               {/* Subject Info Section */}
+               <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <h2 className="text-xl font-semibold text-gray-900">{subject?.name}</h2>
+                        <p className="text-sm text-gray-600">Code: {subject?.code}</p>
+                        <p className="text-sm text-gray-600">Departments: {getDepartments().join(', ')}</p>
+                     </div>
+                     <div className="flex items-center gap-2">
+                        {isSubjectCoordinator ? (
+                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                              <Settings className="w-3 h-3 mr-1" />
+                              Subject Coordinator
+                           </span>
+                        ) : (
+                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              <User className="w-3 h-3 mr-1" />
+                              Faculty Member
+                           </span>
+                        )}
+                     </div>
+                  </div>
+               </div>
+
                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
+                  <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                      <Trophy className="w-5 h-5 mr-2 text-blue-600" />
-                     Your Exams ({filteredExams.length})
-                  </h2>
+                     {isSubjectCoordinator ? 'All Exams' : 'Your Exams'} ({filteredExams.length})
+                  </h3>
                </div>
 
                <div className="flex flex-col md:flex-row gap-4">
@@ -286,12 +355,15 @@ const ManageSubject = () => {
                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
                   <Trophy className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                     {searchTerm || statusFilter !== 'all' ? 'No exams match your filters' : 'No exams assigned yet'}
+                     {searchTerm || statusFilter !== 'all' ? 'No exams match your filters' : 
+                      isSubjectCoordinator ? 'No exams created yet' : 'No exams assigned yet'}
                   </h3>
                   <p className="text-gray-500 mb-6">
                      {searchTerm || statusFilter !== 'all' 
                         ? 'Try adjusting your search or filter criteria' 
-                        : 'You don\'t have any exams assigned for this subject yet.'}
+                        : isSubjectCoordinator 
+                           ? 'No exams have been created for this subject yet.'
+                           : 'You don\'t have any exams assigned for this subject yet.'}
                   </p>
                   {(!searchTerm && statusFilter === 'all') && isSubjectCoordinator && (
                      <button
@@ -316,6 +388,7 @@ const ManageSubject = () => {
                         onEditStudents={handleEditStudents}
                         onAnalyzeExam={handleAnalyzeExam}
                         showActions={true}
+                        canManageExams={canManageExams}
                      />
                   ))}
                </div>

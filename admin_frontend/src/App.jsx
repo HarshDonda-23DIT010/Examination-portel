@@ -13,6 +13,8 @@ import AdminSetting from './pages/setting/AdminSetting';
 import Profile from './pages/Profile/Profile';
 import AddAcademicYear from './pages/academic_year/AddAcademicYear';
 import AddSubject from './pages/subject/AddSubject';
+import SubjectDetails from './pages/subject/SubjectDetails';
+import ExamAnalysis from './pages/ExamAnalysis';
 
 const appRouter = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ const appRouter = createBrowserRouter([
       {
         path: 'add-subjects',
         element: <ProtectedRoute><AddSubject/></ProtectedRoute>
+      },
+      {
+        path: 'subjects/:subjectId',
+        element: <ProtectedRoute><SubjectDetails/></ProtectedRoute>
+      },
+      {
+        path: 'exam-analysis/:examId',
+        element: <ProtectedRoute><ExamAnalysis/></ProtectedRoute>
       }
       // Admin routes can be added here later
 
@@ -67,3 +77,4 @@ function App() {
 }
 
 export default App
+ 

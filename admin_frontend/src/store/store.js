@@ -6,6 +6,7 @@ import { authApi } from './api/authApi';
 import { yearApi } from './api/yearApi';
 import authReducer from './slices/authSlice';
 import { subjectApi } from './api/subjectApi';
+import { examApi } from './api/examApi';
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [yearApi.reducerPath]: yearApi.reducer,
   [subjectApi.reducerPath]: subjectApi.reducer,
+  [examApi.reducerPath]: examApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -29,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(authApi.middleware, yearApi.middleware, subjectApi.middleware),
+    }).concat(authApi.middleware, yearApi.middleware, subjectApi.middleware, examApi.middleware),
 });
 
 export const persistor = persistStore(store);

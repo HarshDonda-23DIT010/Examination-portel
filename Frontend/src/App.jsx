@@ -21,6 +21,7 @@ import ManageExamMarks from './pages/faculties/ManageExamMarks';
 import ViewExamStudents from './pages/faculties/ViewExamStudents';
 import ExamAnalysis from './pages/faculties/ExamAnalysis';
 import AddSubject from './pages/hod/AddSubject';
+import SubjectDetails from './pages/hod/SubjectDetails';
 import YearSetting from './pages/setting/YearSetting';
 import MySubjects from './pages/faculties/MySubjects';
 
@@ -52,6 +53,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/add-subjects',
         element: <ProtectedRoute><AddSubject /></ProtectedRoute>
+      },
+      {
+        path: '/hod/subjects/:subjectId',
+        element: <ProtectedRoute><SubjectDetails /></ProtectedRoute>
       },
       {
         path: '/settings',

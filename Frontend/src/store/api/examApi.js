@@ -40,7 +40,7 @@ export const examApi = createApi({
          invalidatesTags: ['Exam'],
       }),
       getExamsBySubject: builder.query({
-         query: (subjectId) => ({
+         query: ({ subjectId }) => ({
             url: `/subject/${subjectId}`,
             method: 'GET',
          }),

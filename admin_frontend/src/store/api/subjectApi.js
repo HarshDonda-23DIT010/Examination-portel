@@ -46,11 +46,19 @@ export const subjectApi = createApi({
          }),
          invalidatesTags: ['Subject'],
       }),
+      getSubjectById: builder.query({
+         query: (subjectId) => ({
+            url: `/get-subject/${subjectId}`,
+            method: 'GET',
+         }),
+         providesTags: ['Subject'],
+      }),
    })
 });
 
 export const {
    useAddSubjectMutation,
    useGetSubjectByYearAndSemQuery,
-   useUpdateSubjectMutation
+   useUpdateSubjectMutation,
+   useGetSubjectByIdQuery
 } = subjectApi;

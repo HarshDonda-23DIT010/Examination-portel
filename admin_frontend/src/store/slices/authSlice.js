@@ -8,6 +8,7 @@ const initialState = {
   users: [],
   selectedYearObject: null,
   selectedSemester: null,
+  currentYear: null,
 };
 
 const authSlice = createSlice({
@@ -28,10 +29,12 @@ const authSlice = createSlice({
       state.users = [];
       state.selectedYearObject = null;
       state.selectedSemester = null;
+      state.currentYear = null;
       localStorage.removeItem('AccessToken');
       localStorage.removeItem('user');
       localStorage.removeItem('selectedYearObject');
       localStorage.removeItem('selectedSemester');
+      localStorage.removeItem('currentYear');
     },
     setUsers: (state, action) => {
       state.users = action.payload;
@@ -45,6 +48,14 @@ const authSlice = createSlice({
         localStorage.removeItem('selectedYearObject');
       } else {
         localStorage.setItem('selectedYearObject', JSON.stringify(action.payload));
+      }
+    },
+    setCurrentYear: (state, action) => {
+      state.currentYear = action.payload;
+      if (action.payload === null) {
+        localStorage.removeItem('currentYear');
+      } else {
+        localStorage.setItem('currentYear', JSON.stringify(action.payload));
       }
     },
     setSelectedSemester: (state, action) => {
@@ -80,6 +91,7 @@ export const {
   setUsers,
   addUsers,
   setSelectedYearObject,
+  setCurrentYear,
   setSelectedSemester,
   setYearAndSemester
 } = authSlice.actions;

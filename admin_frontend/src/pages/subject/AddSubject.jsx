@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, X, User, Mail, Building, BookOpen, Users, GraduationCap, Edit, Clock, Award } from 'lucide-react';
+import { Search, Plus, X, User, Mail, Building, BookOpen, Users, GraduationCap, Edit, Clock, Award, Eye, BarChart3 } from 'lucide-react';
 import { useAddSubjectMutation, useGetSubjectByYearAndSemQuery, useUpdateSubjectMutation } from '@/store/api/subjectApi';
 import { useGetFacultiesQuery } from '@/store/api/authApi';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const AddSubject = () => {
+   const navigate = useNavigate();
    const { user, selectedYearObject, selectedSemester } = useSelector((state) => state.auth);
    const [isDialogOpen, setIsDialogOpen] = useState(false);
    const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
@@ -279,6 +281,16 @@ const AddSubject = () => {
       }
    };
 
+   const handleViewSubject = (subject) => {
+      navigate(`/subjects/${subject.id}`, { 
+         state: { 
+            subject: subject,
+            yearId: selectedYearObject?.id,
+            semester: selectedSemester 
+         } 
+      });
+   };
+
    const handleEdit = (subject) => {
       setSelectedSubject(subject);
       setUpdateFormData({
@@ -500,6 +512,13 @@ const AddSubject = () => {
                                  </td>
                                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                                     <div className="flex items-center justify-center space-x-2">
+                                       <button
+                                          onClick={() => handleViewSubject(subject)}
+                                          className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+                                          title="View Subject Details"
+                                       >
+                                          <Eye className="h-4 w-4" />
+                                       </button>
                                        <button
                                           onClick={() => handleEdit(subject)}
                                           className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
