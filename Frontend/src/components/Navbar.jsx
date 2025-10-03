@@ -86,6 +86,12 @@ const Navbar = () => {
                         >
                            Add Subjects
                         </button>
+                        <button
+                           onClick={() => handleNavigation('/my-subjects')}
+                           className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 text-sm lg:text-base px-2 py-1"
+                        >
+                           My Subjects
+                        </button>
                      </>
 
                   }

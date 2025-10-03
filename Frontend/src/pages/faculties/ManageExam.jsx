@@ -78,8 +78,8 @@ const ManageExam = () => {
     facultyId: '',
     totalMarks: '',
     effectiveMarks: '',
-    department: 'DCS',
-    division: 'DCS1',
+    department: '',
+    division: '',
     batch: 'A',
     status: 'Pending'
   });
@@ -146,54 +146,33 @@ const ManageExam = () => {
     return departments;
   };
 
-  // Get available divisions based on available departments and selected department
+  // Get available divisions based on selected department
   const getAvailableDivisions = (department = formData.department) => {
     const divisions = [];
     
-    // If a specific department is provided, only show divisions for that department
-    if (department) {
-      if (department === 'DCS' && subject?.dep_CSE) {
-        divisions.push({ value: 'DCS1', label: 'DCS1' });
-        divisions.push({ value: 'DCS2', label: 'DCS2' });
-      } else if (department === 'DIT' && subject?.dep_IT) {
-        divisions.push({ value: 'DIT1', label: 'DIT1' });
-        divisions.push({ value: 'DIT2', label: 'DIT2' });
-      } else if (department === 'DCE' && subject?.dep_CE) {
-        divisions.push({ value: 'DCE1', label: 'DCE1' });
-        divisions.push({ value: 'DCE2', label: 'DCE2' });
-      }
-    } else {
-      // If no department selected, show all available divisions
-      if (subject?.dep_CSE) {
-        divisions.push({ value: 'DCS1', label: 'DCS1' });
-        divisions.push({ value: 'DCS2', label: 'DCS2' });
-      }
-      if (subject?.dep_IT) {
-        divisions.push({ value: 'DIT1', label: 'DIT1' });
-        divisions.push({ value: 'DIT2', label: 'DIT2' });
-      }
-      if (subject?.dep_CE) {
-        divisions.push({ value: 'DCE1', label: 'DCE1' });
-        divisions.push({ value: 'DCE2', label: 'DCE2' });
-      }
+    // Show divisions only for the selected department
+    if (department === 'DCS' && subject?.dep_CSE) {
+      divisions.push({ value: 'DCS1', label: 'DCS1' });
+      divisions.push({ value: 'DCS2', label: 'DCS2' });
+    } else if (department === 'DIT' && subject?.dep_IT) {
+      divisions.push({ value: 'DIT1', label: 'DIT1' });
+      divisions.push({ value: 'DIT2', label: 'DIT2' });
+    } else if (department === 'DCE' && subject?.dep_CE) {
+      divisions.push({ value: 'DCE1', label: 'DCE1' });
+      divisions.push({ value: 'DCE2', label: 'DCE2' });
     }
+    
+    // Debug log
+    console.log('Department:', department, 'Available divisions:', divisions);
     
     return divisions;
   };
 
   // Initialize form data with first available department and division
   useEffect(() => {
-    const availableDepartments = getAvailableDepartments();
-    const availableDivisions = getAvailableDivisions();
-    
-    if (availableDepartments.length > 0 && !formData.department) {
-      setFormData(prev => ({
-        ...prev,
-        department: availableDepartments[0].value,
-        division: availableDivisions[0]?.value || 'DCS1'
-      }));
-    }
-  }, [subject]);
+    // Don't auto-initialize department - let user select manually
+    // This allows the form to start with "Select Department" option
+  }, [subject, formData.department]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -319,8 +298,8 @@ const ManageExam = () => {
       facultyId: '',
       totalMarks: '',
       effectiveMarks: '',
-      department: 'DCS',
-      division: 'DCS1',
+      department: '',
+      division: '',
       batch: 'A',
       status: 'Pending'
     });
@@ -750,6 +729,7 @@ const ManageExam = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
+                    <option value="">Select Department</option>
                     {getAvailableDepartments().map(dept => (
                       <option key={dept.value} value={dept.value}>
                         {dept.label}
@@ -769,8 +749,12 @@ const ManageExam = () => {
                       value={formData.division}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      disabled={!formData.department}
                     >
-                      {getAvailableDivisions().map(div => (
+                      <option value="">
+                        {!formData.department ? "Select Department First" : "Select Division"}
+                      </option>
+                      {getAvailableDivisions(formData.department).map(div => (
                         <option key={div.value} value={div.value}>
                           {div.label}
                         </option>
